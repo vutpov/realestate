@@ -20,6 +20,11 @@
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu" data-widget="tree">
 
+      <li class="treeview">
+        <a href="#"><i class="fa fa-link"></i> <span>Dashboard</span>
+
+        </a>
+      </li>
 
       <li class="treeview">
         <a href="#"><i class="fa fa-link"></i> <span>Project</span>
@@ -128,7 +133,7 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="/system/createUser">Add New User</a></li>
-          <li><a href="#">View All Users</a></li>
+          <li><a href="/system/user">View All Users</a></li>
         </ul>
       </li>
 

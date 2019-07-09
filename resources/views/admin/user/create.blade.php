@@ -1,153 +1,107 @@
 @extends('admin.master')
 
 @section('page-header','Create New User')
-    
 
+
+@section('col','col-md-6')
 @section('content')
 
 
-<div class="row">
+<form action="{{url('/system/storeUser')}}" method="POST" enctype="multipart/form-data">
+  @csrf
+  @if ($errors->any())
+  <div class="alert alert-danger">
+    <ul>
+      @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+  @endif
 
-    <div class="col-md-6">
-        <div class="box box-primary">
-            
-            <div class="box-body">
-              <form role="form">
-                <!-- text input -->
-                <div class="form-group">
-                  <label>Text</label>
-                  <input type="text" class="form-control" placeholder="Enter ...">
-                </div>
-                <div class="form-group">
-                  <label>Text Disabled</label>
-                  <input type="text" class="form-control" placeholder="Enter ..." disabled>
-                </div>
-        
-                <!-- textarea -->
-                <div class="form-group">
-                  <label>Textarea</label>
-                  <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
-                </div>
-                <div class="form-group">
-                  <label>Textarea Disabled</label>
-                  <textarea class="form-control" rows="3" placeholder="Enter ..." disabled></textarea>
-                </div>
-        
-                <!-- input states -->
-                <div class="form-group has-success">
-                  <label class="control-label" for="inputSuccess"><i class="fa fa-check"></i> Input with success</label>
-                  <input type="text" class="form-control" id="inputSuccess" placeholder="Enter ...">
-                  <span class="help-block">Help block with success</span>
-                </div>
-                <div class="form-group has-warning">
-                  <label class="control-label" for="inputWarning"><i class="fa fa-bell-o"></i> Input with
-                    warning</label>
-                  <input type="text" class="form-control" id="inputWarning" placeholder="Enter ...">
-                  <span class="help-block">Help block with warning</span>
-                </div>
-                <div class="form-group has-error">
-                  <label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> Input with
-                    error</label>
-                  <input type="text" class="form-control" id="inputError" placeholder="Enter ...">
-                  <span class="help-block">Help block with error</span>
-                </div>
-        
-                <!-- checkbox -->
-                <div class="form-group">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox">
-                      Checkbox 1
-                    </label>
-                  </div>
-        
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox">
-                      Checkbox 2
-                    </label>
-                  </div>
-        
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" disabled>
-                      Checkbox disabled
-                    </label>
-                  </div>
-                </div>
-        
-                <!-- radio -->
-                <div class="form-group">
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                      Option one is this and that&mdash;be sure to include why it's great
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                      Option two can be something else and selecting it will deselect option one
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
-                      Option three is disabled
-                    </label>
-                  </div>
-                </div>
-        
-                <!-- select -->
-                <div class="form-group">
-                  <label>Select</label>
-                  <select class="form-control">
-                    <option>option 1</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Select Disabled</label>
-                  <select class="form-control" disabled>
-                    <option>option 1</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                  </select>
-                </div>
-        
-                <!-- Select multiple-->
-                <div class="form-group">
-                  <label>Select Multiple</label>
-                  <select multiple class="form-control">
-                    <option>option 1</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Select Multiple Disabled</label>
-                  <select multiple class="form-control" disabled>
-                    <option>option 1</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                  </select>
-                </div>
-        
-              </form>
-            </div>
-            <!-- /.box-body -->
-        </div>
-    </div>
-</div>
+
+
+  {{-- staff --}}
+  <!--Class = has-success, has-error!-->
+  <div class="form-group">
+
+
+
+    <label>Staff</label>
+    <select class="form-control" name="staff">
+
+      <?php
+        foreach ($staff as $s) {
+            echo('<option value='.$s->staffId.'>'.$s->name.'</option>');
+        }    
+      ?>
+
+    </select>
+  </div>
+
+  <div class="form-group">
+
+
+
+    <label>Role</label>
+    <select class="form-control" name="role">
+
+      <?php
+        foreach ($role as $r) {
+            echo('<option value='.$r->roleId.'>'.$r->role.'</option>');
+        }    
+      ?>
+
+    </select>
+  </div>
+
+  <?php
+    $usernameError=($errors->has('username'))?'has-error':'';
+  ?>
+
+  {{-- username --}}
+  <div class="form-group {{$usernameError}}">
+    <label class="control-label" for="inputSuccess">Username</label>
+    <input type="text" class="form-control" name="username" placeholder="Username" value="{{old('username')}}" />
+    <span class="help-block"></span>
+  </div>
+
+  <?php
+      $passwordError=($errors->has('password'))?'has-error':'';
+  ?>
+  {{-- password --}}
+  <div class="form-group{{ $passwordError}}">
+    <label>Password</label>
+    <input type="password" class="form-control" name="password" placeholder="Password" />
+    <span class="help-block"></span>
+  </div>
+
+  <?php
+      $confirmError=($errors->has('confirm'))?'has-error':'';
+  ?>
+  {{-- confirm --}}
+  <div class="form-group {{$confirmError}}">
+    <label>Confirm Password</label>
+
+    <input type="password" class="form-control" name="confirm" placeholder="Confirm Password" />
+    <span class="help-block"></span>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <input type="submit" class="btn btn-primary" />
+
+
+
+</form>
 
 
 @endsection

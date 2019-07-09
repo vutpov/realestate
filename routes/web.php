@@ -22,15 +22,19 @@ Route::get('/', function () {
 
 // Route::post('/system','admin\LoginController@store');
 
-Route::prefix('system')->group(function () {
+Route::get('system', 'auth\LoginController@Index')->name("login");
 
+Route::group(['prefix' => 'system', 'middleware' => 'web'], function () {
     //Create Company
-    Route::get('', 'admin\LoginController@Index')->name("system");
-    Route::post('create-step2', 'admin\LoginController@postCreateStep2')->name("step2");
-    Route::get('create-step2', 'admin\LoginController@CreateStep2');
-    Route::post('', 'admin\LoginController@store');
+
+    Route::post('create-step2', 'auth\LoginController@postCreateStep2')->name("step2");
+    Route::get('create-step2', 'auth\LoginController@CreateStep2');
+    Route::post('', 'auth\LoginController@store');
 
 
+    //Login 
+    Route::post('login', 'auth\LoginController@login');
+    Route::get('logout', 'auth\LoginController@logout');
 
     //Dashboard
     Route::get('dashboard', 'admin\DashboardController@index');
@@ -41,5 +45,7 @@ Route::prefix('system')->group(function () {
     Route::post('storeStaff', 'admin\StaffController@store');
 
     //User
+    Route::get('user', 'admin\UserController@index');
     Route::get('createUser', 'admin\UserController@create');
+    Route::POST('storeUser', 'admin\UserController@store');
 });
