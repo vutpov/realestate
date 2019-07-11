@@ -75,8 +75,7 @@ class StaffController extends Controller
 
         $path = null;
         if ($request->file('profile') != null) {
-            $path = $request->file('profile')->store('public/profile');
-            $path = str_replace("public", "storage", $path);
+            $path = $request->file('profile')->store('profile');
         }
 
 

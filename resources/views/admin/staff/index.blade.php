@@ -40,7 +40,7 @@
             <td>{{$s->address}}</td>
             <td>{{$s->phone}}</td>
             <td>{{$s->email}}</td>
-            <td><img src="{{url('')}}/{{$s->profile}}" alt="" class="img-fluid" width="100" height="100"></td>
+            <td><img src="{{url('storage',$s->profile)}}" alt="" class="img-fluid" width="100" height="100"></td>
             <td>Edit</td>
         </tr>
         @endforeach

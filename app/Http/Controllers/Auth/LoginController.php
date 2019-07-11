@@ -153,7 +153,6 @@ class LoginController extends Controller
             $staff = $staff[0];
 
             return redirect()->intended('/system/dashboard')->with('staff', $staff);
-            // return View('admin.dashboard.index');
         } else {
             return redirect()->back()->with('msg', 'Your username or password incorrect');
         }

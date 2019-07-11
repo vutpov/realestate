@@ -22,7 +22,7 @@ class CreateStaffsTable extends Migration
             $table->string('phone', 30);
             $table->string('email', 30)->unique();
             $table->string('profile')->nullable();
-
+            $table->string('status')->default(1);
             $table->timestamps();
 
             $table->unsignedSmallInteger('positionId');
