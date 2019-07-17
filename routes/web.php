@@ -11,18 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('front.index');
+
+
+Route::group(['prefix' => ''], function () {
+    Route::get('', 'front\FrontController@Home');
+    Route::get('/contact-us', 'front\FrontController@contact');
+    Route::get('/about-us', 'front\FrontController@about');
+    Route::get('/explore', 'front\FrontController@search');
+    Route::get('/show-result', 'front\FrontController@showResult');
 });
-Route::get('/index', function () {
-    return view('front.index');
-});
-Route::get('/about', function () {
-    return view('front.about');
-});
-Route::get('/contact', function () {
-    return view('front.contact');
-});
+
 
 
 // Route::get('/system','admin\LoginController@Index')->name("system");

@@ -1,39 +1,48 @@
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{url('front/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url('front/css/mdb.min.css')}}">
-    <link rel="stylesheet" href="{{url('front/css/front.css')}}">
-    <script src="https://kit.fontawesome.com/6051c9b353.js"></script>
-    <style>
-      .top-nav-collapse {
-        @yield('nav-collapse')
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="{{url('front/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{url('front/css/mdb.min.css')}}">
+  <link rel="stylesheet" href="{{url('front/css/front.css')}}">
+  <script src="https://kit.fontawesome.com/6051c9b353.js"></script>
+  <style>
+    .top-nav-collapse {
+      @yield('nav-collapse')
+    }
+
+    @media only screen and (max-width: 768px) {
+      .navbar {
+        @yield('screen-resize')
       }
-      @media only screen and (max-width: 768px) {
-        .navbar {
-          @yield('screen-resize')
-        }
-      }
-    </style>
+    }
+  </style>
 </head>
+
 <body>
   <nav class="navbar navbar-expand-lg @yield('navbar') fixed-top">
-    <a class="navbar-brand" href="#">
-        @yield('logo')
-        <p class="d-inline">SO1.7 Company</p>
+    <a class="navbar-brand" href="/">
+      @yield('logo')
+      <p class="d-inline">SO1.7 Company</p>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+      aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse ml-5" id="basicExampleNav">
-        <div class="navbar-nav">
-          <a style="font-size:1.3rem; margin-left:3.5rem;" class="nav-item nav-link @yield('home')" href="/">Home</a>
-          <a style="font-size:1.3rem; margin-left:3.5rem;@yield('about')" class="nav-item nav-link" href="/about">About Us</a>
-          <a style="font-size:1.3rem; margin-left:3.5rem;@yield('contact')" class="nav-item nav-link" href="/contact">Contact Us</a>
-        </div>
+      <div class="navbar-nav">
+        <a style="font-size:1.3rem; margin-left:3.5rem;" class="nav-item nav-link @yield('home')" href="/">Home</a>
+        <a style="font-size:1.3rem; margin-left:3.5rem;@yield('about')" class="nav-item nav-link" href="/about-us">About
+          Us</a>
+        <a style="font-size:1.3rem; margin-left:3.5rem;@yield('contact')" class="nav-item nav-link"
+          href="/contact-us">Contact Us</a>
+
+        <a style="font-size:1.3rem; margin-left:3.5rem;@yield('search')" class="nav-item nav-link"
+          href="/explore">Explore</a>
+      </div>
     </div>
   </nav>
 
@@ -43,32 +52,33 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-3 offset-md-1">
-            <img src="{{url('front/img/logo-white.png')}}" width="100" alt="">
+          <img src="{{url('front/img/logo-white.png')}}" width="100" alt="">
           <h5 class="d-inline font-weight-bold text-uppercase">SO1.7</h5>
-          <p class="mt-4">Our Company can find you a great places such as offices, houses, apartments, land either for sale or rent.</p>
+          <p class="mt-4">Our Company can find you a great places such as offices, houses, apartments, land either for
+            sale or rent.</p>
         </div>
         <hr class="clearfix w-100 d-md-none">
         <div class="col-md-2 offset-md-1">
-          
+
         </div>
         <hr class="clearfix w-100 d-md-none">
         <div class="col-md-3">
-            <h5 class="font-weight-bold text-uppercase mb-4">Follow Us on</h5>
-            <a href="https:/www.facebook.com">
-                <i style="font-size:2em" class="fab fa-facebook-square"></i>
-            </a>
-            <a href="https:/www.twitter.com" class="pl-2">
-                <i style="font-size:2em" class="fab fa-twitter-square"></i>
-            </a>
-            <a href="https:/www.instagram.com" class="pl-2">
-                <i style="font-size:2em" class="fab fa-instagram"></i>
-            </a>
-            <a href="https:/www.linkedin.com" class="pl-2">
-                <i style="font-size:2em" class="fab fa-linkedin"></i>
-            </a>
-            <a href="https:/www.pinterest.com" class="pl-2">
-                <i style="font-size:2em" class="fab fa-pinterest-square"></i>
-            </a>
+          <h5 class="font-weight-bold text-uppercase mb-4">Follow Us on</h5>
+          <a href="https:/www.facebook.com">
+            <i style="font-size:2em" class="fab fa-facebook-square"></i>
+          </a>
+          <a href="https:/www.twitter.com" class="pl-2">
+            <i style="font-size:2em" class="fab fa-twitter-square"></i>
+          </a>
+          <a href="https:/www.instagram.com" class="pl-2">
+            <i style="font-size:2em" class="fab fa-instagram"></i>
+          </a>
+          <a href="https:/www.linkedin.com" class="pl-2">
+            <i style="font-size:2em" class="fab fa-linkedin"></i>
+          </a>
+          <a href="https:/www.pinterest.com" class="pl-2">
+            <i style="font-size:2em" class="fab fa-pinterest-square"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -87,6 +97,7 @@
     $('.carousel').carousel({
         interval: 2500
     })
-</script>
+  </script>
 </body>
+
 </html>
