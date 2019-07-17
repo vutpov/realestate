@@ -12,8 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('front.index');
 });
+Route::get('/index', function () {
+    return view('front.index');
+});
+Route::get('/about', function () {
+    return view('front.about');
+});
+Route::get('/contact', function () {
+    return view('front.contact');
+});
+
 
 // Route::get('/system','admin\LoginController@Index')->name("system");
 
