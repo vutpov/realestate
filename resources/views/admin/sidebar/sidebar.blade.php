@@ -63,14 +63,15 @@
       </li>
 
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Payment</span>
+        <a href="#"><i class="fas fa-dollar-sign"></i><span>Payment</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#">Add New Payment</a></li>
-          <li><a href="#">View All Payment</a></li>
+          <li><a href="/system/createPaymentBook">Add New Payment(Book)</a></li>
+          <li><a href="/system/createPaymentInstallment">Add New Payment(Installment)</a></li>
+          <li><a href="/system/payment">View All Payment</a></li>
         </ul>
       </li>
 
@@ -90,14 +91,17 @@
 
 
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Partner</span>
+        <a href="#"><i class="fas fa-handshake"></i><span>Partner</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#">Add New Partner</a></li>
-          <li><a href="#">View All Partners</a></li>
+          <li><a href="/system/createPartner">Add New Partner</a></li>
+          <li><a href="/system/partner">View All Partners</a></li>
+
+          <li><a href="/system/createPartnerType">Add New Partner Type</a></li>
+          <li><a href="/system/partnerType">View All Partner Types</a></li>
         </ul>
       </li>
 

@@ -1,26 +1,17 @@
 @extends('admin.master')
 
-@section('col','col-md-12')
+@section('col','col-md-6')
 
-@section('page-header','View All Agency')
+@section('page-header','View All Agency Type')
 
 @section('content')
-
 
 <table class="table table-hover dataTable">
 
     <thead>
         <tr>
-
             <th>#</th>
-            <th>Name</th>
             <th>Type</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Email</th>
-            <th>Commission</th>
-            <th>Paid</th>
-            <th>Due</th>
             <th>Action</th>
         </tr>
     </thead>

@@ -70,5 +70,24 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Agency
     Route::get('agency', 'admin\AgencyController@index');
     Route::get('createAgency', 'admin\AgencyController@create');
-    
+
+    //AgencyType
+    Route::get('agencyType', 'admin\AgencyTypeController@index');
+    Route::get('createAgencyType', 'admin\AgencyTypeController@create');
+
+
+
+    //Partner
+    Route::get('partner', 'admin\PartnerController@index');
+    Route::get('createPartner', 'admin\PartnerController@create');
+
+    //PartnerType
+    Route::get('partnerType', 'admin\PartnerTypeController@index');
+    Route::get('createPartnerType', 'admin\PartnerTypeController@create');
+
+
+    //Payment
+    Route::get('payment', 'admin\PaymentController@index');
+    Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
+    Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
 });

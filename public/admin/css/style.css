@@ -5,4 +5,7 @@ table svg[class*="fa"] {
 svg[class*="fa"] {
   margin-right: 5px; }
 
+.form-group.w-50 {
+  width: 50%; }
+
 /*end of datatable*/

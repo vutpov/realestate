@@ -2,10 +2,9 @@
 
 @section('col','col-md-12')
 
-@section('page-header','View All Agency')
+@section('page-header','View All Partners')
 
 @section('content')
-
 
 <table class="table table-hover dataTable">
 
@@ -15,12 +14,10 @@
             <th>#</th>
             <th>Name</th>
             <th>Type</th>
-            <th>Phone</th>
+            <th>Date Created</th>
             <th>Address</th>
             <th>Email</th>
-            <th>Commission</th>
-            <th>Paid</th>
-            <th>Due</th>
+            <th>Phone</th>
             <th>Action</th>
         </tr>
     </thead>

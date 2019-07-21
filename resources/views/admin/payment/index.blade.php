@@ -2,25 +2,23 @@
 
 @section('col','col-md-12')
 
-@section('page-header','View All Agency')
+@section('page-header','View All Payment')
 
 @section('content')
-
 
 <table class="table table-hover dataTable">
 
     <thead>
         <tr>
-
             <th>#</th>
-            <th>Name</th>
+            <th>Customer</th>
+            <th>Staff</th>
+            <th>Date</th>
             <th>Type</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Email</th>
-            <th>Commission</th>
-            <th>Paid</th>
-            <th>Due</th>
+            <th>Discount</th>
+            <th>SubTotal</th>
+            <th>Total</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
