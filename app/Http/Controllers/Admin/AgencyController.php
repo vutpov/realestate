@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use App\User;
 
-
-
-class UserController extends Controller
+class AgencyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,15 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = DB::table('users')
-            ->join('staffs', 'users.staffId', '=', 'staffs.staffId')
-            ->join('roles', 'users.roleId', '=', 'roles.roleId')
-            ->select('username', 'staffs.name', 'role', 'users.status')
-            ->get();
-
-        $data = array('user' => $user);
-
-        return View('Admin.user.index', $data);
+        return View('admin.agency.index');
     }
 
     /**
@@ -38,15 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $staff  = DB::select(DB::raw("SELECT staffId,name from staffs where staffId not in(select staffId from users)"));
-
-        $role = DB::table('roles')->select('roleId', 'role')->get();
-
-        $data = array(
-            'staff' => $staff,
-            'role' => $role
-        );
-        return View('admin.user.create', $data);
+        return View('admin.agency.create');
     }
 
     /**
@@ -57,23 +35,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->validate($request, [
-            'username' => 'min:5|max:20',
-            'password' => 'min:5',
-            'confirm' => 'same:password',
-            'staff' => 'required',
-        ]);
-
-
-        $user = new User;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->roleId = $request->role;
-        $user->staffId = $request->staff;
-        $user->save();
-
-        return redirect('/system/user');
+        //
     }
 
     /**
@@ -83,7 +45,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { }
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.

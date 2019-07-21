@@ -26,7 +26,7 @@
   <nav class="navbar navbar-expand-lg @yield('navbar') fixed-top">
     <a class="navbar-brand" href="/">
       @yield('logo')
-      <p class="d-inline">SO1.7 Company</p>
+      <p class="d-inline"></p>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
       aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,7 @@
       <div class="row">
         <div class="col-md-3 offset-md-1">
           <img src="{{url('front/img/logo-white.png')}}" width="100" alt="">
-          <h5 class="d-inline font-weight-bold text-uppercase">SO1.7</h5>
+          <h5 class="d-inline font-weight-bold text-uppercase">Kool Property</h5>
           <p class="mt-4">Our Company can find you a great places such as offices, houses, apartments, land either for
             sale or rent.</p>
         </div>
@@ -84,7 +84,7 @@
     </div>
     <div class="footer-copyright text-center">
       <div class="container-fluid py-3">
-        © 2019 Copyright: <a href="#"> SO1.7 Company </a>
+        © 2019 Copyright: <a href="#"> Group Project By SO1.7 </a>
       </div>
     </div>
   </footer>

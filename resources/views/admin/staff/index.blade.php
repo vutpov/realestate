@@ -30,8 +30,12 @@
 
     <tbody>
 
+
+
         @foreach ($staff as $s)
         <tr>
+
+
             <td>{{$loop->iteration}}</td>
             <td>{{$s->Name}}</td>
             <td>{{$s->position}}</td>
@@ -40,7 +44,16 @@
             <td>{{$s->address}}</td>
             <td>{{$s->phone}}</td>
             <td>{{$s->email}}</td>
-            <td><img src="{{url('storage',$s->profile)}}" alt="" class="img-fluid" width="100" height="100"></td>
+
+            <td><img src="{{url('/storage')}}/{{$s->profile}}" alt="" class="img-fluid" width="100" height="100">
+
+
+            </td>
+
+
+
+
+            </td>
             <td>Edit</td>
         </tr>
         @endforeach

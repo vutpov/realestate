@@ -4,11 +4,14 @@
 @section('screen-resize','background-color:white;')
 @section('search','color:#1e4eb0;')
 @section('logo')
-<img src="{{url('front/img/logo.png')}}" width="140" height="50" alt="">
+<img src="{{url('front/img/logo.png')}}" width="100" alt="">
 @endsection
 
 @section('content')
 <!--Body-->
+
+
+
 <div class="container text-white position-relative mt-n5 mb-5" style="margin-top:110px !important">
 
     <!--Block Top of Body-->
@@ -65,7 +68,7 @@
                 <input type="text" class="form-control">
             </div>
             <div class="form-group">
-                <a class="btn btn-primary form-control" role="button" aria-pressed="true" href="search.html">
+                <a class="btn btn-primary form-control" role="button" aria-pressed="true" href="/show-result">
                     <i class="fas fa-search"></i>
                     &nbsp;Search
                 </a>
@@ -77,342 +80,208 @@
 
 
     <!--Data Middle of Body-->
-    <div class="row mt-3 bg-light rounded">
+    <div class="row bg-light rounded p-3 mt-3">
         <div class="container">
 
-            <!--Find by Category-->
-            <div class="card-header bg-light text-dark">
-                <strong>Find by category</strong>
-                <a href="#" class="text-dark text-decoration-none float-right">
-                    Show All
-                </a>
-            </div>
-            <!--Find by Category End-->
+            <!--pagination-->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!--Pagination End-->
 
 
-            <!--List Category-->
-            <div class="card-body">
-                <div class="card-deck">
+            <!--Card Data include Advertisement-->
+            <div class="row mr-3">
+                <!--Card Data-->
+                <div class="col-lg-9 text-muted">
 
-                    <!--Category One-->
-                    <div class="card text-dark bg-info shadow">
-                        <div class="card-header">House</div>
-                        <img src="front/img/house.jpg" height="" alt="" class="card-img-top">
-                        <div class="btn-group position-absolute" style="bottom:0;width:100%">
-                            <a href="#" class="btn btn-secondary rounded-0" style="width:50%">Buy</a>
-                            <a href="#" class="btn btn-secondary rounded-0" style="width:50%">Rent</a>
+                    <!--First Card-->
+                    <div class="card mt-3">
+                        <!--Head Data-->
+                        <div class="card-header">
+                            Land For Sale
                         </div>
-                    </div>
-                    <!--Category One End-->
+                        <!--Head Data End-->
 
-                    <!--Category One-->
-                    <div class="card text-dark bg-info shadow">
-                        <div class="card-header">BUILDING</div>
-                        <img src="/front/img/building.jpg" height="" alt="" class="card-img-top">
-                        <div class="btn-group position-absolute" style="bottom:0;width:100%">
-                            <a href="#" class="btn btn-secondary rounded-0" style="width:50%">Buy</a>
-                            <a href="#" class="btn btn-secondary rounded-0" style="width:50%">Rent</a>
-                        </div>
-                    </div>
-                    <!--Category One End-->
+                        <!--Body Data-->
+                        <div class="card-body  p-0 position-relative">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Images -->
+                                    <img src="front/img/house.jpg" class="img-fluid" style="z-index:3" alt="...">
+                                </div>
+                                <div class="col-md-8 ">
+                                    <!--description-->
+                                    <div class="position-relative ">
+                                        <div id="listing-cat-price" class="p-1 mt-2">
+                                            <h5 class="p-0">$ 700/<sub>MONTHLY</sub></h5>
+                                        </div>
+                                        <div id="listing-size " class="p-1">
+                                            <span class="text-muted"><i class="fas fa-vector-square"></i> 53</span>
+                                        </div>
 
-                    <!--Category One-->
-                    <div class="card text-dark bg-info shadow">
-                        <div class="card-header">LAND</div>
-                        <img src="/front/img/building.jpg" height="" alt="" class="card-img-top">
-                        <div class="btn-group position-absolute" style="bottom:0;width:100%">
-                            <a href="#" class="btn btn-secondary rounded-0" style="width:50%">Buy</a>
-                            <a href="#" class="btn btn-secondary rounded-0" style="width:50%">Rent</a>
-                        </div>
-                    </div>
-                    <!--Category One End-->
+                                        <div class="p-1">
+                                            <span class="text-muted"><i class="fas fa-bed"></i> 1 </span>
+                                            <span class="text-muted"><i class="fas fa-shower"></i> 1 </span>
+                                        </div>
 
-                </div>
-            </div>
-            <!--List Category End-->
+                                        <div id="listing-location" class="p-1">
+                                            <span class="text-muted text-uppercase"><i
+                                                    class="fas fa-map-marker-alt"></i> Doun Penh phnom penh</span>
+                                        </div>
 
-
-            <!--Recently-->
-            <div class="row p-3">
-                <!-- Grid -->
-                <div class="col-md-12 mt-5 mb-3">
-                    <h1 class="text-dark">Our Recently post</h1>
-                </div>
-
-                <!--Card in Grid-->
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img" style="cursor: pointer;">
-                        <div style="overflow:hidden">
-                            <!-- Edit -->
-                            <div id="loading1629" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
                             </div>
-                            <img id="lazy1629"
-                                src="http://franceaj-immo.com/uploaded/thumb_30124560_938010383030446_1472773985727365996_n (1)_5d24574fe6922.jpg"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- Edit End-->
                         </div>
+                        <!--body data end-->
 
-                        <div class="card-img-overlay">
-                            <span class="badge badge-yellow">$ 105000 SALE</span>
+
+                        <!--foot data-->
+                        <div class="card-footer p-1">
+                            <div class="float-left text-muted small">
+                                <div class="btn btn-sm text-muted">
+                                    <i class="far fa-clock"></i> 1 month ago
+                                    <i class="far fa-eye"></i> 172 views
+                                </div>
+                            </div>
+                            <div class="float-right">
+                                <button aria-hidden="true" data-toggle="modal" data-backdrop="static"
+                                    data-target="#call_card" class="btn btn-rouned-0 btn-sm btn-outline-success"><i
+                                        class="fas fa-phone"></i> Call</button>
+                                <button id="single_btn_message_id1565" aria-hidden="true" data-toggle="modal"
+                                    data-backdrop="static" data-target="#email_card"
+                                    class="btn btn-rouned-0 btn-sm  btn-outline-success"><i class="fas fa-envelope"></i>
+                                    Email</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!--Foot Data End-->
+                    </div>
+                    <!--First Card-->
+
+
+                    <!--Other card-->
+                    <div class="card mt-3">
+                        <!--Head Data-->
+                        <div class="card-header">
+                            Land For Sale
+                        </div>
+                        <!--Head Data End-->
+
+                        <!--Body Data-->
+                        <div class="card-body  p-0 position-relative">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <!-- Images -->
+                                    <img src="front/img/house.jpg" class="img-fluid" style="z-index:3" alt="...">
+                                </div>
+                                <div class="col-md-8 ">
+                                    <!--description-->
+                                    <div class="position-relative ">
+                                        <div id="listing-cat-price" class="p-1 mt-2">
+                                            <h5 class="p-0">$ 700/<sub>MONTHLY</sub></h5>
+                                        </div>
+                                        <div id="listing-size " class="p-1">
+                                            <span class="text-muted"><i class="fas fa-vector-square"></i> 53</span>
+                                        </div>
+
+                                        <div class="p-1">
+                                            <span class="text-muted"><i class="fas fa-bed"></i> 1 </span>
+                                            <span class="text-muted"><i class="fas fa-shower"></i> 1 </span>
+                                        </div>
+
+                                        <div id="listing-location" class="p-1">
+                                            <span class="text-muted text-uppercase"><i
+                                                    class="fas fa-map-marker-alt"></i> Doun Penh phnom penh</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--body data end-->
+
+
+                        <!--foot data-->
+                        <div class="card-footer p-1">
+                            <div class="float-left text-muted small">
+                                <div class="btn btn-sm text-muted">
+                                    <i class="far fa-clock"></i> 1 month ago
+                                    <i class="far fa-eye"></i> 172 views
+                                </div>
+                            </div>
+                            <div class="float-right">
+                                <button aria-hidden="true" data-toggle="modal" data-backdrop="static"
+                                    data-target="#call_card" class="btn btn-rouned-0 btn-sm btn-outline-success"><i
+                                        class="fas fa-phone"></i> Call</button>
+                                <button id="single_btn_message_id1565" aria-hidden="true" data-toggle="modal"
+                                    data-backdrop="static" data-target="#email_card"
+                                    class="btn btn-rouned-0 btn-sm  btn-outline-success"><i class="fas fa-envelope"></i>
+                                    Email</button>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!--Foot Data End-->
+                    </div>
+                    <!--Other card end-->
+                </div>
+                <!--Card Data End-->
+
+
+                <!--Advertisement-->
+                <div class="col-lg-3 text-muted">
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <p class="display-5 mb-0 text-uppercase">Advertisement</p>
                         </div>
                         <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">Condo for Sale</span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 1 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 1 </span>
-                                <span class="badge badge-light">60</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Sen Sok phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 4
-                                    days ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    36</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/condo/20724" class="stretched-link"></a>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
                         </div>
                     </div>
                 </div>
-                <!--Card in Grid End-->
-
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img" style="cursor: pointer;">
-                        <div style="overflow:hidden">
-                            <!-- edit -->
-                            <div id="loading1628" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <img id="lazy1628"
-                                src="http://franceaj-immo.com/uploaded/thumb_photo_2019-06-26_15-06-54_5d244c397bea5.jpg"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- edit -->
-                        </div>
-
-                        <div class="card-img-overlay">
-                            <span class="badge badge-yellow">$ 1800 SALE</span>
-                        </div>
-                        <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">Condo for Sale</span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 2 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 2 </span>
-                                <span class="badge badge-light">99.90</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Sen Sok phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 4
-                                    days ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    44</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/condo/42151" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img" style="cursor: pointer;">
-                        <div style="overflow:hidden">
-                            <!-- edit -->
-                            <div id="loading1627" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <img id="lazy1627" src="http://franceaj-immo.com/uploaded/thumb_land_5d1eee8d7b5fa.png"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- edit -->
-                        </div>
-
-                        <div class="card-img-overlay">
-                            <span class="badge badge-yellow">$ 2700 SALE</span>
-                        </div>
-                        <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">Land for sale</span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 0 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 0 </span>
-                                <span class="badge badge-light">16m x 30m</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Tuol Kouk phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 1
-                                    week ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    40</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/land/32371" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img">
-                        <div style="overflow:hidden">
-                            <!-- edit -->
-                            <div id="loading1626" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <img id="lazy1626" src="http://franceaj-immo.com/uploaded/thumb_3_5d1c1c956a327.jpeg"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- edit -->
-                        </div>
-
-                        <div class="card-img-overlay">
-                            <span class="badge badge-yellow">$ 800000 SALE</span>
-                        </div>
-                        <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">House For Sale</span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 10 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 4 </span>
-                                <span class="badge badge-light">234</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Mean Chey phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 1
-                                    week ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    40</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/house/33175" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img" style="cursor: pointer;">
-                        <div style="overflow:hidden">
-                            <!-- edit -->
-                            <div id="loading1625" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <img id="lazy1625"
-                                src="http://franceaj-immo.com/uploaded/thumb_WhatsApp Image 2019-06-28 at 2.48.22 PM_5d15c321c9e1a.jpeg"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- edit -->
-                        </div>
-
-                        <div class="card-img-overlay">
-                            <span class="badge badge-lg badge-yellow">$ 5000/<sub>MONTHLY</sub></span>
-                        </div>
-                        <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">House For Rent </span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 8 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 8 </span>
-                                <span class="badge badge-light">11x16m</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Ruessei Kaev phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 2
-                                    weeks ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    25</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/house/24355" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img" style="cursor: pointer;">
-                        <div style="overflow:hidden">
-                            <!-- edit -->
-                            <div id="loading1623" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <img id="lazy1623" src="http://franceaj-immo.com/uploaded/thumb_33_5d159abf47879.jpg"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- edit -->
-                        </div>
-
-                        <div class="card-img-overlay">
-                            <span class="badge badge-lg badge-yellow">$ 6000/<sub>MONTHLY</sub></span>
-                        </div>
-                        <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">House For Rent </span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 0 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 0 </span>
-                                <span class="badge badge-light">12x18</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Chamkar Mon phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 2
-                                    weeks ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    45</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/house/65789" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img">
-                        <div style="overflow:hidden">
-                            <!-- edit -->
-                            <div id="loading1622" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <img id="lazy1622" src="http://franceaj-immo.com/uploaded/thumb_44_5d159271819da.jpeg"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- edit -->
-                        </div>
-
-                        <div class="card-img-overlay">
-                            <span class="badge badge-lg badge-yellow">$ 3600/<sub>MONTHLY</sub></span>
-                        </div>
-                        <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">House For Rent </span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 10 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 10 </span>
-                                <span class="badge badge-light">14x10m</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Chamkar Mon phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 2
-                                    weeks ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    39</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/house/36863" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <div class="card border-0 bg-light scale_img">
-                        <div style="overflow:hidden">
-                            <!-- edit -->
-                            <div id="loading1621" class="spinner-grow position-absolute"
-                                style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <img id="lazy1621" src="http://franceaj-immo.com/uploaded/thumb_11_5d14829a9c0ac.jpg"
-                                height="150px" class="card-img-top rounded-0" style="z-index:3" alt="...">
-                            <!-- edit -->
-                        </div>
-
-                        <div class="card-img-overlay">
-                            <span class="badge badge-yellow">$ 750000 SALE</span>
-                            <span class="badge badge-lg badge-yellow">$ 1500/<sub>MONTHLY</sub></span>
-                        </div>
-                        <div class="card-body">
-                            <span class="text-uppercase font-weight-bold">House For Rent </span>
-                            <div>
-                                <span class="badge badge-light"><i class="fas fa-bed"></i> 17 </span>
-                                <span class="badge badge-light"><i class="fas fa-shower"></i> 17 </span>
-                                <span class="badge badge-light">8x22m</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i
-                                        class="fas fa-map-marker-alt"></i> Mean Chey phnom penh</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-clock"></i> 2
-                                    weeks ago</span>
-                                <span class="text-muted badge badge-light text-uppercase"><i class="fas fa-eye"></i>
-                                    33</span>
-                            </div>
-                            <a href="http://franceaj-immo.com/v/house/68360" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
+                <!--Advertisement End-->
 
             </div>
-            <!--Recently End-->
+            <!--Card Data include Advertisement End-->
+
+            <!--Pagination B-->
+            <div class="pt3 mt-3">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!--Pagination B End-->
 
         </div>
     </div>

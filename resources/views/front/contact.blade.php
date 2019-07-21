@@ -4,7 +4,7 @@
 @section('screen-resize','background-color:white;')
 @section('contact','color:#1e4eb0;')
 @section('logo')
-<img src="{{url('front/img/logo.png')}}" width="140" height="50" alt="">
+<img src="{{url('front/img/logo.png')}}" width="100" alt="">
 @endsection
 @section('content')
 <section style="margin-top:80px; background-color: #FAFAFA;" class="text-center">

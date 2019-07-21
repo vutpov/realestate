@@ -102,19 +102,22 @@
       </li>
 
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Agency</span>
+        <a href="#"><i class="fa fa-user-tie"></i><span>Agency</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#">Add New Agency</a></li>
-          <li><a href="#">View All Agencies</a></li>
+          <li><a href="/system/createAgency">Add New Agency</a></li>
+          <li><a href="/system/agency">View All Agencies</a></li>
+
+          <li><a href="/system/createAgencyType">Add New Agency Type</a></li>
+          <li><a href="/system/agencyType">View All Agency Types</a></li>
         </ul>
       </li>
 
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Staff</span>
+        <a href="#"><i class="fa fa-users"></i> <span>Staff</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>

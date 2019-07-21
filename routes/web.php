@@ -59,8 +59,16 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('createStaff', 'admin\StaffController@create');
     Route::post('storeStaff', 'admin\StaffController@store');
 
+
     //User
     Route::get('user', 'admin\UserController@index');
     Route::get('createUser', 'admin\UserController@create');
     Route::POST('storeUser', 'admin\UserController@store');
+    Route::POST('editUser', 'admin\UserController@edit');
+
+
+    //Agency
+    Route::get('agency', 'admin\AgencyController@index');
+    Route::get('createAgency', 'admin\AgencyController@create');
+    
 });

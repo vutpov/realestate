@@ -67,10 +67,8 @@ class StaffController extends Controller
             'date_of_birth' => 'required|date',
             'address' => 'required|min:5',
             'phone' => 'required|min:10',
-            'email' => 'required|min:12|unique:staffs'
-
-
-
+            'email' => 'required|min:12|unique:staffs',
+            'profile' => 'mimes:jpeg,png '
         ]);
 
         $path = null;

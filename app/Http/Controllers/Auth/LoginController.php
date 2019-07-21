@@ -60,19 +60,26 @@ class LoginController extends Controller
 
     public function postCreateStep2()
     {
+
+
         $company = request()->validate([
             'companyname' => 'required|min:3|max:50',
             'email' => ['required', 'unique:companies', 'min:12'],
             'tel' => 'required',
             'address' => 'required|min:5',
             'description' => 'required',
-
+            'logo' => 'required|mimes:jpeg,png'
         ]);
 
 
 
-        request()->session()->put('company', $company);
+        $logo = request()->file('logo')->store('logo');
 
+
+        $company['logo'] = $logo;
+
+
+        request()->session()->put('company', $company);
 
         return redirect('/system/create-step2');
     }

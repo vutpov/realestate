@@ -12,7 +12,6 @@
         <tr>
 
             <th>#</th>
-
             <th>Username</th>
             <th>Staff</th>
             <th>Role</th>
@@ -31,7 +30,8 @@
             <td>{{$u->name}}</td>
             <td>{{$u->role}}</td>
             <td>{{$u->status}}</td>
-            <td>Edit</td>
+            <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
+                <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
         </tr>
         @endforeach
 

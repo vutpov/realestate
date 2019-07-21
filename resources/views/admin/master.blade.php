@@ -39,6 +39,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <link rel="stylesheet" href="{{url('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{url('admin/css/all.min.css')}}">
+
+  <!-- Additional style -->
+  <link rel="stylesheet" href="{{url('admin/css/style.css')}}">
+
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <!--
@@ -394,6 +402,11 @@ desired effect
   <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+
+  <!-- Font Awesome -->
+  <script src="{{url('admin/js/all.min.js')}}"></script>
+
 </body>
 
 
