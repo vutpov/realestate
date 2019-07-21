@@ -39,26 +39,26 @@
       </li>
 
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Booking</span>
+        <a href="#"><i class="fas fa-bookmark"></i><span>Booking</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#">Add New Booking</a></li>
-          <li><a href="#">View All Booking</a></li>
+          <li><a href="/system/createBook">Add New Booking</a></li>
+          <li><a href="/system/book">View All Booking</a></li>
         </ul>
       </li>
 
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Contract</span>
+        <a href="#"><i class="fas fa-file-signature"></i><span>Contract</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#">Add New Contract</a></li>
-          <li><a href="#">View All Contracts</a></li>
+          <li><a href="/system/createContract">Add New Contract</a></li>
+          <li><a href="/system/contract">View All Contracts</a></li>
         </ul>
       </li>
 

@@ -90,4 +90,16 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('payment', 'admin\PaymentController@index');
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
+
+
+
+    //Contract
+    Route::get('contract', 'admin\ContractController@index');
+    Route::get('createContract', 'admin\ContractController@create');
+    Route::get('schedule', 'admin\ContractController@schedule');
+
+
+    //Book
+    Route::get('book', 'admin\BookController@index');
+    Route::get('createBook', 'admin\BookController@create');
 });

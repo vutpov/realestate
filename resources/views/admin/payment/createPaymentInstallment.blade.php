@@ -72,51 +72,58 @@
 
     <br>
 
-    {{-- schedule --}}
 
-    <div class="form-group">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>APay</th>
-                    <th>Prin.</th>
-                    <th>Int.</th>
-                    <th>OutPrin.</th>
-                    <th>Out.Debt</th>
-                    <th>Penalty</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-
-                {{-- @foreach ($user as $u)
-                <tr>
-                    <td>{{$loop->iteration}}</td>
-                <td>{{$u->username}}</td>
-                <td>{{$u->name}}</td>
-                <td>{{$u->role}}</td>
-                <td>{{$u->status}}</td>
-                <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
-                    <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
-                </tr>
-                @endforeach --}}
-
-
-            </tbody>
-        </table>
-    </div>
-
-
-
-
-    <input type="submit" class="btn btn-primary" />
 
 
 </form>
 
 
+@endsection
+
+@section('detail-header','Payment Detail')
+
+@section('detail')
+
+{{-- schedule --}}
+
+<div class="form-group">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>APay</th>
+                <th>Prin.</th>
+                <th>Int.</th>
+                <th>OutPrin.</th>
+                <th>Out.Debt</th>
+                <th>Penalty</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            {{-- @foreach ($user as $u)
+                        <tr>
+                            <td>{{$loop->iteration}}</td>
+            <td>{{$u->username}}</td>
+            <td>{{$u->name}}</td>
+            <td>{{$u->role}}</td>
+            <td>{{$u->status}}</td>
+            <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
+                <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
+            </tr>
+            @endforeach --}}
+
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<input type="submit" class="btn btn-primary" />
 @endsection

@@ -39,3 +39,5 @@
 
 
 @endsection
+
+@section('display-detail','display:none')

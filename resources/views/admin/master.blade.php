@@ -282,6 +282,34 @@ desired effect
         </div>
       </section>
       <!-- /.content -->
+
+
+
+      <div style="@yield('display-detail')">
+        <!-- Detail Header -->
+        <section class="content-header">
+          <h2>
+            @yield('detail-header')
+            <small>@yield('detail-desc')</small>
+          </h2>
+
+        </section>
+        <!-- Detail content -->
+        <section class="content container-fluid">
+          <div class="row">
+            <div class="@yield('col')">
+              <div class="box box-primary">
+                <div class="box-body">
+                  @yield('detail')
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- /.content -->
+      </div>
+
+
     </div>
     <!-- /.content-wrapper -->
 

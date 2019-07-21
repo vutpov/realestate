@@ -92,8 +92,7 @@
     {{-- address --}}
     <div class=" form-group {{$addressError}}">
         <label>Address</label>
-        <textarea class="form-control" rows="3" placeholder="Address" name="address"
-            >{{old('address')}}</textarea>
+        <textarea class="form-control" rows="3" placeholder="Address" name="address">{{old('address')}}</textarea>
     </div>
 
     <?php
@@ -135,3 +134,5 @@
 
 
 @endsection
+
+@section('display-detail','display:none')
