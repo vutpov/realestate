@@ -19,6 +19,7 @@ Route::group(['prefix' => ''], function () {
     Route::get('/about-us', 'front\FrontController@about');
     Route::get('/explore', 'front\FrontController@search');
     Route::get('/show-result', 'front\FrontController@showResult');
+    Route::get('/show-result/show-detail', 'front\FrontController@showDetail');
 });
 
 

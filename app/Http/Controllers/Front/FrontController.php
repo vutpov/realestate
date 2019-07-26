@@ -14,7 +14,7 @@ class FrontController extends Controller
 
     public function Home()
     {
-        dd(getLogo());
+        // dd(getLogo());
         return View('front.index');
     }
     public function Contact()
@@ -34,6 +34,11 @@ class FrontController extends Controller
     public function showResult()
     {
         return View('front.show');
+    }
+
+    public function showDetail()
+    {
+        return View('front.show-detail');
     }
 
     public function getLogo()

@@ -7,6 +7,7 @@
   <title>Document</title>
   <link rel="stylesheet" href="{{url('front/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{url('front/css/mdb.min.css')}}">
+  <link type="text/css" rel="stylesheet" href="{{url('front/css/lightslider.min.css')}}" />
   <link rel="stylesheet" href="{{url('front/css/front.css')}}">
   <script src="https://kit.fontawesome.com/6051c9b353.js"></script>
   <style>
@@ -93,11 +94,10 @@
   <script src="{{url('front/js/mdb.min.js')}}"></script>
   <script src="{{url('front/js/popper.min.js')}}"></script>
   <script src="{{url('front/js/bootstrap.min.js')}}"></script>
-  <script type="text/javascript">
-    $('.carousel').carousel({
-        interval: 2500
-    })
-  </script>
+  <script src="{{url('front/js/lightslider.min.js')}}"></script>
+  <script src="{{url('front/js/script.js')}}"></script>
+
+ 
 </body>
 
 </html>

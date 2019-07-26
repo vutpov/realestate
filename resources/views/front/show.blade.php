@@ -110,7 +110,7 @@
                 <div class="col-lg-9 text-muted">
 
                     <!--First Card-->
-                    <div class="card mt-3">
+                    <a href="/show-result/show-detail" class="card mt-3">
                         <!--Head Data-->
                         <div class="card-header">
                             Land For Sale
@@ -171,12 +171,12 @@
                             <div class="clearfix"></div>
                         </div>
                         <!--Foot Data End-->
-                    </div>
+                    </a>
                     <!--First Card-->
 
 
                     <!--Other card-->
-                    <div class="card mt-3">
+                    <a href="/show-result/show-detail" class="card mt-3">
                         <!--Head Data-->
                         <div class="card-header">
                             Land For Sale
@@ -237,7 +237,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <!--Foot Data End-->
-                    </div>
+                    </a>
                     <!--Other card end-->
                 </div>
                 <!--Card Data End-->
