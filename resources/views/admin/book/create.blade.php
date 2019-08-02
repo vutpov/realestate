@@ -1,6 +1,6 @@
 @extends('admin.master')
 
-@section('page-header','Create New Contract')
+@section('page-header','Create New Booking')
 
 
 @section('col','col-md-6')
@@ -135,6 +135,9 @@
 
 @endsection
 
+
+
+@section('col-detail','col-md-6')
 
 
 @section('detail-header','Book Detail')

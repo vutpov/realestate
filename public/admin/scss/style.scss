@@ -16,10 +16,14 @@ svg[class*="fa"] {
 
 /*end of datatable*/
 
-.form-group.w-50 {
+.w-50 {
     width: 50%;
 }
 
 .content-header h2 {
     font-size: 20px;
+}
+
+.content {
+    min-height: auto;
 }

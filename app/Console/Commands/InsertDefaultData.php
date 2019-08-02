@@ -38,6 +38,7 @@ class InsertDefaultData extends Command
      */
     public function handle()
     {
-        DB::unprepared(file_get_contents('database\custom_sql\data.sql'));
+        $sep = DIRECTORY_SEPARATOR;
+        DB::unprepared(file_get_contents('database' . $sep . 'custom_sql' . $sep . 'data.sql'));
     }
 }

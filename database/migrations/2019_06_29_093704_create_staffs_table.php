@@ -14,7 +14,7 @@ class CreateStaffsTable extends Migration
     public function up()
     {
         Schema::create('staffs', function (Blueprint $table) {
-            $table->bigIncrements('staffId');
+            $table->smallIncrements('staffId');
             $table->string('Name', 30);
             $table->string('gender', 6);
             $table->date('dob');

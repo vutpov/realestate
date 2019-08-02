@@ -23,10 +23,11 @@ class UserController extends Controller
         $user = DB::table('users')
             ->join('staffs', 'users.staffId', '=', 'staffs.staffId')
             ->join('roles', 'users.roleId', '=', 'roles.roleId')
-            ->select('username', 'staffs.name', 'role', 'users.status')
+            ->select('userId', 'username', 'staffs.name', 'role', 'users.status')
             ->get();
 
         $data = array('user' => $user);
+
 
         return View('Admin.user.index', $data);
     }
@@ -36,11 +37,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    static function getRole()
+    {
+        return DB::table('roles')->select('roleId', 'role')->get();
+    }
+
     public function create()
     {
         $staff  = DB::select(DB::raw("SELECT staffId,name from staffs where staffId not in(select staffId from users)"));
 
-        $role = DB::table('roles')->select('roleId', 'role')->get();
+        $role = $this::getRole();
 
         $data = array(
             'staff' => $staff,
@@ -93,7 +101,20 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $staff  = DB::select(DB::raw("SELECT staffId,name from staffs where staffId not in(select staffId from users where staffId not in($id))"));
+
+        $user = User::find($id);
+
+        $role = $this::getRole();
+
+        $data = array(
+            'user' => $user,
+            'staff' => $staff,
+            'role' => $role
+        );
+
+        return View('admin.user.create', $data);
     }
 
     /**

@@ -297,7 +297,7 @@ desired effect
         <!-- Detail content -->
         <section class="content container-fluid">
           <div class="row">
-            <div class="@yield('col')">
+            <div class="@yield('col-detail')">
               <div class="box box-primary">
                 <div class="box-body">
                   @yield('detail')

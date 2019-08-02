@@ -65,7 +65,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('user', 'admin\UserController@index');
     Route::get('createUser', 'admin\UserController@create');
     Route::POST('storeUser', 'admin\UserController@store');
-    Route::POST('editUser', 'admin\UserController@edit');
+    Route::GET('editUser/{id}', 'admin\UserController@edit');
 
 
     //Agency
@@ -103,4 +103,8 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Book
     Route::get('book', 'admin\BookController@index');
     Route::get('createBook', 'admin\BookController@create');
+
+    //Project
+    Route::get('project', 'admin\ProjectController@index');
+    Route::get('createProject', 'admin\ProjectController@create');
 });

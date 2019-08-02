@@ -106,6 +106,8 @@
 @endsection
 
 
+@section('col-detail','col-md-6')
+
 @section('detail-header','Contract Detail')
 
 

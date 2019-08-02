@@ -3,7 +3,7 @@
 @section('page-header','Create New Payment For Installment')
 
 
-@section('col','col-md-12')
+@section('col','col-md-6')
 @section('content')
 
 
@@ -21,7 +21,7 @@
 
 
     {{-- Contract Id --}}
-    <div class="form-group w-50">
+    <div class="form-group ">
         <label class="control-label" for="inputSuccess">Contract ID</label>
         <input type="text" class="form-control" name="contractId" placeholder="Contract ID"
             value="{{old('contractId')}}" />
@@ -30,7 +30,7 @@
 
 
     {{-- Cost --}}
-    <div class="form-group w-50">
+    <div class="form-group ">
         <label class="control-label" for="inputSuccess">Amount To Pay</label>
         <input type="number" class="form-control" name="cost" value="{{old('Amount To Pay')}}" disabled />
         <span class="help-block"></span>
@@ -38,7 +38,7 @@
 
 
     {{-- Total Discount --}}
-    <div class="form-group w-50">
+    <div class="form-group ">
         <label class="control-label" for="inputSuccess">Total Discount</label>
         <input type="number" class="form-control" name="discount" placeholder="Total Discount"
             value="{{old('Total Discount')}}" />
@@ -46,7 +46,7 @@
     </div>
 
     {{-- Penalty --}}
-    <div class="form-group w-50">
+    <div class="form-group ">
         <label class="control-label" for="inputSuccess">Penalty</label>
         <input type="number" class="form-control" name="change" disabled />
         <span class="help-block"></span>
@@ -54,7 +54,7 @@
 
 
     {{-- Price --}}
-    <div class="form-group w-50">
+    <div class="form-group ">
         <label class="control-label" for="inputSuccess">Price</label>
         <input type="number" class="form-control" name="price" placeholder="price" value="{{old('price')}}" />
         <span class="help-block"></span>
@@ -64,7 +64,7 @@
 
 
     {{-- Change --}}
-    <div class="form-group w-50">
+    <div class="form-group ">
         <label class="control-label" for="inputSuccess">Change</label>
         <input type="number" class="form-control" name="change" disabled />
         <span class="help-block"></span>
@@ -81,6 +81,8 @@
 @endsection
 
 @section('detail-header','Payment Detail')
+
+@section('col-detail','col-md-12')
 
 @section('detail')
 
