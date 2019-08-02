@@ -14,6 +14,8 @@ class CreatePropAttributesTable extends Migration
     public function up()
     {
         Schema::create('prop_attributes', function (Blueprint $table) {
+
+
             $table->smallIncrements('propAttributeid');
             $table->String('propAttribute', 30);
             $table->timestamps();

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PropAttribute extends Model
+class PropAttribDetail extends Model
 {
     //
 }
