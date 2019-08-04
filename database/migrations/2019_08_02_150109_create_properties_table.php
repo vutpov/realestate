@@ -23,7 +23,7 @@ class CreatePropertiesTable extends Migration
             $table->double('price', 15, 2);
             $table->string('free', 100);
             $table->string('location', 200);
-            $table->string('unit', 20);
+            $table->string('unit');
             $table->tinyInteger('status');
             $table->timestamps();
 

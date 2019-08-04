@@ -16,7 +16,7 @@ class CreateClientPropertiesTable extends Migration
         Schema::create('client_properties', function (Blueprint $table) {
             //ClientProperty (CProID, CProCode, CproDescription, No, St, Price, UMID, Free, status, PropertyTypeId, propAtrribute, LocationIfo)
             $table->bigIncrements('cProID');
-          
+
             $table->string('cProCode', 10);
             $table->string('cProDescription', 30);
             $table->string('no', 5);
@@ -24,9 +24,10 @@ class CreateClientPropertiesTable extends Migration
             $table->double('price', 15, 2);
             $table->string('free', 100);
             $table->string('location', 200);
+            $table->string('unit');
             $table->tinyInteger('status');
             $table->timestamps();
-           
+
 
 
             $table->unsignedSmallInteger('propertyTypeId');
@@ -37,7 +38,6 @@ class CreateClientPropertiesTable extends Migration
             $table->foreign('propertyTypeId')->references('propertyTypeId')->on('property_Types');
             $table->foreign('umId')->references('umId')->on('u_m_s');
             $table->foreign('propAttribDetailId')->references('propAttribDetailId')->on('prop_attrib_details');
-
         });
     }
 
