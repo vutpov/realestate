@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateRegistersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('registers', function (Blueprint $table) {
+            //.Register(RegisterID, VisitorID,ClientID,username,passoword,type,dateCreate ,status)
+            $table->bigIncrements('registerId');
+            $table->String('username',30);
+            $table->String('password');
+            $table->String('type');
+            $table->String('status');
+
+            $table->timestamps();
+
+
+            $table->unsignedBigInteger('visitorId');
+            $table->foreign('visitorId')->references('visitorId')->on('visitors');
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('registers');
+    }
+}
