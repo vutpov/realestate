@@ -45,7 +45,7 @@ class PartnerTypeController extends Controller
         $partnerType->partnerType = $request->type;
         $partnerType->save();
 
-        return redirect()->back();
+        return redirect("/system/partnerType");
 
     }
 

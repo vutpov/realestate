@@ -81,6 +81,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Partner
     Route::get('partner', 'admin\PartnerController@index');
     Route::get('createPartner', 'admin\PartnerController@create');
+    Route::post('partner', 'admin\PartnerController@store');
     
 
     //PartnerType

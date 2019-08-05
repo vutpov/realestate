@@ -7,7 +7,7 @@
 @section('content')
 
 
-<form action="{{url('/system/storeUser')}}" method="POST" enctype="multipart/form-data">
+<form action="{{url('/system/partner')}}" method="POST">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -27,16 +27,17 @@
     {{-- Partner Type --}}
     <div class="form-group">
         <label>Partner Type</label>
-        <select class="form-control">
-            <option>Project</option>
-            <option>One Time</option>
+        <select class="form-control" name="partnerType">
+            @foreach($partnerType as $item)
+                <option value="{{$item->partnerTypeid}}">{{ $item->partnerType }}</option>
+            @endforeach
         </select>
     </div>
 
     {{-- Name --}}
     <div class="form-group">
-        <label class="control-label" for="inputSuccess">Name</label>
-        <input type="text" class="form-control" name="name" placeholder="Name" value="{{old('name')}}" />
+        <label class="control-label" for="inputSuccess">Partner</label>
+        <input type="text" class="form-control" name="partner" placeholder="Name" value="{{old('name')}}" />
         <span class="help-block"></span>
     </div>
 
