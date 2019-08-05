@@ -40,7 +40,23 @@
         </tr>
         @endforeach --}}
 
-
+        @foreach ($agency as $a)
+            <tr>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$a->agency}}</td>
+                <td>{{$a->agencyType}}</td>
+                <td>{{$a->phone}}</td>
+                <td>{{$a->address}}</td>
+                <td>{{$a->email}}</td>
+                <td>{{$a->tCOm}}</td>
+                <td>{{$a->paid}}</td>
+                <td>{{$a->amountDue}}</td>
+                <td>
+                    <a href="{{url('/system/editAgency/'.$a->agencyId)}}"><i class="fa fa-edit"></i></a>
+                    <a href="{{url('/system/deleteAgency/'.$a->agencyId)}}"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        @endforeach
     </tbody>
 
 </table>

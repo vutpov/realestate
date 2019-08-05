@@ -71,6 +71,10 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Agency
     Route::get('agency', 'admin\AgencyController@index');
     Route::get('createAgency', 'admin\AgencyController@create');
+    Route::get('editAgency/{id}','admin\AgencyController@edit');
+    Route::get('deleteAgency/{id}','admin\AgencyController@destroy');
+    Route::post('storeAgency', 'admin\AgencyController@store');
+    Route::patch('updateAgency/{id}','admin\AgencyController@update');
 
     //AgencyType
     Route::get('agencyType', 'admin\AgencyTypeController@index');
