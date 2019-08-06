@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Partner;
+use App\PartnerType;
 
 class PartnerController extends Controller
 {
@@ -14,7 +16,8 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        return View('admin.partner.index');
+        $partners = Partner::all();
+        return View('admin.partner.index', compact('partners', $partners));
     }
 
     /**
@@ -24,7 +27,8 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        return View('admin.partner.create');
+        $partnerType = PartnerType::all();
+        return View('admin.partner.create', compact('partnerType', $partnerType));
     }
 
     /**
@@ -35,7 +39,24 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'partnerType' => 'required',
+            'partner' => 'required|regex:/^[a-zA-Z ]+$/',
+            'phone' => 'required|regex:/^[0-9 ]+$/',
+            'email' => 'required',
+            'address' => 'required|regex:/^[a-zA-Z ]+$/|min:5|max:15'
+        ]);
+
+        $partner = new Partner;
+        $partner->partner = $request->partner;
+        $partner->phone = $request->phone;
+        $partner->email = $request->email;
+        $partner->address = $request->address;
+        $partner->partnerTypeid = $request->partnerType;
+        $partner->save();
+
+        return redirect('/system/partner');
+
     }
 
     /**

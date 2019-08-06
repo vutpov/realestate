@@ -7,7 +7,7 @@
 @section('content')
 
 
-<form action="{{url('/system/storeUser')}}" method="POST" enctype="multipart/form-data">
+<form action="{{url('/system/partnerType')}}" method="POST" enctype="multipart/form-data">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">

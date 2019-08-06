@@ -82,11 +82,13 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Partner
     Route::get('partner', 'admin\PartnerController@index');
     Route::get('createPartner', 'admin\PartnerController@create');
+    Route::post('partner', 'admin\PartnerController@store');
+    
 
     //PartnerType
     Route::get('partnerType', 'admin\PartnerTypeController@index');
     Route::get('createPartnerType', 'admin\PartnerTypeController@create');
-
+    Route::post('partnerType','admin\PartnerTypeController@store');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');

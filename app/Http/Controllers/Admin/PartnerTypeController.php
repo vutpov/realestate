@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\PartnerType;
 
 class PartnerTypeController extends Controller
 {
@@ -14,7 +15,8 @@ class PartnerTypeController extends Controller
      */
     public function index()
     {
-        return View('admin.partnerType.index');
+        $partnerTypes = PartnerType::all();
+        return View('admin.partnerType.index',compact('partnerTypes', $partnerTypes));
     }
 
     /**
@@ -35,7 +37,16 @@ class PartnerTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'type' => 'required'
+        ]);
+
+        $partnerType = new PartnerType;
+        $partnerType->partnerType = $request->type;
+        $partnerType->save();
+
+        return redirect("/system/partnerType");
+
     }
 
     /**
