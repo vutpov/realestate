@@ -17,6 +17,7 @@ class CreatePartnerTypesTable extends Migration
             
             $table->smallIncrements('partnerTypeId');
             $table->string('partnerType', 30);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }
