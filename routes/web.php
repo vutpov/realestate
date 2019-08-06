@@ -92,7 +92,6 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('partnerType', 'admin\PartnerTypeController@index');
     Route::get('createPartnerType', 'admin\PartnerTypeController@create');
     Route::get('editPartnerType/{id}', 'admin\PartnerTypeController@edit');
-    Route::get('deletePartnerType/{id}', 'admin\PartnerTypeController@destroy');
     Route::post('partnerType','admin\PartnerTypeController@store');
     Route::post('updatePartnerType/{id}', 'admin\PartnerTypeController@update');
 

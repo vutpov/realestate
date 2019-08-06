@@ -101,7 +101,6 @@ class PartnerTypeController extends Controller
      */
     public function destroy($id)
     {
-        PartnerType::where('partnerTypeId', $id)->delete();
-        return redirect('/system/partnerType');
+        
     }
 }
