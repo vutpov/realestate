@@ -67,7 +67,6 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::POST('storeUser', 'admin\UserController@store');
     Route::GET('editUser/{id}', 'admin\UserController@edit');
     Route::POST('updateUser/{id}', 'admin\UserController@update');
-    Route::GET('deleteUser/{id}', 'admin\UserController@destroy');
     Route::GET('setActive/{id}', 'admin\UserController@setActive');
 
     //Agency

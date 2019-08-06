@@ -24,6 +24,12 @@ class Authenticate extends Middleware
 
         if (!Auth::check()) {
             return route('login');
+        } else {
+
+            dd('a');
+            if (Request::is('system')) {
+                return redirect('system/dashboard');
+            }
         }
     }
 }
