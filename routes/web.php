@@ -82,14 +82,19 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Partner
     Route::get('partner', 'admin\PartnerController@index');
     Route::get('createPartner', 'admin\PartnerController@create');
-    Route::get('editPartner', 'admin\PartnerController@edit');
+    Route::get('editPartner/{id}', 'admin\PartnerController@edit');
+    Route::get('deletePartner/{id}', 'admin\PartnerController@destroy');
+    Route::post('updatePartner/{id}','admin\PartnerController@update');
     Route::post('partner', 'admin\PartnerController@store');
     
 
     //PartnerType
     Route::get('partnerType', 'admin\PartnerTypeController@index');
     Route::get('createPartnerType', 'admin\PartnerTypeController@create');
+    Route::get('editPartnerType/{id}', 'admin\PartnerTypeController@edit');
+    Route::get('deletePartnerType/{id}', 'admin\PartnerTypeController@destroy');
     Route::post('partnerType','admin\PartnerTypeController@store');
+    Route::post('updatePartnerType/{id}', 'admin\PartnerTypeController@update');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');

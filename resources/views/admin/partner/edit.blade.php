@@ -7,7 +7,7 @@
 @section('content')
 
 
-<form action="{{url('/system/partner')}}" method="POST">
+<form action="{{url('/system/updatePartner/'. $partner->partnerId)}}" method="POST">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -28,30 +28,41 @@
     <div class="form-group">
         <label>Partner Type</label>
         <select class="form-control" name="partnerType">
-            @foreach($partnerType as $item)
-                <option value="{{$item->partnerTypeId}}">{{ $item->partnerType }}</option>
-            @endforeach
+            <?php
+                
+                foreach($partnerType as $item){
+                    $selected = '';
+                    if($item->partnerTypeId == $partner->partnerTypeId){
+                        $selected = 'selected';
+                    }
+            ?>
+                <option <?= $selected ?> value="<?= $item->partnerTypeId ?>"><?= $item->partnerType ?></option>
+
+            <?php
+            
+                }
+            ?>
         </select>
     </div>
 
     {{-- Name --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">Partner</label>
-        <input type="text" class="form-control" name="partner" placeholder="Name" value="{{old('name')}}" />
+        <input type="text" class="form-control" name="partner" placeholder="Name" value="{{$partner->partner}}" />
         <span class="help-block"></span>
     </div>
 
     {{-- phone --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">Phone</label>
-        <input type="text" class="form-control" name="phone" placeholder="Phone" value="{{old('phone')}}" />
+        <input type="text" class="form-control" name="phone" placeholder="Phone" value="{{$partner->phone}}" />
         <span class="help-block"></span>
     </div>
 
     {{-- email --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">email</label>
-        <input type="email" class="form-control" name="email" placeholder="Email" value="{{old('email')}}" />
+        <input type="email" class="form-control" name="email" placeholder="Email" value="{{$partner->email}}" />
         <span class="help-block"></span>
     </div>
 
@@ -59,12 +70,12 @@
     {{-- Address --}}
     <div class="form-group">
         <label>Address</label>
-        <textarea class="form-control" rows="3" placeholder="Address" name="address">{{old('address')}}</textarea>
+        <textarea class="form-control" rows="3" placeholder="Address" name="address">{{$partner->address}}</textarea>
     </div>
 
 
 
-    <input type="submit" class="btn btn-primary pull-right" value="Add" />
+    <input type="submit" class="btn btn-primary" value="Update" />
 
 
 

@@ -68,7 +68,11 @@ class PartnerTypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $partnerType = PartnerType::find($id);
+        $data = [
+            'partnerType' => $partnerType
+        ];
+        return view('admin.partnerType.edit', $data);
     }
 
     /**
@@ -80,7 +84,13 @@ class PartnerTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'type' => 'required'
+        ]);
+
+        PartnerType::where('partnerTypeId', $id)->update(['partnerType' => $request->type]);
+        return redirect('/system/partnerType');
+
     }
 
     /**
@@ -91,6 +101,7 @@ class PartnerTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        PartnerType::where('partnerTypeId', $id)->delete();
+        return redirect('/system/partnerType');
     }
 }
