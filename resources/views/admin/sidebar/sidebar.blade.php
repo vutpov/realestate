@@ -88,7 +88,17 @@
         </ul>
       </li>
 
-
+      <li class="treeview">
+        <a href="#"><i class="fas fa-handshake"></i><span>Customer</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/system/createPartner">Add New Customer</a></li>
+          <li><a href="/system/partner">View All Customers</a></li>
+        </ul>
+      </li>
 
       <li class="treeview">
         <a href="#"><i class="fas fa-handshake"></i><span>Partner</span>
