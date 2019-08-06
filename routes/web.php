@@ -66,7 +66,8 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('createUser', 'admin\UserController@create');
     Route::POST('storeUser', 'admin\UserController@store');
     Route::GET('editUser/{id}', 'admin\UserController@edit');
-
+    Route::POST('updateUser/{id}', 'admin\UserController@update');
+    Route::GET('setActive/{id}', 'admin\UserController@setActive');
 
     //Agency
     Route::get('agency', 'admin\AgencyController@index');

@@ -12,4 +12,10 @@ class Staffs extends Model
     {
         return $this->hasOne('App\Position', 'positionId', 'positionId');
     }
+
+    public function user()
+    {
+       
+        return $this->hasOne('App\User', 'staffId', 'staffId');
+    }
 }
