@@ -29,7 +29,7 @@
         <label>Partner Type</label>
         <select class="form-control" name="partnerType">
             @foreach($partnerType as $item)
-                <option value="{{$item->partnerTypeid}}">{{ $item->partnerType }}</option>
+                <option value="{{$item->partnerTypeId}}">{{ $item->partnerType }}</option>
             @endforeach
         </select>
     </div>

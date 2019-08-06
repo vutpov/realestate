@@ -31,8 +31,8 @@
             <td>{{$item->address}}</td>
             <td>{{$item->phone}}</td>
             <td>{{$item->email}}</td>
-            <td>{{$item->partnerTypeId}}</td>
-            <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
+            <td>{{$item->partnerTypes->partnerType}}</td>
+            <td><a href="{{url('/system/editPartner')}}"><i class="fa fa-edit"></i></a>
                 <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a>
             </td>
         </tr>

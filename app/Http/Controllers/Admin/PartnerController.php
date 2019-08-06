@@ -40,7 +40,6 @@ class PartnerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'partnerType' => 'required',
             'partner' => 'required|regex:/^[a-zA-Z ]+$/',
             'phone' => 'required|regex:/^[0-9 ]+$/',
             'email' => 'required',
@@ -52,7 +51,7 @@ class PartnerController extends Controller
         $partner->phone = $request->phone;
         $partner->email = $request->email;
         $partner->address = $request->address;
-        $partner->partnerTypeid = $request->partnerType;
+        $partner->partnerTypeId = $request->partnerType;
         $partner->save();
 
         return redirect('/system/partner');
