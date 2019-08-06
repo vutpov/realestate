@@ -15,7 +15,7 @@ class CreateStaffsTable extends Migration
     {
         Schema::create('staffs', function (Blueprint $table) {
             $table->smallIncrements('staffId');
-            $table->string('Name', 30);
+            $table->string('name', 30);
             $table->string('gender', 6);
             $table->date('dob');
             $table->string('address')->default('');

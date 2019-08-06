@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Staffs;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 
 
 
@@ -67,16 +71,23 @@ class UserController extends Controller
     {
 
         $this->validate($request, [
-            'username' => 'min:5|max:20',
+            'username' => 'min:5|max:20|unique:users',
             'password' => 'min:5',
             'confirm' => 'same:password',
             'staff' => 'required',
         ]);
 
 
+
+
+
         $user = new User;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
+
+
+
+
         $user->roleId = $request->role;
         $user->staffId = $request->staff;
         $user->save();
@@ -106,15 +117,21 @@ class UserController extends Controller
 
         $user = User::find($id);
 
+        $selectedStaff = Staffs::where('staffId', $user->staffId)->get()[0];
+
+
+
+
         $role = $this::getRole();
 
         $data = array(
             'user' => $user,
             'staff' => $staff,
-            'role' => $role
+            'role' => $role,
+            'selectedStaff' => $selectedStaff,
         );
 
-        return View('admin.user.create', $data);
+        return View('admin.user.edit', $data);
     }
 
     /**
@@ -126,7 +143,34 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        $this->validate($request, [
+            'username' => [
+                'min:5|max:20',
+                Rule::unique('users')->ignore($id, 'UserId'),
+            ],
+            'password' => '',
+            'confirm' => 'same:password',
+            'staff' => 'required',
+        ]);
+
+
+
+
+
+        User::where('UserId', $id)->update(array(
+            'username' => $request->username,
+            'staffId' => $request->staff,
+        ));
+
+        if (!empty($request->password)) {
+            User::where('UserId', $id)->update(array(
+                'password' =>  Hash::make($request->password),
+
+            ));
+        }
+        return redirect('/system/user');
     }
 
     /**
@@ -137,6 +181,20 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::where('UserId', $id)->delete();
+        return redirect('/system/user');
+    }
+
+    public function setActive($id)
+    {
+        $status = (User::where('UserId', $id)->get()[0]->status == 1) ? 0 : 1;
+
+
+        User::where('UserId', $id)->update(array(
+            'status' => $status,
+
+        ));
+
+        return redirect('/system/user');
     }
 }

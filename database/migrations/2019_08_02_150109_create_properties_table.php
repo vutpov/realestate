@@ -38,12 +38,12 @@ class CreatePropertiesTable extends Migration
             $table->unsignedSmallInteger('umId');
             $table->unsignedBigInteger('propAttribDetailId');
 
-            $table->foreign('projectId')->references('projectId')->on('projects');
-            $table->foreign('partnerId')->references('partnerId')->on('partners');
-            $table->foreign('staffId')->references('staffId')->on('staffs');
-            $table->foreign('propertyTypeId')->references('propertyTypeId')->on('property_Types');
-            $table->foreign('umId')->references('umId')->on('u_m_s');
-            $table->foreign('propAttribDetailId')->references('propAttribDetailId')->on('prop_attrib_details');
+            $table->foreign('projectId')->references('projectId')->on('projects')->cascade();
+            $table->foreign('partnerId')->references('partnerId')->on('partners')->cascade();
+            $table->foreign('staffId')->references('staffId')->on('staffs')->cascade();
+            $table->foreign('propertyTypeId')->references('propertyTypeId')->on('property_Types')->cascade();
+            $table->foreign('umId')->references('umId')->on('u_m_s')->cascade();
+            $table->foreign('propAttribDetailId')->references('propAttribDetailId')->on('prop_attrib_details')->cascade();
 
         });
     }

@@ -124,7 +124,6 @@ class LoginController extends Controller
         $staffId = DB::table('staffs')->insertGetId($staffAttr);
 
         unset($userAttr['confirmed']);
-        $userAttr['status'] = 'active';
         $userAttr['staffId'] = $staffId;
         $userAttr['roleId'] = $role->roleId;
         $userAttr['password'] =  Hash::make($userAttr['password']);

@@ -31,9 +31,15 @@
             <td>{{$u->username}}</td>
             <td>{{$u->name}}</td>
             <td>{{$u->role}}</td>
-            <td>{{$u->status}}</td>
+            <td>
+
+
+                {{($u->status==1)?'Activated':'Deactivated'}}
+            </td>
             <td><a href="{{url('/system/editUser/'.$u->userId)}}"><i class="fa fa-edit"></i></a>
-                <a href="{{url('/system/editUser/'.$u->userId)}}"><i class="fa fa-trash"></i></a></td>
+                <a href="{{url('/system/deleteUser/'.$u->userId)}}"><i class="fa fa-trash"></i></a>
+                <a href="{{url('/system/setActive/'.$u->userId)}}"><i class="far fa-check-square"></i></a>
+            </td>
         </tr>
         @endforeach
 

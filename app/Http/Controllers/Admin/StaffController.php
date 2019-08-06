@@ -62,7 +62,7 @@ class StaffController extends Controller
 
 
         $this->validate($request, [
-            'name' => 'required|min:5|max:50',
+            'name' => 'required|min:5|max:50|unique:staffs',
             'gender' => 'required',
             'date_of_birth' => 'required|date',
             'address' => 'required|min:5',
