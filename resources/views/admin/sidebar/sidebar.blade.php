@@ -95,8 +95,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/system/createPartner">Add New Customer</a></li>
-          <li><a href="/system/partner">View All Customers</a></li>
+          <li><a href="/system/createCustomer">Add New Customer</a></li>
+          <li><a href="/system/customer">View All Customers</a></li>
         </ul>
       </li>
 
