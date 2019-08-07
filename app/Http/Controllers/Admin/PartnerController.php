@@ -27,7 +27,7 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        $partnerType = PartnerType::all();
+        $partnerType = PartnerType::where('status', 1)->get();
         return View('admin.partner.create', compact('partnerType', $partnerType));
     }
 
