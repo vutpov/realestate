@@ -31,7 +31,7 @@
             <td>{{$item->address}}</td>
             <td>{{$item->phone}}</td>
             <td>{{$item->email}}</td>
-            <td>{{$item->partnerTypes->partnerType}}</td>
+            <td>{{$item->partnerType}}</td>
             <td><a href="{{url('/system/editPartner/'. $item->partnerId)}}"><i class="fa fa-edit"></i></a>
                 <a href="#" data-toggle="modal" data-target="#partner-{{$item->partnerId}}"><i class="fa fa-trash"></i></a>
             </td>

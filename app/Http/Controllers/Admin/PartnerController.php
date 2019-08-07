@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Partner;
 use App\PartnerType;
+use Illuminate\Support\Facades\DB;
 
 class PartnerController extends Controller
 {
@@ -16,7 +17,11 @@ class PartnerController extends Controller
      */
     public function index()
     {
-        $partners = Partner::all();
+        $partners = DB::table('partners')
+            ->join('partner_types', 'partner_types.partnerTypeId', 'partners.partnerTypeId')
+            ->select('partnerId','partner', 'address', 'phone', 'email', 'partner_types.partnerType')
+            ->where('partner_types.status', 1)
+            ->get();
         return View('admin.partner.index', compact('partners', $partners));
     }
 

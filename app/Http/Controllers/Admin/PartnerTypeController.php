@@ -103,4 +103,14 @@ class PartnerTypeController extends Controller
     {
         
     }
+
+    public function changeStatusPType($id, $status){
+        if($status == 1){
+            PartnerType::where('partnerTypeId', $id)->update(['status' => 0]);
+        }else{
+            PartnerType::where('partnerTypeId', $id)->update(['status' => 1]);
+        }
+
+        return redirect("/system/partnerType");
+    }
 }
