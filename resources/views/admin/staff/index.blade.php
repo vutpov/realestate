@@ -37,7 +37,7 @@
 
 
             <td>{{$loop->iteration}}</td>
-            <td>{{$s->Name}}</td>
+            <td>{{$s->name}}</td>
             <td>{{$s->position}}</td>
             <td>{{$s->gender}}</td>
             <td>{{$s->dob}}</td>
@@ -54,7 +54,10 @@
 
 
             </td>
-            <td>Edit</td>
+            <td><a href="{{url('/system/editStaff/'.$s->staffId)}}"><i class="fa fa-edit"></i></a>
+                <a href="{{url('/system/deleteStaff/'.$s->staffId)}}"><i class="fa fa-trash"></i></a>
+
+            </td>
         </tr>
         @endforeach
 

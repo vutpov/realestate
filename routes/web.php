@@ -59,6 +59,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('staff', 'admin\StaffController@index');
     Route::get('createStaff', 'admin\StaffController@create');
     Route::post('storeStaff', 'admin\StaffController@store');
+    Route::get('editStaff/{id}', 'admin\StaffController@edit');
 
 
     //User
@@ -83,12 +84,12 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('partner', 'admin\PartnerController@index');
     Route::get('createPartner', 'admin\PartnerController@create');
     Route::post('partner', 'admin\PartnerController@store');
-    
+
 
     //PartnerType
     Route::get('partnerType', 'admin\PartnerTypeController@index');
     Route::get('createPartnerType', 'admin\PartnerTypeController@create');
-    Route::post('partnerType','admin\PartnerTypeController@store');
+    Route::post('partnerType', 'admin\PartnerTypeController@store');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');

@@ -24,6 +24,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
+
+        
         return View('admin.project.create');
     }
 
