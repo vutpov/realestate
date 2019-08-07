@@ -40,7 +40,6 @@ class PartnerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'partnerType' => 'required',
             'partner' => 'required|regex:/^[a-zA-Z ]+$/',
             'phone' => 'required|regex:/^[0-9 ]+$/',
             'email' => 'required',
@@ -52,7 +51,7 @@ class PartnerController extends Controller
         $partner->phone = $request->phone;
         $partner->email = $request->email;
         $partner->address = $request->address;
-        $partner->partnerTypeid = $request->partnerType;
+        $partner->partnerTypeId = $request->partnerType;
         $partner->save();
 
         return redirect('/system/partner');
@@ -78,7 +77,10 @@ class PartnerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $partnerType = PartnerType::all();
+        $partner = Partner::find($id);
+        $data = ['partner' => $partner, 'partnerType' => $partnerType];
+        return view('admin.partner.edit', $data);
     }
 
     /**
@@ -90,7 +92,26 @@ class PartnerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'partner' => 'required|regex:/^[a-zA-Z ]+$/',
+            'phone' => 'required|regex:/^[0-9 ]+$/',
+            'email' => 'required',
+            'address' => 'required|regex:/^[a-zA-Z ]+$/|min:5|max:15'
+        ]);
+
+        
+        Partner::where('partnerId', $id)
+                ->update([
+                    'partner' => $request->partner,
+                    'phone' => $request->phone,
+                    'email' => $request->email,
+                    'address' => $request->address,
+                    'partnerTypeId' => $request->partnerType
+                ]);
+        
+        return redirect('/system/partner');
+
+
     }
 
     /**
@@ -101,6 +122,9 @@ class PartnerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Partner::where('partnerId', $id)
+                ->delete();
+
+        return redirect('/system/partner');
     }
 }

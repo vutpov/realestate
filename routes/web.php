@@ -73,6 +73,10 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Agency
     Route::get('agency', 'admin\AgencyController@index');
     Route::get('createAgency', 'admin\AgencyController@create');
+    Route::get('editAgency/{id}','admin\AgencyController@edit');
+    Route::get('deleteAgency/{id}','admin\AgencyController@destroy');
+    Route::post('storeAgency', 'admin\AgencyController@store');
+    Route::patch('updateAgency/{id}','admin\AgencyController@update');
 
     //AgencyType
     Route::get('agencyType', 'admin\AgencyTypeController@index');
@@ -83,6 +87,9 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Partner
     Route::get('partner', 'admin\PartnerController@index');
     Route::get('createPartner', 'admin\PartnerController@create');
+    Route::get('editPartner/{id}', 'admin\PartnerController@edit');
+    Route::get('deletePartner/{id}', 'admin\PartnerController@destroy');
+    Route::post('updatePartner/{id}','admin\PartnerController@update');
     Route::post('partner', 'admin\PartnerController@store');
 
 
@@ -90,6 +97,9 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('partnerType', 'admin\PartnerTypeController@index');
     Route::get('createPartnerType', 'admin\PartnerTypeController@create');
     Route::post('partnerType', 'admin\PartnerTypeController@store');
+    Route::get('editPartnerType/{id}', 'admin\PartnerTypeController@edit');
+    Route::post('partnerType','admin\PartnerTypeController@store');
+    Route::post('updatePartnerType/{id}', 'admin\PartnerTypeController@update');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');
