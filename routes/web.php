@@ -104,6 +104,14 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::post('updatePartnerType/{id}', 'admin\PartnerTypeController@update');
     Route::get('ChangeStatusPartnerType/{id}/{status}', 'admin\PartnerTypeController@changeStatusPType');
 
+    //Customer
+    Route::get('customer','admin\CustomerController@index');
+    Route::get('createCustomer', 'admin\CustomerController@create');
+    Route::post('storeCustomer', 'admin\CustomerController@store');
+    Route::get('editCustomer/{id}','admin\CustomerController@edit');
+    Route::patch('updateCustomer/{id}','admin\CustomerController@update');
+    Route::get('deleteCustomer/{id}','admin\CustomerController@destroy');
+
     //Payment
     Route::get('payment', 'admin\PaymentController@index');
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
