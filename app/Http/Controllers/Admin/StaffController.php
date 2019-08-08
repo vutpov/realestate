@@ -25,7 +25,7 @@ class StaffController extends Controller
 
         $staff = DB::table('staffs')
             ->join('positions', 'positions.positionId', '=', 'staffs.positionId')
-            ->select('Name', 'positions.position', 'gender', 'dob', 'address', 'phone', 'email', 'profile')
+            ->select('staffId', 'name', 'positions.position', 'gender', 'dob', 'address', 'phone', 'email', 'profile')
             ->get();
 
 
@@ -62,7 +62,7 @@ class StaffController extends Controller
 
 
         $this->validate($request, [
-            'name' => 'required|min:5|max:50',
+            'name' => 'required|min:5|max:50|unique:staffs',
             'gender' => 'required',
             'date_of_birth' => 'required|date',
             'address' => 'required|min:5',
@@ -112,7 +112,17 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+        $position = Position::all();
+        $staff = Staffs::where('staffId', $id)->get()[0];
+
+
+
+        $data = array(
+            'position' => $position,
+            'staff' => $staff,
+
+        );
+        return View('admin.staff.edit', $data);
     }
 
     /**

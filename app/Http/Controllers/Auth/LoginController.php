@@ -36,17 +36,17 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/system';
+    // protected $redirectTo = '/system';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
 
     public function index()
     {
@@ -124,7 +124,6 @@ class LoginController extends Controller
         $staffId = DB::table('staffs')->insertGetId($staffAttr);
 
         unset($userAttr['confirmed']);
-        $userAttr['status'] = 'active';
         $userAttr['staffId'] = $staffId;
         $userAttr['roleId'] = $role->roleId;
         $userAttr['password'] =  Hash::make($userAttr['password']);
@@ -146,8 +145,10 @@ class LoginController extends Controller
             ]
         );
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'status' => 1])) {
 
+
+            
 
             $staff = DB::table('staffs')
                 ->join('users', 'users.staffId', '=', 'staffs.staffId')

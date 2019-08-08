@@ -19,14 +19,17 @@
     <tbody>
 
 
-        @foreach ($partnerTypes as $value)
+        @foreach ($partnerTypes as $item)
         <tr>
             <td>{{$loop->iteration}}</td>
-            <td>{{$value->partnerType}}</td>
-            <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
-                <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a>
+            <td>{{$item->partnerType}}</td>
+            <td><a href="{{url('/system/editPartnerType/'. $item->partnerTypeId)}}"><i class="fa fa-edit"></i></a>
+                <a href="#" ><i class="fa fa-trash"></i></a>
             </td>
         </tr>
+
+
+
         @endforeach
 
 

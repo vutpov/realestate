@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->smallIncrements('UserId');
             $table->string('username', 20)->unique();
             $table->string('password');
-            $table->string('status', 10)->default('active');
+            $table->smallInteger('status')->default('1');
             $table->unsignedSmallInteger('staffId');
             $table->unsignedSmallInteger('roleId')->default(1);
             $table->timestamp('email_verified_at')->nullable();

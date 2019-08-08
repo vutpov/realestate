@@ -7,7 +7,7 @@
 @section('content')
 
 
-<form action="{{url('/system/partnerType')}}" method="POST" enctype="multipart/form-data">
+<form action="{{url('/system/updatePartnerType/'. $partnerType->partnerTypeId)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -24,14 +24,14 @@
     {{-- Type --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">Partner Type</label>
-        <input type="text" class="form-control" name="type" placeholder="Partner Type" value="{{old('type')}}" />
+        <input type="text" class="form-control" name="type" placeholder="Partner Type" value="{{$partnerType->partnerType}}" />
         <span class="help-block"></span>
     </div>
 
 
 
 
-    <input type="submit" class="btn btn-primary pull-right" value="Add"/>
+    <input type="submit" class="btn btn-primary pull-right" value="Update"/>
 
 
 

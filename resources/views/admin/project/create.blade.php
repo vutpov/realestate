@@ -9,11 +9,6 @@
 
 
 
-
-
-
-
-
 <form action="{{url('/system/storeProject')}}" method="POST" enctype="multipart/form-data">
     @csrf
     @if ($errors->any())
@@ -186,8 +181,7 @@
 
 
 
-Property (PropertyId, PropertyCode, ProDescription, No, St, Price, Cost, Free, status, ProjectId, partnerId,
-PropertyTypeId, propAtrribute, LocationIfo)
+
 
 <div class="form-group">
     <table class="table table-hover">
