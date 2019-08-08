@@ -102,6 +102,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('editPartnerType/{id}', 'admin\PartnerTypeController@edit');
     Route::post('partnerType', 'admin\PartnerTypeController@store');
     Route::post('updatePartnerType/{id}', 'admin\PartnerTypeController@update');
+    Route::get('ChangeStatusPartnerType/{id}/{status}', 'admin\PartnerTypeController@changeStatusPType');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');
