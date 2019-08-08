@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Staffs;
 use App\Position;
+use App\Http\Helpers\Helper;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -18,19 +20,39 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($getTrash = false)
     {
 
 
+        if ($getTrash) {
+            $staff = DB::table('staffs')
+                ->join('positions', 'positions.positionId', '=', 'staffs.positionId')
+                ->select('staffId', 'name', 'positions.position', 'gender', 'dob', 'address', 'phone', 'email', 'profile', 'status')
+                ->get();
 
-        $staff = DB::table('staffs')
-            ->join('positions', 'positions.positionId', '=', 'staffs.positionId')
-            ->select('staffId', 'name', 'positions.position', 'gender', 'dob', 'address', 'phone', 'email', 'profile')
-            ->get();
+            $url = url('/system/staff/');
+
+            $checkTrash = 'checked';
+        } else {
+            $staff = DB::table('staffs')
+                ->join('positions', 'positions.positionId', '=', 'staffs.positionId')
+                ->select('staffId', 'name', 'positions.position', 'gender', 'dob', 'address', 'phone', 'email', 'profile', 'status')
+                ->where('status', '<>', -1)
+                ->get();
+            $url = url('/system/staff/trash');
+
+
+            $checkTrash = '';
+        }
 
 
 
-        $data = array('staff' => $staff);
+
+        $data = array(
+            'staff' => $staff,
+            'trashUrl' => $url,
+            'checkTrash' => $checkTrash
+        );
 
 
 
@@ -57,9 +79,14 @@ class StaffController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+    // public function uploadProfile(Request $request){
+
+    // }
+
     public function store(Request $request)
     {
-
 
         $this->validate($request, [
             'name' => 'required|min:5|max:50|unique:staffs',
@@ -67,8 +94,9 @@ class StaffController extends Controller
             'date_of_birth' => 'required|date',
             'address' => 'required|min:5',
             'phone' => 'required|min:10',
-            'email' => 'required|min:12|unique:staffs',
-            'profile' => 'mimes:jpeg,png '
+            'email' => 'required|email|unique:staffs',
+            'profile' => 'mimes:jpeg,jpg,png',
+            'position' => 'required'
         ]);
 
         $path = null;
@@ -80,14 +108,12 @@ class StaffController extends Controller
         $staff = new Staffs;
         $staff->name = $request->name;
         $staff->gender = $request->gender;
-        $staff->dob =   date('Y-m-d', strtotime($request->date_of_birth));
+        $staff->dob = Helper::formatMysqlDate($request->date_of_birth);
         $staff->address = $request->address;
         $staff->phone = $request->phone;
         $staff->email = $request->email;
         $staff->positionId = $request->position;
         $staff->profile = $path;
-
-
 
         $staff->save();
         return redirect('system/staff');
@@ -122,8 +148,12 @@ class StaffController extends Controller
             'staff' => $staff,
 
         );
+
+
         return View('admin.staff.edit', $data);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -134,7 +164,51 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request, [
+            'name' => [
+                'min:5|max:20',
+                Rule::unique('staffs')->ignore($id, 'staffId'),
+            ],
+            'gender' => 'required',
+            'date_of_birth' => 'required|date',
+            'address' => 'required|min:5',
+            'phone' =>  [
+                'min:10',
+                Rule::unique('staffs')->ignore($id, 'staffId')
+            ],
+            'email' =>  [
+                'required',
+                'email',
+                Rule::unique('staffs')->ignore($id, 'staffId')
+            ],
+            'profile' => 'mimes:jpeg,jpg,png',
+            'position' => 'required'
+        ]);
+
+
+
+
+
+        Staffs::where('staffId', $id)->update(array(
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'dob' => Helper::formatMysqlDate($request->date_of_birth),
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'positionId' => $request->position,
+        ));
+
+        if ($request->file('profile') != null) {
+            $path = $request->file('profile')->store('profile');
+            Staffs::where('staffId', $id)->update(array(
+                'profile' => $path,
+            ));
+        }
+
+
+        return redirect('/system/staff');
     }
 
     /**
@@ -146,5 +220,17 @@ class StaffController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function setStatus($id, $status)
+    {
+
+        $status = $status == 'trash' ? -1 : 1;
+
+        Staffs::where('staffId', $id)->update(array(
+            'status' => $status,
+        ));
+
+        return redirect()->back();
     }
 }

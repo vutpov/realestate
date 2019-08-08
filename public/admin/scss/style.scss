@@ -27,3 +27,57 @@ svg[class*="fa"] {
 .content {
     min-height: auto;
 }
+
+.box-body {
+    position: relative;
+}
+
+.form-profile {
+    .form-group {
+        width: 74%;
+    }
+}
+
+.my-dropzone {
+    border: 1px solid #d2d6de;
+    height: 200px;
+
+    display: table;
+
+    .my-dz-details {
+        text-align: center;
+    }
+
+    &.input[type="file"] {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        width: 23%;
+    }
+
+    &.profile {
+        position: absolute;
+        right: 15px;
+        top: 35px;
+        width: 23%;
+        margin-bottom: 0;
+    }
+
+    .dz-default.dz-message {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .form-group {
+        margin: 0;
+    }
+
+
+
+    span {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        color: #999;
+    }
+}

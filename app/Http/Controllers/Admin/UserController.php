@@ -28,6 +28,7 @@ class UserController extends Controller
             ->join('staffs', 'users.staffId', '=', 'staffs.staffId')
             ->join('roles', 'users.roleId', '=', 'roles.roleId')
             ->select('userId', 'username', 'staffs.name', 'role', 'users.status')
+            ->where('staffs.status', '<>', '-1')
             ->get();
 
         $data = array('user' => $user);
@@ -113,7 +114,7 @@ class UserController extends Controller
     public function edit($id)
     {
 
-        $staff  = DB::select(DB::raw("SELECT staffId,name from staffs where staffId not in(select staffId from users where staffId not in($id))"));
+        $staff  = DB::select(DB::raw("SELECT staffId,name from staffs where staffId <> -1 and staffId not in(select staffId from users where staffId not in($id))"));
 
         $user = User::find($id);
 
@@ -186,6 +187,20 @@ class UserController extends Controller
     }
 
     public function setActive($id)
+    {
+        $status = (User::where('UserId', $id)->get()[0]->status == 1) ? 0 : 1;
+
+
+        User::where('UserId', $id)->update(array(
+            'status' => $status,
+
+        ));
+
+        return redirect('/system/user');
+    }
+
+
+    public function uploadPhoto(Request $request, $id)
     {
         $status = (User::where('UserId', $id)->get()[0]->status == 1) ? 0 : 1;
 

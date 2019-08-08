@@ -14,3 +14,37 @@ svg[class*="fa"] {
 
 .content {
   min-height: auto; }
+
+.box-body {
+  position: relative; }
+
+.form-profile .form-group {
+  width: 74%; }
+
+.my-dropzone {
+  border: 1px solid #d2d6de;
+  height: 200px;
+  display: table; }
+  .my-dropzone .my-dz-details {
+    text-align: center; }
+  .my-dropzone.input[type="file"] {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 23%; }
+  .my-dropzone.profile {
+    position: absolute;
+    right: 15px;
+    top: 35px;
+    width: 23%;
+    margin-bottom: 0; }
+  .my-dropzone .dz-default.dz-message {
+    display: table-cell;
+    vertical-align: middle; }
+  .my-dropzone .form-group {
+    margin: 0; }
+  .my-dropzone span {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    color: #999; }

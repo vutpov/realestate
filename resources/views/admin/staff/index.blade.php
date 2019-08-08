@@ -50,12 +50,16 @@
 
             </td>
 
+            <td>
+                <a href="{{url('/system/editStaff/'.$s->staffId)}}"><i class="fa fa-edit"></i></a>
+
+                @if ($s->status==1)
+                <a href="{{url('/system/staffStatus/'.$s->staffId.'/trash')}}"><i class="fa fa-trash"></i></a>
+                @else
+                <a href="{{url('/system/staffStatus/'.$s->staffId.'/untrash')}}"><i class="fas fa-recycle"></i></a>
+                @endif
 
 
-
-            </td>
-            <td><a href="{{url('/system/editStaff/'.$s->staffId)}}"><i class="fa fa-edit"></i></a>
-                <a href="{{url('/system/deleteStaff/'.$s->staffId)}}"><i class="fa fa-trash"></i></a>
 
             </td>
         </tr>
@@ -65,6 +69,25 @@
     </tbody>
 
 </table>
+
+
+<div class="form-group">
+
+
+
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="{{$trashUrl}}" name="trash-check-staff" id="trash-check-staff"
+                {{$checkTrash}}>
+            Trash
+        </label>
+    </div>
+
+</div>
 @endsection
+
+
+
 
 @section('display-detail','display:none')

@@ -435,38 +435,13 @@ desired effect
   <!-- Font Awesome -->
   <script src="{{url('admin/js/all.min.js')}}"></script>
 
+  <script src="{{url('admin/js/dropzone.js')}}"></script>
+
+  <script src="{{url('admin/js/script.js')}}"></script>
+
 </body>
 
 
-<script>
-  $(function () {
-    $('.datepicker').datepicker({
-      autoclose: true
-    })
 
-
-    $('.datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-
-
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    });
-
-  });
-
-  var table = jQuery.makeArray($('.dataTable')) ;
-
-  (table).forEach(t => {
-    $(t).DataTable();
-  });
-  
-
-</script>
 
 </html>

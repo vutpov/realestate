@@ -11,7 +11,7 @@
 
   
     $name = Helper::oldOrDB('name',$staff->name);
-
+    
 
 
     $selectMale=$selectFemale='';
@@ -38,7 +38,7 @@
 
 ?>
 
-<form action="{{url('/system/storeStaff')}}" method="post" enctype="multipart/form-data">
+<form action="{{url('/system/updateStaff',$staff->staffId)}}" method="post" enctype="multipart/form-data">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -160,12 +160,13 @@
         <span class="help-block"></span>
     </div>
 
-
     <input type="submit" class="btn btn-primary" />
 
-
-
 </form>
+
+
+
+
 
 
 
