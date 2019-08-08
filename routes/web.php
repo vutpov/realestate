@@ -81,9 +81,12 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::patch('updateAgency/{id}', 'admin\AgencyController@update');
 
     //AgencyType
-    Route::get('agencyType', 'admin\AgencyTypeController@index');
+    Route::get('agencyType/{trash?}', 'admin\AgencyTypeController@index');
     Route::get('createAgencyType', 'admin\AgencyTypeController@create');
-
+    Route::post('storeAgencyType', 'admin\AgencyTypeController@store');
+    Route::get('editAgencyType/{id}', 'admin\AgencyTypeController@edit');
+    Route::post('updateAgencyType/{id}', 'admin\AgencyTypeController@update');
+    Route::get('agencyTypeStatus/{id}/{status}/', 'admin\AgencyTypeController@setStatus');
 
 
     //Partner
@@ -105,12 +108,12 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('ChangeStatusPartnerType/{id}/{status}', 'admin\PartnerTypeController@changeStatusPType');
 
     //Customer
-    Route::get('customer','admin\CustomerController@index');
+    Route::get('customer', 'admin\CustomerController@index');
     Route::get('createCustomer', 'admin\CustomerController@create');
     Route::post('storeCustomer', 'admin\CustomerController@store');
-    Route::get('editCustomer/{id}','admin\CustomerController@edit');
-    Route::patch('updateCustomer/{id}','admin\CustomerController@update');
-    Route::get('deleteCustomer/{id}','admin\CustomerController@destroy');
+    Route::get('editCustomer/{id}', 'admin\CustomerController@edit');
+    Route::patch('updateCustomer/{id}', 'admin\CustomerController@update');
+    Route::get('deleteCustomer/{id}', 'admin\CustomerController@destroy');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');

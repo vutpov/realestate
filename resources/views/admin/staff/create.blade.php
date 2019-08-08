@@ -123,9 +123,11 @@
         <span class="help-block"></span>
     </div>
 
+    <button type="submit" class="btn btn-primary">Submit</button>
 
-    <input type="submit" class="btn btn-primary btn-submit" />
-
+    <button class="btn btn-danger pull-right">
+        <a style="color:white;" href="/system/staff">Cancel</a>
+    </button>
 
 
 

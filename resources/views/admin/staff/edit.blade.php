@@ -1,4 +1,4 @@
-@extends('admin.master') @section('page-header','Create New Staff')
+@extends('admin.master') @section('page-header','Edit Staff')
 
 @section('col','col-md-8')
 @section('content')
@@ -161,6 +161,9 @@
     </div>
 
     <input type="submit" class="btn btn-primary" />
+    <button class="btn btn-danger pull-right">
+        <a style="color:white;" href="/system/staff">Cancel</a>
+    </button>
 
 </form>
 

@@ -15,7 +15,7 @@ class CreateUMSTable extends Migration
     {
         Schema::create('u_m_s', function (Blueprint $table) {
             $table->smallIncrements('umId');
-            $table->String('um',30);
+            $table->String('um', 30);
             $table->timestamps();
         });
     }

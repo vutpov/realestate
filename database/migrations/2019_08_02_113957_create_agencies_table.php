@@ -23,6 +23,7 @@ class CreateAgenciesTable extends Migration
             $table->double('paid', 10, 2);
             $table->double('amountDue', 10, 2);
 
+            $table->tinyInteger('status')->default(1);
             $table->unsignedSmallInteger('agencyTypeId');
             $table->foreign('agencyTypeId')->references('agencyTypeId')->on('agency_types');
             $table->timestamps();

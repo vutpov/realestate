@@ -16,8 +16,8 @@ class CreateAgencyTypesTable extends Migration
         Schema::create('agency_types', function (Blueprint $table) {
             $table->smallIncrements('agencyTypeId');
             $table->String('agencyType',30);
-            
-           
+            $table->tinyInteger('status')->default(1);
+            $table->timestamps();
         });
     }
 

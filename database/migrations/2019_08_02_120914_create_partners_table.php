@@ -19,7 +19,7 @@ class CreatePartnersTable extends Migration
             $table->string('address')->default('');
             $table->string('phone', 30);
             $table->string('email', 30)->unique();
-
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
 
             $table->unsignedSmallInteger('partnerTypeId');

@@ -99,7 +99,9 @@
 
   <input type="submit" class="btn btn-primary" />
 
-
+  <button class="btn btn-danger pull-right">
+      <a style="color:white;" href="/system/user">Cancel</a>
+  </button>
 
 </form>
 

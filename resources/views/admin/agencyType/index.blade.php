@@ -19,22 +19,49 @@
     <tbody>
 
 
-        {{-- @foreach ($user as $u)
+        @foreach ($agencyType as $a)
         <tr>
             <td>{{$loop->iteration}}</td>
-        <td>{{$u->username}}</td>
-        <td>{{$u->name}}</td>
-        <td>{{$u->role}}</td>
-        <td>{{$u->status}}</td>
-        <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
-            <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
+            <td>{{$a->agencyType}}</td>
+
+
+
+            <td>
+                <a href="{{url('/system/editAgencyType/'.$a->agencyTypeId)}}"><i class="fa fa-edit"></i></a>
+
+                @if ($a->status==1)
+                <a href="{{url('/system/agencyTypeStatus/'.$a->agencyTypeId.'/trash')}}"><i class="fa fa-trash"></i></a>
+                @else
+                <a href="{{url('/system/agencyTypeStatus/'.$a->agencyTypeId.'/untrash')}}"><i
+                        class="fas fa-recycle"></i></a>
+                @endif
+
+
+
+            </td>
         </tr>
-        @endforeach --}}
+        @endforeach
 
 
     </tbody>
 
 </table>
+
+<div class="form-group">
+
+
+
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="{{$trashUrl}}" name="trash-check-staff" id="trash-check-staff"
+                {{$checkTrash}}>
+            Trash
+        </label>
+    </div>
+
+</div>
+
 
 @endsection
 

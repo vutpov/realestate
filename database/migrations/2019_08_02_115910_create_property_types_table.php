@@ -16,6 +16,7 @@ class CreatePropertyTypesTable extends Migration
         Schema::create('property_types', function (Blueprint $table) {
             $table->smallIncrements('propertyTypeId');
             $table->String('propertyType',30);
+            $table->tinyInteger('status')->default(1);
         });
     }
 

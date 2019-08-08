@@ -1,13 +1,19 @@
 @extends('admin.master')
 
-@section('page-header','Create New Agency Type')
+@section('page-header','Edit Agency Type')
 
 
 @section('col','col-md-6')
 @section('content')
 
+<?php
+    use App\Http\Helpers\Helper;
+    $type = Helper::oldOrDB('type',$agencyType->agencyType);
 
-<form action="{{url('/system/storeAgencyType')}}" method="POST" enctype="multipart/form-data">
+?>
+
+<form action="{{url('/system/updateAgencyType',$agencyType->agencyTypeId)}}" method="POST"
+    enctype="multipart/form-data">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -23,7 +29,7 @@
     {{-- Type --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">Type</label>
-        <input type="text" class="form-control" name="type" placeholder="Type" value="{{old('type')}}" />
+        <input type="text" class="form-control" name="type" placeholder="Type" value="{{$type}}" />
         <span class="help-block"></span>
     </div>
 
