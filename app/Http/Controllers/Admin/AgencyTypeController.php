@@ -66,12 +66,14 @@ class AgencyTypeController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
-            'type' => 'required|unique:agencyType'
+            'type' => 'required|unique:agency_types,agencyType'
 
         ]);
 
         $agencyType = new AgencyType();
+
 
         $agencyType->agencyType = $request->type;
 
