@@ -41,8 +41,6 @@ class Prop_Attribute extends Controller
 
 
 
-
-
         $data = array(
             'propAttribute' => $propAttribute,
             'trashUrl' => $url,
@@ -61,23 +59,25 @@ class Prop_Attribute extends Controller
     public function create()
     {
 
-        $propAttributeDetail = PropAttribDetail::all()->pluck('propAttributeDetail')->toArray();
+
         $data = array(
 
-            'propDetail' =>  $propAttributeDetail
+            'propDetail' =>  $this->getPropDetail()
         );
         return View('admin.propAttribute.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    function getPropDetail()
     {
-        $input = $request->input();
+        return PropAttribDetail::all()->pluck('propAttributeDetail')->toArray();
+    }
+
+
+
+
+    function validateAllField($request, $input)
+    {
+
 
 
 
@@ -92,26 +92,26 @@ class Prop_Attribute extends Controller
         }
 
         $this->validate($request, $validateArray);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $input = $request->input();
+        $this->validateAllField($request, $input);
 
 
         $sql = 'insert into prop_attributes (propAttribute) values(?)';
 
 
-        $value = '';
-
-        foreach ($input as $key => $item) {
-
-            if ($key === "_token") {
-                continue;
-            }
-
-            $value .= $key . ":" . $item . ',';
-        }
 
 
-        $value = substr($value, 0, strlen($value) - 1);
-
-        DB::insert($sql, [$value]);
+        DB::insert($sql, [$this->prepareInputValue($input)]);
 
         return redirect('/system/propAttribute');
     }
@@ -135,7 +135,24 @@ class Prop_Attribute extends Controller
      */
     public function edit($id)
     {
-        //
+        $propAttribute = PropAttribute::where('propAttributeId', $id)->first();
+
+        $detail = explode(',', $propAttribute->propAttribute);
+        $pairedValue = null;
+
+        foreach ($detail as $d) {
+            $d = explode(':', $d);
+            $pairedValue[$d[0]] = $d[1];
+        }
+
+
+        $data = array(
+            "propAttributeId" => $id,
+            "pairedValue" => $pairedValue,
+            "propDetail" => $this->getPropDetail()
+        );
+
+        return View('admin.propAttribute.edit', $data);
     }
 
     /**
@@ -145,9 +162,40 @@ class Prop_Attribute extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+    function prepareInputValue($input)
+    {
+        $value = '';
+     
+        foreach ($input as $key => $item) {
+
+            if ($key === "_token") {
+                continue;
+            }
+
+            $value .= $key . ":" . $item . ',';
+        }
+
+
+        return substr($value, 0, strlen($value) - 1);
+    }
+
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->input();
+        $this->validateAllField($request, $input);
+
+        //UPDATE `realestate`.`prop_attributes` SET `propAttribute` = 'Title:None,Bedroom:2,Bathroom:3,Floor:5' WHERE `propAttributeid` = 3
+
+
+
+
+        PropAttribute::where('propAttributeid', $id)->update(array(
+            'propAttribute' => $this->prepareInputValue($input),
+        ));
+
+        return redirect('/system/propAttribute');
     }
 
     /**

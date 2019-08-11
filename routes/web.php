@@ -120,7 +120,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('createPropAttribute', 'admin\Prop_Attribute@create');
     Route::post('storePropAttribute', 'admin\Prop_Attribute@store');
     Route::get('editPropAttribute/{id}', 'admin\Prop_Attribute@edit');
-    Route::patch('updatePropAttribute/{id}', 'admin\Prop_Attribute@update');
+    Route::post('updatePropAttribute/{id}', 'admin\Prop_Attribute@update');
     Route::get('deletePropAttribute/{id}', 'admin\Prop_Attribute@destroy');
     Route::get('/propAttributeStatus/{id}/{status}/', 'admin\Prop_Attribute@setStatus');
 
