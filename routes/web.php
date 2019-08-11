@@ -115,6 +115,15 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::patch('updateCustomer/{id}', 'admin\CustomerController@update');
     Route::get('deleteCustomer/{id}', 'admin\CustomerController@destroy');
 
+    //PropAttribute
+    Route::get('propAttribute/{trash?}', 'admin\Prop_Attribute@index');
+    Route::get('createPropAttribute', 'admin\Prop_Attribute@create');
+    Route::post('storePropAttribute', 'admin\Prop_Attribute@store');
+    Route::get('editPropAttribute/{id}', 'admin\Prop_Attribute@edit');
+    Route::patch('updatePropAttribute/{id}', 'admin\Prop_Attribute@update');
+    Route::get('deletePropAttribute/{id}', 'admin\Prop_Attribute@destroy');
+    Route::get('/propAttributeStatus/{id}/{status}/', 'admin\Prop_Attribute@setStatus');
+
     //Payment
     Route::get('payment', 'admin\PaymentController@index');
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');

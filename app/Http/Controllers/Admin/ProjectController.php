@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Partner;
 
 class ProjectController extends Controller
 {
@@ -14,6 +15,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
+
+
+
         return View('admin.project.index');
     }
 
@@ -25,8 +29,14 @@ class ProjectController extends Controller
     public function create()
     {
 
-        
-        return View('admin.project.create');
+        $partner = Partner::where('status', '<>', 0)->get();
+
+        $data = array(
+            'partner' => $partner
+        );
+
+
+        return View('admin.project.create', $data);
     }
 
     /**

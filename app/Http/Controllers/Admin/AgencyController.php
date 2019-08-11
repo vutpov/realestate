@@ -18,9 +18,9 @@ class AgencyController extends Controller
      */
     public function index()
     {
-        $agency = Agency::join('Agency_Types','Agencies.AgencyTypeId','=','Agency_Types.AgencyTypeId')
+        $agency = Agency::join('Agency_Types', 'Agencies.AgencyTypeId', '=', 'Agency_Types.AgencyTypeId')
             ->select('*')->get();
-        return View('admin.agency.index',compact('agency'));
+        return View('admin.agency.index', compact('agency'));
     }
 
     /**
@@ -30,8 +30,8 @@ class AgencyController extends Controller
      */
     public function create()
     {
-        $type = AgencyType::all();
-        return View('admin.agency.create',compact('type'));
+        $type = AgencyType::where('status', '<>', -1)->get();
+        return View('admin.agency.create', compact('type'));
     }
 
     /**
@@ -47,7 +47,7 @@ class AgencyController extends Controller
         $attributes['tCOm'] = 0;
         $attributes['paid'] = 0;
         $attributes['amountDue'] = 0;
-        
+
         // dd($attributes);
         Agency::create($attributes);
 
@@ -73,12 +73,12 @@ class AgencyController extends Controller
      */
     public function edit($id)
     {
-        $agency = Agency::where('agencyId',$id)->join('Agency_Types','Agencies.AgencyTypeId','=','Agency_Types.AgencyTypeId')
+        $agency = Agency::where('agencyId', $id)->join('Agency_Types', 'Agencies.AgencyTypeId', '=', 'Agency_Types.AgencyTypeId')
             ->select('*')->get();
 
         $type = AgencyType::all();
 
-        return view('admin.agency.edit',compact('agency','type'));
+        return view('admin.agency.edit', compact('agency', 'type'));
     }
 
     /**
@@ -91,13 +91,13 @@ class AgencyController extends Controller
     public function update(Request $request, $id)
     {
         $attributes = self::validateAgency($request);
-        
-        $agency = Agency::where('agencyId',$id)->firstOrFail();
+
+        $agency = Agency::where('agencyId', $id)->firstOrFail();
         request()->validate([
-            'email' => ['required','min:12','max:30','unique:agencies,email,'.$agency->email.',email']
+            'email' => ['required', 'min:12', 'max:30', 'unique:agencies,email,' . $agency->email . ',email']
         ]);
 
-        Agency::where('agencyId',$id)->update($attributes);
+        Agency::where('agencyId', $id)->update($attributes);
 
         return redirect('/system/agency');
     }
@@ -110,7 +110,7 @@ class AgencyController extends Controller
      */
     public function destroy($id)
     {
-        Agency::where('agencyId',$id)->delete();
+        Agency::where('agencyId', $id)->delete();
 
         return redirect('/system/agency');
     }
@@ -120,12 +120,12 @@ class AgencyController extends Controller
         $attributes = request()->validate([
             'agency' => 'required|min:5|max:30',
             'phone' => 'required|min:9|max:30',
-            'email' => ['required','min:12','max:30','unique:agencies'],
+            'email' => ['required', 'min:12', 'max:30', 'unique:agencies'],
             'address' => 'required|min:10:max:191',
             'agencyTypeId' => 'required'
         ]);
 
-        $agencyType = AgencyType::where('agencyType',$request->agencyTypeId)->firstOrFail();
+        $agencyType = AgencyType::where('agencyType', $request->agencyTypeId)->firstOrFail();
         $attributes['agencyTypeId'] = $agencyType->agencyTypeId;
 
         return $attributes;

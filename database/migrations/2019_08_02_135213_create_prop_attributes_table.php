@@ -17,7 +17,8 @@ class CreatePropAttributesTable extends Migration
 
 
             $table->smallIncrements('propAttributeid');
-            $table->String('propAttribute', 30);
+            $table->String('propAttribute');
+            $table->smallInteger('status')->default('1');
             $table->timestamps();
         });
     }

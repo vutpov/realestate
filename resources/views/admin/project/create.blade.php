@@ -26,8 +26,13 @@
     <div class="form-group">
         <label>Partner</label>
         <select class="form-control" name="partner">
-            <option>Partner 1</option>
-            <option>Partner 2</option>
+
+            @foreach ($partner as $p)
+            <option value="{{$p->partnerID}}">{{$p->partner}}</option>
+            @endforeach
+
+
+
         </select>
     </div>
 

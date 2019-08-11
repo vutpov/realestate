@@ -38,6 +38,20 @@
         </ul>
       </li>
 
+
+      <li class="treeview">
+        <a href="#"><i class="fas fa-home"></i> <span>Property</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="/system/createPropAttribute">Add New Property Attribute</a></li>
+          <li><a href="/system/propAttribute">View All Property Attributes</a></li>
+        </ul>
+      </li>
+
+
       <li class="treeview">
         <a href="#"><i class="fas fa-bookmark"></i><span>Booking</span>
           <span class="pull-right-container">

@@ -17,8 +17,7 @@ class CreatePropAttribDetailsTable extends Migration
             // PropAttribDetail(propAttribDetailId, propAtrribute,Title, PropertyCode) 
 
             $table->bigIncrements('propAttribDetailId');
-            $table->string('propAtrribute', 200);
-            $table->string('title', 10);
+            $table->string('propAttributeDetail', 200);
             
             $table->timestamps();
         });
