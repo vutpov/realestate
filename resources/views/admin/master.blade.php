@@ -22,6 +22,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <link rel="stylesheet"
     href="{{ url('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+
+  <!-- select2 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/css/select2.min.css" rel="stylesheet" />
+
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
@@ -256,17 +260,19 @@ desired effect
     @include('admin.sidebar.sidebar')
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper @yield(" push-content")">
       <!-- Content Header (Page header) -->
       <section class="content-header">
+
+
         <h1>
           @yield('page-header')
           <small>@yield('page-desc')</small>
         </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-          <li class="active">Here</li>
-        </ol>
+
+
+        @yield('page-summary')
+
       </section>
 
       <!-- Main content -->
@@ -435,7 +441,12 @@ desired effect
   <!-- Font Awesome -->
   <script src="{{url('admin/js/all.min.js')}}"></script>
 
+  <!-- Dropzone -->
   <script src="{{url('admin/js/dropzone.js')}}"></script>
+
+
+  <!-- Select2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
 
   <script src="{{url('admin/js/script.js')}}"></script>
 

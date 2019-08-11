@@ -4,7 +4,15 @@
 
 
 @section('col','col-md-6')
+
+
+
+
+
+
 @section('content')
+
+
 
 
 
@@ -22,16 +30,25 @@
     @endif
 
 
-    {{-- Customer --}}
+
+
+
+
+    {{-- Type --}}
+
+
     <div class="form-group">
-        <label>Partner</label>
-        <select class="form-control" name="partner">
-
-            @foreach ($partner as $p)
-            <option value="{{$p->partnerID}}">{{$p->partner}}</option>
-            @endforeach
 
 
+
+        <label>Type</label>
+        <select class="form-control select2" name="partner">
+
+            <?php
+                foreach ($partner as $p) {
+                    echo('<option value='.$p->partnerId.'>'.$p->partner.'</option>');
+                }    
+            ?>
 
         </select>
     </div>
@@ -39,7 +56,7 @@
     {{-- project --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">Project</label>
-        <input type="text" class="form-control" id="inputSuccess" name="project" placeholder="Project"
+        <input type="text" class="form-control" id="project" name="project" placeholder="Project"
             value="{{old('project')}}" />
         <span class="help-block"></span>
     </div>
@@ -62,124 +79,135 @@
 
 
 
-{{-- Type --}}
-<div class="form-group w-50">
-    <label>Type</label>
-    <select class="form-control" name="type">
-        <option>Land</option>
-        <option>House</option>
-    </select>
-</div>
 
 
-{{-- project --}}
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">Code</label>
-    <input type="text" class="form-control" id="inputSuccess" name="code" placeholder="Code" />
-    <span class="help-block"></span>
-</div>
+
+<form action="" method="post" id="detail">
+    <div class="form-group w-50">
 
 
-{{-- description --}}
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">Description</label>
-    <input type="text" class="form-control" id="inputSuccess" name="description" placeholder="Description" />
-    <span class="help-block"></span>
-</div>
+        {{-- Type --}}
 
+        <label>Type</label>
+        <select class="form-control" name="type">
 
-{{-- No --}}
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">No</label>
-    <input type="text" class="form-control" id="inputSuccess" name="no" placeholder="No" />
-    <span class="help-block"></span>
-</div>
+            <?php
+                        foreach ($propertyType as $item) {
+                            echo('<option value='.$item->propertyTypeId.'>'.$item->propertyType.'</option>');
+                        }    
+                    ?>
 
-
-{{-- St --}}
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">st</label>
-    <input type="text" class="form-control" id="inputSuccess" name="st" placeholder="St" />
-    <span class="help-block"></span>
-</div>
-
-{{-- Props Attribute --}}
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">Attribute</label>
-    <input type="text" class="form-control" id="inputSuccess" name="attrib" placeholder="Attribute" disabled />
-    <span class="help-block"></span>
-</div>
-
-
-{{--  Cost --}}
-
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">Cost</label>
-    <input type="number" class="form-control" name="cost" placeholder="Cost" />
-    <span class="help-block"></span>
-</div>
-
-
-{{--  Price --}}
-
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">Price</label>
-    <input type="number" class="form-control" name="price" placeholder="Price" />
-    <span class="help-block"></span>
-</div>
-
-
-{{-- Free --}}
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess">Free</label>
-    <input type="text" class="form-control" id="inputSuccess" name="free" placeholder="Free" />
-    <span class="help-block"></span>
-</div>
-
-{{-- Status --}}
-<div class="form-group w-50">
-    <label>Status</label>
-    <select class="form-control" name="status">
-        <option>Hard</option>
-        <option>Soft</option>
-        <option>None</option>
-    </select>
-</div>
-
-
-{{-- Publish --}}
-<div class="form-group w-50">
-    <label>Publish</label>
-    <select class="form-control" name="publish">
-        <option>Pending</option>
-        <option>Published</option>
-    </select>
-</div>
+        </select>
+    </div>
 
 
 
 
-{{--  Discount --}}
-
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess"> Discount</label>
-    <input type="number" class="form-control" name="discount" placeholder="Discount" value="{{old('Discount')}}" />
-    <span class="help-block"></span>
-</div>
-
-
-{{--  Amount --}}
-
-<div class="form-group w-50">
-    <label class="control-label" for="inputSuccess"> Amount</label>
-    <input type="number" class="form-control" name="amount" placeholder="Amount" value="{{old('Amount')}}" />
-    <span class="help-block"></span>
-</div>
+    {{-- project --}}
+    <div class="form-group w-50">
+        <label class="control-label" for="inputSuccess">Code</label>
+        <input type="text" class="form-control text-validate" id="code" name="code" placeholder="Code"
+            data-toggle="tooltip" data-placement="bottom" title="Please input 4 or more character"
+            alt="Please input 4 or more character" />
+        <span class="help-block"></span>
+    </div>
 
 
-<div class="form-group">
-    <button type="button" class="btn btn-primary">Add Property</button>
-</div>
+    {{-- description --}}
+    <div class="form-group w-50">
+        <label class="control-label" for="inputSuccess">Description</label>
+        <input type="text" class="form-control" id="description" name="description" placeholder="Description" />
+        <span class="help-block"></span>
+    </div>
+
+
+    {{-- No --}}
+    <div class="form-group w-50">
+        <label class="control-label" for="inputSuccess">No</label>
+        <input type="text" class="form-control text-validate" id="no" name="no" placeholder="No" data-toggle="tooltip"
+            data-placement="bottom" title="Please input value" alt="Please input value" />
+        <span class="help-block"></span>
+    </div>
+
+
+    {{-- St --}}
+    <div class="form-group w-50">
+        <label class="control-label" for="inputSuccess">ST</label>
+        <input type="text" class="form-control text-validate" id="st" name="st" placeholder="St" data-toggle="tooltip"
+            data-placement="bottom" title="Please input value" alt="Please input value" />
+        <span class="help-block"></span>
+    </div>
+
+
+
+    {{-- Props Attribute --}}
+
+    <div class="form-group w-50">
+        <label>Type</label>
+        <select class="form-control" name="Attribute" id="attribute">
+
+            <?php
+                        foreach ($propAttribute as $item) {
+                            echo('<option value='.$item->propAttributeID.'>'.$item->propAttribute.'</option>');
+                        }    
+                    ?>
+
+        </select>
+    </div>
+
+
+
+
+    {{--  Cost --}}
+
+    <div class="form-group w-50">
+        <label class="control-label" for="inputSuccess">Cost</label>
+        <input type="number" class="form-control number-validate" id="cost" name="cost" placeholder="Cost"
+            data-toggle="tooltip" data-placement="bottom" title="Please input value" alt="Please input value" />
+        <span class="help-block"></span>
+    </div>
+
+
+    {{--  Price --}}
+
+    <div class="form-group w-50">
+        <label class="control-label" for="inputSuccess">Price</label>
+        <input type="number" class="form-control number-validate" id="price" name="price" placeholder="Price"
+            data-toggle="tooltip" data-placement="bottom" title="Please input value" alt="Please input value" />
+        <span class="help-block"></span>
+    </div>
+
+
+    {{-- Free --}}
+    <div class="form-group w-50">
+        <label class="control-label" for="inputSuccess">Free</label>
+        <input type="text" class="form-control" id="free" name="free" placeholder="Free" />
+        <span class="help-block"></span>
+    </div>
+
+
+
+    {{-- Publish --}}
+    <div class="form-group w-50">
+        <label>Publish</label>
+        <select class="form-control" name="publish" id="publish">
+            <option value="0">Pending</option>
+            <option value="1">Published</option>
+        </select>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" name="btnAdd" id="btnAdd">Add Property</button>
+    </div>
+
+
+
+</form>
+
+
 
 
 {{-- Book Detail --}}

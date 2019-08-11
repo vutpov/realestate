@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Partner;
+use App\PropertyType;
+use App\PropAttribute;
 
 class ProjectController extends Controller
 {
@@ -15,6 +17,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        //partner propertyType
+
 
 
 
@@ -34,6 +38,30 @@ class ProjectController extends Controller
         $data = array(
             'partner' => $partner
         );
+
+
+
+        $partner = Partner::select('partnerId', 'partner')
+            ->where('status', '<>', 0)
+            ->get();
+
+        $propertyType = PropertyType::select('propertyTypeId', 'propertyType')
+            ->where('status', '<>', 0)
+            ->get();
+
+        $propAttribute = PropAttribute::select('propAttributeID', 'propAttribute')
+            ->where('status', '<>', 0)
+            ->get();
+
+        $data = array(
+            'partner' => $partner,
+            'propertyType' => $propertyType,
+            'propAttribute' => $propAttribute
+        );
+
+
+
+
 
 
         return View('admin.project.create', $data);

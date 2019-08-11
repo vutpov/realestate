@@ -5,6 +5,8 @@ insert into roles(role) values('Admin'),('Accountant'),('Cashier');
 INSERT INTO `realestate`.`prop_attrib_details`(`propAttributeDetail`) VALUES ('Title'),('Bedroom'),('Bathroom'),('Floor');
 
 
+INSERT INTO `realestate`.`property_types`(`propertyType`) VALUES ('House'),('Villa'),('Land'),('Condo'),('Office');
+
 
 
 -- INSERT INTO `companies`(`CompanyName`, `description`, `tel`, `address`, `email`, `logo`, `created_at`) VALUES ('SO1.7', 'Real Estate', '012606645', 'Phnom Penh', 'so17@gmail.com', 'logo.png', '2019-08-05 19:26:54');
