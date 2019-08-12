@@ -7,7 +7,6 @@
 @section('content')
 
 
-
 <table class="table table-hover dataTable">
 
     <thead>
@@ -26,17 +25,6 @@
     <tbody>
 
 
-        {{-- @foreach ($user as $u)
-        <tr>
-            <td>{{$loop->iteration}}</td>
-        <td>{{$u->username}}</td>
-        <td>{{$u->name}}</td>
-        <td>{{$u->role}}</td>
-        <td>{{$u->status}}</td>
-        <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
-            <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
-        </tr>
-        @endforeach --}}
 
 
     </tbody>
