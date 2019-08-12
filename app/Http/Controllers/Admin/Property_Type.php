@@ -37,7 +37,13 @@ class Property_Type extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'propertyType' => 'required'
+        ]);
+
+        $propType = new PropertyType;
+        $propType->propertyType = $request->propertyType;
+        $propType->save();
     }
 
     /**

@@ -127,6 +127,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //PropertiesTypes
     Route::get('PropTypes','admin\Property_Type@index');
     Route::get('createPropTypes', 'admin\Property_Type@create');
+    Route::post('storePropTypes','admin\Property_Type@store');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');

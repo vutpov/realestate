@@ -7,7 +7,7 @@
 @section('content')
 
 
-<form action="{{url('/system/storePropAttribute')}}" method="POST">
+<form action="{{url('/system/storePropTypes')}}" method="POST">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">
