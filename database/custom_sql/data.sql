@@ -1,6 +1,6 @@
 insert into positions (position) values('Admin'),('Accountant'),('Cashier');
 
-insert into roles(role) values('Admin'),('Accountant'),('Cashier');
+insert into roles(role) values('Admin'),('Accountant'),('Cashier'),('Customer');
 
 INSERT INTO `realestate`.`prop_attrib_details`(`propAttributeDetail`) VALUES ('Title'),('Bedroom'),('Bathroom'),('Floor');
 
