@@ -19,10 +19,15 @@
     <tbody>
 
 
-        
-
 
     </tbody>
+
+
+    <div class="form-group">
+        <label for="">
+            <input type="checkbox" name="chkbox" id="chkbox-proptyType">
+        </label>
+    </div>
 
 </table>
 

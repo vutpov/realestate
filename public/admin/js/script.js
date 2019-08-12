@@ -29,6 +29,16 @@ $(function() {
         document.location.href = go_to_url;
     });
 
+    // checkbox for propertyType
+
+    $("#chkbox-proptyType").click(function(){
+        if($(this).prop("checked") == true){
+            document.location = "/system/PropTypes/trash";
+        }else{
+            document.location = "/system/PropTypes";
+        }
+    });
+
     $('input[type=number]').keypress(e => {
         if ((e.which != 8 && e.which != 0 && e.which < 48) || e.which > 57) {
             e.preventDefault();

@@ -125,7 +125,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('/propAttributeStatus/{id}/{status}/', 'admin\Prop_Attribute@setStatus');
 
     //PropertiesTypes
-    Route::get('PropTypes','admin\Property_Type@index');
+    Route::get('PropTypes/{trash?}','admin\Property_Type@index');
     Route::get('createPropTypes', 'admin\Property_Type@create');
     Route::post('storePropTypes','admin\Property_Type@store');
 

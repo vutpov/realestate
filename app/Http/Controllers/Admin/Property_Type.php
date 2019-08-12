@@ -14,9 +14,14 @@ class Property_Type extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($getTrash = false)
     {
-        return view('admin.propertyType.index');
+        if($getTrash){
+            dd('false');
+        }else{
+            return view('admin.propertyType.index');
+        }
+        
     }
 
     /**
