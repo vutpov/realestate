@@ -124,6 +124,10 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('deletePropAttribute/{id}', 'admin\Prop_Attribute@destroy');
     Route::get('/propAttributeStatus/{id}/{status}/', 'admin\Prop_Attribute@setStatus');
 
+    //PropertiesTypes
+    Route::get('PropTypes','admin\Property_Type@index');
+    Route::get('createPropTypes', 'admin\Property_Type@create');
+
     //Payment
     Route::get('payment', 'admin\PaymentController@index');
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
