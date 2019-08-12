@@ -50,11 +50,23 @@ svg[class*="fa"] {
     color: #999; }
 
 .summary {
-  position: fixed;
-  z-index: 1;
-  top: 65px; }
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  width: 70%; }
+  .summary div {
+    margin-right: 15%;
+    display: block;
+    font-weight: 600; }
 
-.my-pT-summary {
+.selected-row {
+  background-color: #00C0EF;
+  color: black; }
+
+.detail-row {
+  cursor: pointer; }
+
+.primary .my-pT-summary {
   padding-top: 105px; }
 
 .form-control.select2 .select2-container--classic,

@@ -41,7 +41,7 @@
 
 
 
-        <label>Type</label>
+        <label>Partner</label>
         <select class="form-control select2" name="partner">
 
             <?php
@@ -89,7 +89,7 @@
         {{-- Type --}}
 
         <label>Type</label>
-        <select class="form-control" name="type">
+        <select class="form-control" name="type" id="propertyType">
 
             <?php
                         foreach ($propertyType as $item) {
@@ -143,14 +143,14 @@
     {{-- Props Attribute --}}
 
     <div class="form-group w-50">
-        <label>Type</label>
-        <select class="form-control" name="Attribute" id="attribute">
+        <label>Property Attribute</label>
+        <select class="form-control select2" name="Attribute" id="attribute">
 
             <?php
-                        foreach ($propAttribute as $item) {
-                            echo('<option value='.$item->propAttributeID.'>'.$item->propAttribute.'</option>');
-                        }    
-                    ?>
+                foreach ($propAttribute as $item) {
+                    echo('<option value='.$item->propAttributeID.'>'.$item->propAttribute.'</option>');
+                }    
+            ?>
 
         </select>
     </div>
@@ -214,39 +214,36 @@
 
 
 
+<div class="callout callout-info summary">
+
+    <div>Count: <span id="tCount">0</span></div>
+    <div>Cost: <span id="tCost">0</span></div>
+    <div>Price: <span id="tPrice">0</span></div>
+</div>
+
+
 
 
 <div class="form-group">
-    <table class="table table-hover">
+    <table class="table table-hover" id="table-project-detail">
         <thead>
-            <tr>
+            <tr class="tr-heading">
                 <th>#</th>
                 <th>Type</th>
                 <th>Code</th>
                 <th>Description</th>
                 <th>No</th>
                 <th>St</th>
+                <th>Property Attribute</th>
                 <th>Cost</th>
                 <th>Price</th>
                 <th>Free</th>
-                <th>Status</th>
                 <th>Publish</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="project-detail-body">
 
 
-            {{-- @foreach ($user as $u)
-                            <tr>
-                                <td>{{$loop->iteration}}</td>
-            <td>{{$u->username}}</td>
-            <td>{{$u->name}}</td>
-            <td>{{$u->role}}</td>
-            <td>{{$u->status}}</td>
-            <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
-                <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
-            </tr>
-            @endforeach --}}
 
 
         </tbody>
