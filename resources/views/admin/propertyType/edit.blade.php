@@ -7,7 +7,7 @@
 @section('content')
 
 
-<form action="{{url('/system/storePropAttribute')}}" method="POST">
+<form action="{{url('/system/updatePropTypes/' . $propTypes->propertyTypeId)}}" method="POST">
     @csrf
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -22,10 +22,10 @@
 
     <div class="form-group">
         <label for="">Property Types</label>
-        <input type="text" name="propertyType" class="form-control">
+        <input type="text" name="propertyType" value="{{$propTypes->propertyType}}" class="form-control">
     </div>
     <div class="from-group">
-        <button class="btn btn-primary pull-right" type="submit" name="btnAdd">ADD</button>
+        <button class="btn btn-primary pull-right" type="submit" name="btnAdd">UPDATE</button>
     </div>
 
 

@@ -23,13 +23,15 @@ class Prop_Attribute extends Controller
 
 
         if ($getTrash) {
+            
+            
             $propAttribute = PropAttribute::all();
-
+    
             $url = url('/system/propAttribute/');
 
             $checkTrash = 'checked';
         } else {
-
+            
             $propAttribute = PropAttribute::where('status', '<>', -1)->get();
 
             $url = url('/system/propAttribute/trash');

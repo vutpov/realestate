@@ -17,9 +17,21 @@ class Property_Type extends Controller
     public function index($getTrash = false)
     {
         if($getTrash){
-            dd('false');
+            $check = "checked";
+            $propTypes = PropertyType::where('status', '-1')->get();
+            $data = [
+                'check' => $check,
+                'propTypes' => $propTypes 
+            ];
+            return view('admin.propertyType.index', $data);
         }else{
-            return view('admin.propertyType.index');
+            $check = '';
+            $propTypes = PropertyType::where('status', '<>', '-1')->get();
+            $data = [
+                'check' => $check,
+                'propTypes' => $propTypes 
+            ];
+            return view('admin.propertyType.index', $data);
         }
         
     }
@@ -70,7 +82,11 @@ class Property_Type extends Controller
      */
     public function edit($id)
     {
-        //
+        $propTypes = PropertyType::where('propertyTypeId', $id)->first();
+        $data = [
+            'propTypes' => $propTypes 
+        ];  
+        return view('admin.propertyType.edit', $data);
     }
 
     /**
@@ -82,7 +98,12 @@ class Property_Type extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'propertyType' => 'required'
+        ]);
+
+        PropertyType::where('propertyTypeId', $id)->update(['propertyType' => $request->propertyType]);
+        return redirect('/system/PropTypes');
     }
 
     /**
@@ -95,4 +116,12 @@ class Property_Type extends Controller
     {
         //
     }
+
+    public function setStatus($id, $status){
+        $st = $status == 'trash' ? -1 : 1;
+        PropertyType::where('propertyTypeId', $id)->update(['status' => $st]);
+        return redirect()->back();
+    }
+
+
 }

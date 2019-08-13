@@ -18,18 +18,34 @@
 
     <tbody>
 
-
+        @foreach ($propTypes as $item)
+            <tr>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$item->propertyType}}</td>
+                <td>
+                    <a href="/system/editPropTypes/{{$item->propertyTypeId}}"><i class="fa fa-edit"></i></a>
+                    @if($item->status == 1)
+                        <a href="/system/PropTypesStatus/{{$item->propertyTypeId}}/trash"><i class="fa fa-trash"></i></a>
+                    @else
+                        <a href="/system/PropTypesStatus/{{$item->propertyTypeId}}/recycle"><i class="fas fa-recycle"></i></a>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
 
     </tbody>
 
 
-    <div class="form-group">
-        <label for="">
-            <input type="checkbox" name="chkbox" id="chkbox-proptyType">
-        </label>
-    </div>
+    
 
 </table>
+
+<div class="form-group">
+    <label for="">
+        <input type="checkbox" name="chkbox" id="chkbox-proptyType" {{$check}}>
+        Trash
+    </label>
+</div>
 
 @endsection
 
