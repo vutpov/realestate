@@ -54,6 +54,12 @@ $(function() {
     $('form#detail').submit(e => {
         e.preventDefault();
 
+        if($("#btnAdd").text()=='Cancel'){
+            changeBtnContext('#btnAdd','1');
+            return;
+        }
+        
+       
         const inputText = document.querySelectorAll('.text-validate');
 
         inputText.forEach(item => {
@@ -97,36 +103,34 @@ $(function() {
         }
     });
 
+    
+
     let currentRowIndex = -1;
 
-    const tableProjectDetail = this.querySelector('#table-project-detail');
+    const detail = this.querySelector('#project-detail-body');
 
-    tableProjectDetail.addEventListener('click', e => {
-        parentTag = $(e.target).parent();
+    detail.addEventListener('click', e => {
+        
+       console.log(e.target.tagName);
+      
+        console.log(e.target.className)
+        
+        console.log(e)
 
-        console.log(parentTag);
 
-        if (
-            parentTag.prop('tagName') == 'TR' &&
-            !parentTag.hasClass('tr-heading')
-        ) {
-            const lastRow = `#table-project-detail tr[alt=${currentRowIndex}]`;
-            console.log(lastRow);
+        if(e.target.tagName == 'A'){
+            if(e.target.rel == 'edit'){
+                getProjectItemForEdit($(e.target).attr('alt'));
+            }else if(e.target.rel == 'delete'){
 
-            $(lastRow).removeClass('selected-row');
-
-            $(tableProjectDetail);
-
-            currentRowIndex = $(e.target)
-                .parent()
-                .attr('alt');
-            $(e.target)
-                .parent()
-                .addClass('selected-row');
+            }
         }
+        
+        
+        
     });
 
-    $('#table-project-detail').click(e => {});
+
 
     $('.select2').select2({
         theme: 'classic',
@@ -134,7 +138,15 @@ $(function() {
     });
 
     /* Add property detail to project */
+
+
+
+
+
 });
+
+
+
 
 function addProjectDetail() {
     const type = document.querySelector('#propertyType');
@@ -158,16 +170,28 @@ function addProjectDetail() {
     const rowCount = $('#table-project-detail td').closest('tr').length + 1;
 
     const row = `<tr class="detail-row" alt=${rowCount - 1}><td>${rowCount}</td>
-        <td><div alt='${type.value}'></div>${stType}</td>
-        <td>${code.value}</td>
-        <td>${description.value}</td>
-        <td>${no.value}</td>
-        <td>${st.value}</td>
-        <td>${propAttribute}</td>
-        <td>${cost.value}</td>
-        <td>${price.value}</td>
-        <td>${free.value}</td>
-        <td><div alt='${publish.value}'></div>${stPublish}</td>
+        <td alt='${type.value}'>${stType}</td>
+        <td alt='${code.value}'>${code.value}</td>
+        <td alt='${description.value}'>${description.value}</td>
+        <td alt='${no.value}'>${no.value}</td>
+        <td alt='${st.value}'>${st.value}</td>
+        <td alt='${$('#attribute').val()}'>${propAttribute}</td>
+        <td alt='${cost.value}'>${cost.value}</td>
+        <td alt='${price.value}'>${price.value}</td>
+        <td alt='${free.value}'>${free.value}</td>
+        <td alt='${
+            publish.value
+        }' class='pro-detail-publish'>${stPublish}</td>
+        <td>
+            <a alt=${rowCount - 1} rel="edit" href="#" class="btn btn-primary edit">Edit</a>
+           
+        </td>
+        <td>
+            <a alt=${rowCount - 1} rel="delete" href="#" class="btn btn-danger delete">Delete</a>  
+        </td>
+
+       
+
     `;
 
     $('#project-detail-body').append(row);
@@ -179,4 +203,15 @@ function addProjectDetail() {
     $('#tCount').text(rowCount);
     $('#tCost').text(tCost);
     $('#tPrice').text(tPrice);
+}
+
+
+
+function getProjectItemForEdit(rowIndex) {
+    let row = document.querySelector(`.tr[alt="${rowIndex}"]`);
+    console.log(row);
+}
+
+function showPropertyPopup(){
+
 }
