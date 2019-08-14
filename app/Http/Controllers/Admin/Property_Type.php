@@ -18,7 +18,7 @@ class Property_Type extends Controller
     {
         if($getTrash){
             $check = "checked";
-            $propTypes = PropertyType::where('status', '-1')->get();
+            $propTypes = PropertyType::all();
             $data = [
                 'check' => $check,
                 'propTypes' => $propTypes 
