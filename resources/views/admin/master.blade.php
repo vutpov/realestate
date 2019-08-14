@@ -48,8 +48,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{url('admin/css/all.min.css')}}">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   <!-- Additional style -->
   <link rel="stylesheet" href="{{url('admin/css/style.css')}}">
+
+
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -447,6 +450,9 @@ desired effect
 
   <!-- Select2 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
 
   <script src="{{url('admin/js/script.js')}}"></script>
 

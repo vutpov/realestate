@@ -122,7 +122,19 @@ svg[class*="fa"] {
 .select2-selection__rendered {
 
     line-height: 35px !important;
+}
 
+.my-mb-15 {
+    margin-bottom: 15px;
+}
 
+.modal {
+    overflow: visible;
 
+    z-index: 111;
+    margin-top: 40px;
+}
+
+.primary-color {
+    color: $primary-color;
 }
