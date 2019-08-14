@@ -48,6 +48,8 @@
         <ul class="treeview-menu">
           <li><a href="/system/createPropAttribute">Add New Property Attribute</a></li>
           <li><a href="/system/propAttribute">View All Property Attributes</a></li>
+          <li><a href="/system/createPropTypes">Add New Property Types</a></li>
+          <li><a href="/system/PropTypes">View All Property Types</a></li>
         </ul>
       </li>
 

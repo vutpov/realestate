@@ -124,6 +124,14 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('deletePropAttribute/{id}', 'admin\Prop_Attribute@destroy');
     Route::get('/propAttributeStatus/{id}/{status}/', 'admin\Prop_Attribute@setStatus');
 
+    //PropertiesTypes
+    Route::get('PropTypes/{trash?}','admin\Property_Type@index');
+    Route::get('createPropTypes', 'admin\Property_Type@create');
+    Route::post('storePropTypes','admin\Property_Type@store');
+    Route::get('editPropTypes/{id}', 'admin\Property_Type@edit');
+    Route::post('updatePropTypes/{id}', 'admin\Property_Type@update');
+    Route::get('PropTypesStatus/{id}/{status}', 'admin\Property_Type@setStatus');
+
     //Payment
     Route::get('payment', 'admin\PaymentController@index');
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
