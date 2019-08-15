@@ -45,6 +45,11 @@ Route::group(['prefix' => 'system'], function () {
     Route::post('/login', 'auth\LoginController@login');
 });
 
+
+
+
+
+
 Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
 
 
@@ -125,9 +130,9 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('/propAttributeStatus/{id}/{status}/', 'admin\Prop_Attribute@setStatus');
 
     //PropertiesTypes
-    Route::get('PropTypes/{trash?}','admin\Property_Type@index');
+    Route::get('PropTypes/{trash?}', 'admin\Property_Type@index');
     Route::get('createPropTypes', 'admin\Property_Type@create');
-    Route::post('storePropTypes','admin\Property_Type@store');
+    Route::post('storePropTypes', 'admin\Property_Type@store');
     Route::get('editPropTypes/{id}', 'admin\Property_Type@edit');
     Route::post('updatePropTypes/{id}', 'admin\Property_Type@update');
     Route::get('PropTypesStatus/{id}/{status}', 'admin\Property_Type@setStatus');

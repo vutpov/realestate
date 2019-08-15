@@ -1,4 +1,9 @@
 $(function() {
+   
+
+
+
+   
     $('.datepicker').datepicker({
         autoclose: true,
     });
@@ -105,25 +110,21 @@ $(function() {
 
     
 
-    let currentRowIndex = -1;
+   
 
     const detail = this.querySelector('#project-detail-body');
 
     detail.addEventListener('click', e => {
         
-       console.log(e.target.tagName);
-      
-        console.log(e.target.className)
-        
-        console.log(e)
 
 
         if(e.target.tagName == 'A'){
+            let rowIndex = $(e.target).parent().parent().attr('alt')
             if(e.target.rel == 'edit'){
-                getProjectItemForEdit($(e.target).attr('alt'));
+                getProjectItemForEdit(rowIndex);
             }else if(e.target.rel == 'delete'){
-
-            }
+                deleteDetail(rowIndex);
+            }   
         }
         
         
@@ -160,34 +161,34 @@ function addProjectDetail() {
     const free = document.querySelector('#free');
     const publish = document.querySelector('#publish');
 
-    const stType = document.querySelector(
+    const stType = $(
         `#propertyType option[value="${type.value}"]`
-    ).innerText;
-    const stPublish = document.querySelector(
-        `#publish option[value="${type.value}"]`
-    ).innerText;
+    ).html();
+    const stPublish =$(
+        `#publish option[value="${publish.value}"]`
+    ).html();
 
     const rowCount = $('#table-project-detail td').closest('tr').length + 1;
 
-    const row = `<tr class="detail-row" alt=${rowCount - 1}><td>${rowCount}</td>
-        <td alt='${type.value}'>${stType}</td>
-        <td alt='${code.value}'>${code.value}</td>
-        <td alt='${description.value}'>${description.value}</td>
-        <td alt='${no.value}'>${no.value}</td>
-        <td alt='${st.value}'>${st.value}</td>
-        <td alt='${$('#attribute').val()}'>${propAttribute}</td>
-        <td alt='${cost.value}'>${cost.value}</td>
-        <td alt='${price.value}'>${price.value}</td>
-        <td alt='${free.value}'>${free.value}</td>
-        <td alt='${
+    const row = `<tr alt="${rowCount - 1}" id="detail-row-${rowCount - 1}"><td>${rowCount}</td>
+        <td rel="type" alt='${type.value}'>${stType}</td>
+        <td rel="code" alt='${code.value}'>${code.value}</td>
+        <td rel="description" alt='${description.value}'>${description.value}</td>
+        <td rel="no" alt='${no.value}'>${no.value}</td>
+        <td rel="st" alt='${st.value}'>${st.value}</td>
+        <td rel="propertyAttribute" alt='${$('#attribute').val()}'>${propAttribute}</td>
+        <td rel="cost" alt='${cost.value}'>${cost.value}</td>
+        <td rel="price" alt='${price.value}'>${price.value}</td>
+        <td rel="free" alt='${free.value}'>${free.value}</td>
+        <td rel="publish" alt='${
             publish.value
         }' class='pro-detail-publish'>${stPublish}</td>
         <td>
-            <a alt=${rowCount - 1} rel="edit" href="#" class="btn btn-primary edit">Edit</a>
+            <a rel="edit"  class="btn btn-primary edit">Edit</a>
            
         </td>
         <td>
-            <a alt=${rowCount - 1} rel="delete" href="#" class="btn btn-danger delete">Delete</a>  
+            <a rel="delete" class="btn btn-danger delete">Delete</a>  
         </td>
 
        
@@ -208,10 +209,96 @@ function addProjectDetail() {
 
 
 function getProjectItemForEdit(rowIndex) {
-    let row = document.querySelector(`.tr[alt="${rowIndex}"]`);
-    console.log(row);
+    var children = document.querySelector(`#detail-row-${rowIndex}`).children;
+    children=Array.from(children);
+    var data=[];
+
+    
+    children
+        .filter(e=>{            
+            return typeof $(e).attr('rel') !== 'undefined' 
+        })
+        .forEach(e=>{
+            data[$(e).attr('rel')]=$(e).attr('alt')
+        });
+
+    showPropertyPopup(data);
+
 }
 
-function showPropertyPopup(){
+function showPropertyPopup(data){
+    $('#trigger-detail').modal();
+    const type = document.querySelector('#propertyType');
+    const code = document.querySelector('#code');
+    const description = document.querySelector('#description');
+    const no = document.querySelector('#no');
+    const st = document.querySelector('#st');
+    
+    const cost = document.querySelector('#cost');
+    const price = document.querySelector('#price');
+    const free = document.querySelector('#free');
+    const publish = document.querySelector('#publish');
 
+
+
+    $('#attribute').val(data["propertyAttribute"]);
+    $('#attribute').select2().trigger('change');
+
+
+    setSelect(type,data['type']);
+
+    code.value=data['code'];
+    description.value=data['description'];
+    no.value = data['no'];
+    st.value = data['st'];
+ 
+    cost.value = data['cost'];
+    price.value = data['price'];
+    free.value = data['free'];
+    st.value = data['st'];
+    
+    setSelect(publish,data['publish']);
+}
+
+
+function deleteDetail(rowIndex){
+    let row = document.querySelector(`#detail-row-${rowIndex}`);
+    row.remove();
+
+    let table=document.querySelector(`#project-detail-body`);
+
+    resetId(table)
+}
+
+function resetId(table){
+    let rows=table.children;
+
+    rows=Array.from(rows);
+
+
+    rows.forEach((value,index)=>{
+        console.log(index,value);
+        value.setAttribute('id', `detail-row-${index}`);
+        value.setAttribute('alt', index);
+        value.children[0].innerText=index+1;
+    });
+
+}
+
+function changeSummaryValue(){
+    
+}
+
+
+
+
+
+function setSelect(select,data){
+    const typeChildren= Array.from(select.children);
+
+    typeChildren.forEach(child=>{
+        if(child.value == data){
+            select.value = data;
+        }
+    });
 }

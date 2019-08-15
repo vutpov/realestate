@@ -80,7 +80,7 @@
 
 
 <!-- Modal HTML embedded directly into document -->
-<div id="ex1" class="modal">
+<div id="trigger-detail" class="modal">
     <form action="" method="post" id="detail">
         <div class="form-group">
 
@@ -210,7 +210,7 @@
 
 
 <!-- Link to open the modal -->
-<p><a href="#ex1" class="btn btn-primary" rel="modal:open">Add Property</a></p>
+<p><a href="#trigger-detail" class="btn btn-primary" rel="modal:open">Add Property</a></p>
 
 
 
@@ -256,7 +256,7 @@
         </thead>
         <tbody id="project-detail-body">
 
-        <tbody id="project-detail-body">
+
 
 
 

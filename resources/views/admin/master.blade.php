@@ -38,20 +38,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+
   <!-- Google Font -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
-  <link rel="stylesheet" href="{{url('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+
+
 
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{url('admin/css/all.min.css')}}">
 
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
   <!-- Additional style -->
   <link rel="stylesheet" href="{{url('admin/css/style.css')}}">
-
 
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -454,7 +457,9 @@ desired effect
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 
+
   <script src="{{url('admin/js/script.js')}}"></script>
+
 
 </body>
 
