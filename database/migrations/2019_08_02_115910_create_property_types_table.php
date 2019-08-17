@@ -17,6 +17,7 @@ class CreatePropertyTypesTable extends Migration
             $table->smallIncrements('propertyTypeId');
             $table->String('propertyType',30);
             $table->tinyInteger('status')->default(1);
+            $table->timestamps();
         });
     }
 

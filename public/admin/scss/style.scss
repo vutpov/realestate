@@ -1,3 +1,5 @@
+$primary-color:#00C0EF;
+
 /*datatable*/
 
 table {
@@ -84,14 +86,34 @@ svg[class*="fa"] {
 
 .summary {
 
-    position: fixed;
-    z-index: 1;
+    // position: fixed;
+    // z-index: 1;
 
-    top: 65px;
+    // top: 65px;
 
+    display: inline-flex;
+    width: 70%;
+
+
+    div {
+        margin-right: 15%;
+        display: block;
+        font-weight: 600;
+    }
 }
 
-.my-pT-summary {
+.selected-row {
+    background-color: $primary-color;
+
+    color: black;
+}
+
+.detail-row {
+    cursor: pointer;
+}
+
+
+.primary .my-pT-summary {
     padding-top: 105px
 }
 
@@ -100,7 +122,19 @@ svg[class*="fa"] {
 .select2-selection__rendered {
 
     line-height: 35px !important;
+}
 
+.my-mb-15 {
+    margin-bottom: 15px;
+}
 
+.modal {
+    overflow: visible;
 
+    z-index: 111;
+    margin-top: 40px;
+}
+
+.primary-color {
+    color: $primary-color;
 }

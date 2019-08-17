@@ -7,6 +7,11 @@ INSERT INTO `realestate`.`prop_attrib_details`(`propAttributeDetail`) VALUES ('T
 
 INSERT INTO `realestate`.`property_types`(`propertyType`) VALUES ('House'),('Villa'),('Land'),('Condo'),('Office');
 
+INSERT INTO `realestate`.`partner_types`(`partnerType`) VALUES ('Company');
+
+INSERT INTO `realestate`.`partners`(`partner`, `address`, `phone`, `email`, `partnerTypeId`) VALUES ('Angkor Realty', 'Phnom Penh', '012112121', 'email@yahoo.com', 1)
+
+INSERT INTO `realestate`.`prop_attributes`(`propAttribute`) VALUES ('Title:Hard,Bedroom:1,Bathroom:1,Face:North');
 
 
 -- INSERT INTO `companies`(`CompanyName`, `description`, `tel`, `address`, `email`, `logo`, `created_at`) VALUES ('SO1.7', 'Real Estate', '012606645', 'Phnom Penh', 'so17@gmail.com', 'logo.png', '2019-08-05 19:26:54');
