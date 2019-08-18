@@ -39,6 +39,7 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
-        "npm-install-peers": "^1.2.1"
+        "npm-install-peers": "^1.2.1",
+        "react-router-dom": "^5.0.1"
     }
 }

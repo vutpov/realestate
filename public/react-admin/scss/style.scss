@@ -1,0 +1,140 @@
+$primary-color:#00C0EF;
+
+/*datatable*/
+
+table {
+    svg[class*="fa"] {
+        font-size: 18px;
+    }
+}
+
+svg[class*="fa"] {
+    margin-right: 5px;
+}
+
+
+
+
+
+/*end of datatable*/
+
+.w-50 {
+    width: 50%;
+}
+
+.content-header h2 {
+    font-size: 20px;
+}
+
+.content {
+    min-height: auto;
+}
+
+.box-body {
+    position: relative;
+}
+
+.form-profile {
+    .form-group {
+        width: 74%;
+    }
+}
+
+.my-dropzone {
+    border: 1px solid #d2d6de;
+    height: 200px;
+
+    display: table;
+
+    .my-dz-details {
+        text-align: center;
+    }
+
+    &.input[type="file"] {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        width: 23%;
+    }
+
+    &.profile {
+        position: absolute;
+        right: 15px;
+        top: 35px;
+        width: 23%;
+        margin-bottom: 0;
+    }
+
+    .dz-default.dz-message {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .form-group {
+        margin: 0;
+    }
+
+
+
+    span {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        color: #999;
+    }
+}
+
+.summary {
+
+    // position: fixed;
+    // z-index: 1;
+
+    // top: 65px;
+
+    display: inline-flex;
+    width: 70%;
+
+
+    div {
+        margin-right: 15%;
+        display: block;
+        font-weight: 600;
+    }
+}
+
+.selected-row {
+    background-color: $primary-color;
+
+    color: black;
+}
+
+.detail-row {
+    cursor: pointer;
+}
+
+
+.primary .my-pT-summary {
+    padding-top: 105px
+}
+
+.form-control.select2 .select2-container--classic,
+.select2-selection--single,
+.select2-selection__rendered {
+
+    line-height: 35px !important;
+}
+
+.my-mb-15 {
+    margin-bottom: 15px;
+}
+
+.modal {
+    overflow: visible;
+
+    z-index: 111;
+    margin-top: 40px;
+}
+
+.primary-color {
+    color: $primary-color;
+}

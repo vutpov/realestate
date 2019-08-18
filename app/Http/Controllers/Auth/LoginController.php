@@ -58,6 +58,17 @@ class LoginController extends Controller
         return view('admin.login.index');
     }
 
+    public function index1()
+    {
+        $company = Company::all()->count();
+        if ($company == 0) {
+            return view('admin.create.step1');
+        }
+        return view('react-admin.login.index');
+    }
+
+
+
     public function postCreateStep2()
     {
 
@@ -148,7 +159,7 @@ class LoginController extends Controller
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'status' => 1])) {
 
 
-            
+
 
             $staff = DB::table('staffs')
                 ->join('users', 'users.staffId', '=', 'staffs.staffId')
@@ -160,9 +171,16 @@ class LoginController extends Controller
 
             $staff = $staff[0];
 
-            return redirect()->intended('/system/dashboard')->with('staff', $staff);
+            //laravel
+            // return redirect()->intended('/system/dashboard')->with('staff', $staff);
+            //laravel
+
+
+            return redirect()->intended('/react/dashboard')->with('staff', $staff);
         } else {
+            //laravel
             return redirect()->back()->with('msg', 'Your username or password incorrect');
+            //laravel
         }
     }
 

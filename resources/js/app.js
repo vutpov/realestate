@@ -12,15 +12,46 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
+import Header from './components/Header'
+import Sidebar from './components/Sidebar'
+import Content from './components/Content';
+import Footer from './components/Footer';
+import ControlSidebar from './components/ControlSidebar';
 
-class App extends Component{
-    render(){
-        return(
-            <div className="container">
-                
-            </div>
+
+class App extends Component {
+    render() {
+        return (
+
+            <BrowserRouter>
+
+                <div className="wrapper">
+                    <Header />
+                   
+
+                    {/* // Content Wrapper. Contains page content */}
+                    <div className="content-wrapper">
+                        
+                        <Switch>
+
+                            <Route exact path='/react/dashboard' component={Content} />
+                          
+                        </Switch>
+
+                        
+                       
+                    </div>
+
+
+
+
+                   
+                </div>
+
+            </BrowserRouter>
         )
     };
 }
