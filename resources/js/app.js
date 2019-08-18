@@ -17,12 +17,11 @@ import ReactDOM from 'react-dom';
 
 class App extends Component{
     render(){
-
-        
-        <div className="aaaa">
-            Hello
-        </div>
-
+        return(
+            <div className="container">
+                
+            </div>
+        )
     };
 }
 
@@ -30,4 +29,4 @@ class App extends Component{
 
 require('./components/Example');
 
-ReactDOM.render(<App />, document.getElementById('pov'))
+ReactDOM.render(<App />, document.getElementById('app'))

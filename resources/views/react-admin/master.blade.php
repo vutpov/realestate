@@ -292,7 +292,7 @@ desired effect
               <div class="box-body">
                 @yield('content')
 
-
+                <div id="app"></div>
               </div>
             </div>
           </div>
@@ -427,7 +427,7 @@ desired effect
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 3 -->
-
+  <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{url('admin/bower_components/jquery/dist/jquery.min.js')}}"></script>
   <!-- Bootstrap 3.3.7 -->
   <script src="{{url('admin/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
