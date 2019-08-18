@@ -46,6 +46,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
+          <li><a href="/system/createProperty">Add New Property</a></li>
+          <li><a href="/system/property">View All Properties</a></li>
           <li><a href="/system/createPropAttribute">Add New Property Attribute</a></li>
           <li><a href="/system/propAttribute">View All Property Attributes</a></li>
           <li><a href="/system/createPropTypes">Add New Property Types</a></li>

@@ -157,4 +157,11 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Project
     Route::get('project', 'admin\ProjectController@index');
     Route::get('createProject', 'admin\ProjectController@create');
+    Route::post('storeProject/', 'admin\ProjectController@store');
+    Route::get('editProject/{id}', 'admin\ProjectController@edit');
+    Route::post('updateProject/{id}', 'admin\ProjectController@update');
+
+    //Property
+    Route::get('property', 'admin\PropertyController@index');
+    Route::get('createProperty', 'admin\PropertyController@create');
 });

@@ -50,7 +50,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{url('admin/css/all.min.css')}}">
 
+  <!-- datatable -->
+  <link rel="stylesheet" href="{{url('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}} ">
 
+  <!-- modal -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
   <!-- Additional style -->
@@ -288,6 +291,8 @@ desired effect
             <div class="box box-primary">
               <div class="box-body">
                 @yield('content')
+
+                <div id="pov"></div>
               </div>
             </div>
           </div>
@@ -313,6 +318,11 @@ desired effect
               <div class="box box-primary">
                 <div class="box-body">
                   @yield('detail')
+
+
+
+
+
                 </div>
               </div>
             </div>
@@ -417,6 +427,7 @@ desired effect
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 3 -->
+  <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{url('admin/bower_components/jquery/dist/jquery.min.js')}}"></script>
   <!-- Bootstrap 3.3.7 -->
   <script src="{{url('admin/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
@@ -459,6 +470,9 @@ desired effect
 
 
   <script src="{{url('admin/js/script.js')}}"></script>
+
+
+  @yield('script');
 
 
 </body>

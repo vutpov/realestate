@@ -1,27 +1,47 @@
 $(function() {
    
 
+    function checkIfExist(data,fallback){
+        
+        if(data instanceof  jQuery && data.length>0){
+            console.log(data);
+            fallback();
+        }
+       
+    }
+    
 
 
-   
-    $('.datepicker').datepicker({
+    const makeDatePicker = () =>{ 
+        $('.datepicker').datepicker({
         autoclose: true,
-    });
+        })
+    };
+    checkIfExist($('.datepicker'),makeDatePicker);
 
-    $('.datemask').inputmask('dd/mm/yyyy', { placeholder: 'dd/mm/yyyy' });
 
-    $('#example1').DataTable();
-    $('#example2').DataTable({
-        paging: true,
-        lengthChange: false,
-        searching: false,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-    });
+    const makeInputmask = () =>{ 
+        $('.datemask').inputmask('dd/mm/yyyy', { placeholder: 'dd/mm/yyyy' });
+    };
+    checkIfExist($('.datemask'),makeInputmask);
+
+
+    
+    const makeSelect2 = () =>{
+        $('.select2').select2({
+            theme: 'classic',
+            width: 'resolve',
+        });
+    }   
+
+    checkIfExist($('.select2'),makeSelect2);
+    
+
+
+
 
     const table = jQuery.makeArray($('.dataTable'));
-
+   
     table.forEach(t => {
         $(t).DataTable();
     });
@@ -112,31 +132,9 @@ $(function() {
 
    
 
-    const detail = this.querySelector('#project-detail-body');
-
-    detail.addEventListener('click', e => {
-        
-
-
-        if(e.target.tagName == 'A'){
-            let rowIndex = $(e.target).parent().parent().attr('alt')
-            if(e.target.rel == 'edit'){
-                getProjectItemForEdit(rowIndex);
-            }else if(e.target.rel == 'delete'){
-                deleteDetail(rowIndex);
-            }   
-        }
-        
-        
-        
-    });
 
 
 
-    $('.select2').select2({
-        theme: 'classic',
-        width: 'resolve',
-    });
 
     /* Add property detail to project */
 
