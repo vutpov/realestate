@@ -14,45 +14,16 @@ require('./bootstrap');
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom';
-import {BrowserRouter,Route,Switch} from 'react-router-dom'
-import Header from './components/Header'
-import Sidebar from './components/Sidebar'
-import Content from './components/Content';
-import Footer from './components/Footer';
-import ControlSidebar from './components/ControlSidebar';
 
 
-class App extends Component {
-    render() {
-        return (
+class App extends Component{
+    render(){
 
-            <BrowserRouter>
+        
+        <div className="aaaa">
+            Hello
+        </div>
 
-                <div className="wrapper">
-                    <Header />
-                   
-
-                    {/* // Content Wrapper. Contains page content */}
-                    <div className="content-wrapper">
-                        
-                        <Switch>
-
-                            <Route exact path='/react/dashboard' component={Content} />
-                          
-                        </Switch>
-
-                        
-                       
-                    </div>
-
-
-
-
-                   
-                </div>
-
-            </BrowserRouter>
-        )
     };
 }
 
@@ -60,4 +31,4 @@ class App extends Component {
 
 require('./components/Example');
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(<App />, document.getElementById('pov'))
