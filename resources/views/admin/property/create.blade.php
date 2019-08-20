@@ -11,12 +11,12 @@
     @csrf
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <div class="alert alert-danger show-error" style="display:none">
+    <div class="alert show-message" style="display:none">
 
     </div>
 
 
-    <input type="text" value="" id="propertyImageId">
+    <input type="text" value="{{$nextId}}" id="propertyId" name="propertyId">
 
 
     <div class="form-group">
@@ -46,8 +46,7 @@
     {{-- Description --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">Description</label>
-        <input type="text" class="form-control" name="description" placeholder="Description" id="description"
-            value="{{old('Description')}}" />
+        <input type="text" class="form-control" name="description" placeholder="Description" id="description" />
         <span class="help-block"></span>
     </div>
 
@@ -55,14 +54,14 @@
     {{-- Phone --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">No</label>
-        <input type="text" class="form-control" name="no" placeholder="No" value="{{old('no')}}" />
+        <input type="text" class="form-control" name="no" placeholder="No" />
         <span class="help-block"></span>
     </div>
 
     {{-- St --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">St</label>
-        <input type="email" class="form-control" name="st" placeholder="St" value="{{old('St')}}" />
+        <input type="email" class="form-control" name="st" placeholder="St" />
         <span class="help-block"></span>
     </div>
 
@@ -82,7 +81,23 @@
     {{-- Unit --}}
     <div class="form-group">
         <label class="control-label" for="inputSuccess">Unit</label>
-        <input type="Text" class="form-control" name="unit" placeholder="Unit" value="{{old('Unit')}}" />
+        <input type="Text" class="form-control" name="unit" placeholder="Unit" />
+        <span class="help-block"></span>
+    </div>
+
+
+
+    {{-- Cost --}}
+    <div class="form-group">
+        <label class="control-label" for="inputSuccess">Cost</label>
+        <input type="Text" class="form-control" name="cost" placeholder="Cost" />
+        <span class="help-block"></span>
+    </div>
+
+    {{-- Price --}}
+    <div class="form-group">
+        <label class="control-label" for="inputSuccess">Price</label>
+        <input type="Text" class="form-control" name="price" placeholder="Price" />
         <span class="help-block"></span>
     </div>
 
@@ -137,6 +152,39 @@
 
 @section('script')
 <script>
+    const sendData = () =>{
+        let description = $("input[name='description']").val();
+               
+                
+        var frmdata = new FormData($("#form-submit-property")[0])
+        
+        
+        return $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "{{route('storeProperty')}}",
+            processData:false,
+            contentType:false,
+            data: frmdata,
+            success: response =>{
+                console.log(response);
+                return true;
+            },
+            error: response=>{
+                console.log(response);
+                return false;
+
+            },
+            complete: response=>{
+                renderResponseMessage(response);
+            },
+            dataType: "json",
+            // contentType : "application/json"
+        });
+    };
+    
     Dropzone.options.propertyDropzone = {
         autoProcessQueue:false,
         acceptedFiles: ".jpeg,.jpg,.png,.gif",
@@ -149,68 +197,54 @@
         init: function() {
             let myDropzone=this;
             this.on("success", function(file, response) {             
-                // let imageId=response.imageId;
                 
-                // let existId = $("#propertyImageId").val();
-                // existId+= imageId +",";
-                // $("#propertyImageId").val(existId);
-                
+                this.removeFile(file);
 
-                // response.forEach(element => {
-                //     console.log(response.element);
-                // });
 
-                
+            });
+
+            this.on('sending', function(file, xhr, formData){
+                formData.append('propertyId', file.propertyId);
+            });
+
+            this.on("addedfile",(file)=>{
+                file.propertyId=$('#propertyId').val();
+              
             });
 
             this.on("error", function(file, response) {
                 console.log(response);
                   
             });
-           
+
             this.on("complete", function(file, response) {
-                propertyDropzone.removeFile(file);
+                console.log(response);
+                  
             });
 
+            
 
 
             $("#submitProperty").click(()=>{      
                 //$('#form-submit-property').submit();
-
-                myDropzone.processQueue();
-                let description = $("input[name='description']").val();
-                console.log('javascript:',description);
+                if(sendData()){
+                    console.log('send photo');
+                    myDropzone.processQueue();
+                }else{
+                    console.log('not send photo');
+                }
+                   
                 
-                var frmdata = new FormData($("#form-submit-property")[0])
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "POST",
-                    url: "{{route('storeProperty')}}",
-                    processData:false,
-                    contentType:false,
-                    data: frmdata,
-                    success: (response)=>{
-                        
-                        console.log(response);
+                
 
-                    },
-                    error: response=>{
-                        
-                        renderResponseMessage(response);
-                        
-
-                    },
-                    dataType: "json",
-                    // contentType : "application/json"
-                });
             });
             
         }
 
         
     };
+
+
     
 
 </script>

@@ -480,23 +480,44 @@ desired effect
         console.log(response.responseJSON.data);
         let responseJSON=response.responseJSON;
 
+        let showMessage=document.createElement('ul');
+        let dataToRender='';
+
+
+        console.log(responseJSON);
         if(responseJSON.failOnValidate==true){
-            console.log(responseJSON.error);
-            let showError=document.createElement('ul');
-           
-            for (var error in responseJSON.error) {
-                let errorMessageList =document.createElement('li');
-                let message= document.createTextNode(responseJSON.error[error]);
-                errorMessageList.appendChild(message);
-                showError.appendChild(errorMessageList);
-                $('.show-error').html(showError);
-                $('.show-error').css('display','block')
-              
-                
-            }
+          
+          dataToRender=responseJSON.error;    
+          $('.show-message').addClass('alert-danger');
+          $('.show-message').removeClass('alert-success');
+          
         }else{
-          console.log('hello');
+          dataToRender=responseJSON.success;
+
+          $('.show-message').addClass('alert-success');
+          $('.show-message').removeClass('alert-danger');
         }
+
+
+        if(responseJSON.failOnValidate){
+          for (var data in dataToRender) {
+            let messageList =document.createElement('li');
+            let message= document.createTextNode(dataToRender[data]);
+            messageList.appendChild(message);
+            showMessage.appendChild(messageList);
+            $('.show-message').html(showMessage);
+            
+          }
+        }else{
+          $('.show-message').html(dataToRender);
+        }
+
+        $('.show-message').css('display','block');  
+
+
+
+        window.scrollTo(0, 0);
+
        }
   </script>
 

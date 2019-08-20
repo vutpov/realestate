@@ -13,7 +13,9 @@ use App\UM;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use App\PropertyImage;
 use Response;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
@@ -40,12 +42,17 @@ class PropertyController extends Controller
         $propAttribute = PropAttribute::select('propAttributeID', 'propAttribute')
             ->get();
 
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'properties'");
+
+
+        $nextId = $statement[0]->Auto_increment;
+
 
         // foreach ($propAttribute as $prop) {
         //     dd($prop);
         // }
 
-        
+
 
 
         $unitMesurementType = UM::select('umid', 'um')
@@ -56,7 +63,8 @@ class PropertyController extends Controller
             'project' => $project,
             'propertyType' => $propertyType,
             'propAttribute' =>  $propAttribute,
-            'unitMesurementType' => $unitMesurementType
+            'unitMesurementType' => $unitMesurementType,
+            'nextId' => $nextId
         );
         return View('admin.property.create', $data);
     }
@@ -75,22 +83,48 @@ class PropertyController extends Controller
 
             'project' => 'required',
             'propertyType' => 'required',
-            'no' => 'required',
-            'st' => 'required',
-            'price' => 'required',
-            'cost' => 'required',
+            'no' => 'min:1|max:5',
+            'st' => 'min:1|max:20',
+            'price' => 'required|numeric',
+            'cost' => 'required|numeric',
             'mesurement' => 'required',
-            'unit' => 'required',
-            'propAttribute' => 'required'
+            'unit' => 'regex:/\dx\d/',
+            'propAttribute' => 'required',
+            'thumbnail' => 'required'
         ]);
 
 
         if ($validator->passes()) {
+
+            $property = new Property();
+            $property->projectId = $request->project;
+            $property->propertyCode = rand(0, 99) . substr(time() . '', 6);
+            $property->description = $request->description;
+            $property->no = $request->no;
+            $property->st = $request->st;
+            $property->umid = $request->mesurement;
+            $property->unit = $request->unit;
+            $property->propertyTypeId =  $request->propertyType;
+            $property->propAttribId = $request->propAttribute;
+            $property->price = $request->price;
+            $property->cost = $request->cost;
+            $property->partnerId = $request->partner;
+            $property->staffId = Auth::user()->staffId;
+
+            $path = request()->file('thumbnail')->store('propertyImage');
+            $PropertyImage = new PropertyImage();
+            $PropertyImage->image = $path;
+            $PropertyImage->is_featured = 1;
+            $PropertyImage->propertyId = $request->propertyId;
+
+            $property->save();
+            $PropertyImage->save();
+
             return response()->json(['success' => 'Added new records.'], 200);
         }
 
 
-        return response()->json(['error' => $validator->errors()->all(), 'failOnValidate' => true, 'data' => $request->all()], 403);
+        return response()->json(['error' => $validator->errors()->all(), 'failOnValidate' => true, 'data' => substr(time() . '', 6)], 403);
     }
 
     /**
@@ -145,11 +179,12 @@ class PropertyController extends Controller
 
         DB::table('property_images')->insert([
             'image' => $path,
-            'is_featured' => 0
+            'is_featured' => 0,
+            'propertyId' => $request->propertyId
         ]);
 
-        $imageId = DB::getPdo()->lastInsertId();
 
-        return response()->json(array('success' => true, 'imageId' => $imageId), 200);
+
+        return response()->json(array('success' => true), 200);
     }
 }
