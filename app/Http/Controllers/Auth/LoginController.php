@@ -152,36 +152,51 @@ class LoginController extends Controller
             $request,
             [
                 'username' => 'required',
-                'password' => 'required'
+                // 'password' => 'required'
             ]
         );
 
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'status' => 1])) {
+        $user = User::where('staffId', 1)
+            ->first();
 
+        if ($user) {
 
-
-
-            $staff = DB::table('staffs')
-                ->join('users', 'users.staffId', '=', 'staffs.staffId')
-                ->join('roles', 'roles.roleId', '=', 'users.roleId')
-                ->select('name', 'profile', 'role')
-                ->where('staffs.staffId', '=', Auth::user()->staffId)
-                ->get();
-
-
-            $staff = $staff[0];
-
-            //laravel
-            // return redirect()->intended('/system/dashboard')->with('staff', $staff);
-            //laravel
-
-
-            return redirect()->intended('/react/dashboard')->with('staff', $staff);
+            Auth::loginUsingId($user->UserId);
+            
+            return redirect()->route('dashboard');
         } else {
-            //laravel
-            return redirect()->back()->with('msg', 'Your username or password incorrect');
-            //laravel
+            //dd($user);
+            return redirect()->back()->withInput();
         }
+
+
+        //Hashing
+        // if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'status' => 1])) {
+
+
+
+
+        //     $staff = DB::table('staffs')
+        //         ->join('users', 'users.staffId', '=', 'staffs.staffId')
+        //         ->join('roles', 'roles.roleId', '=', 'users.roleId')
+        //         ->select('name', 'profile', 'role')
+        //         ->where('staffs.staffId', '=', Auth::user()->staffId)
+        //         ->get();
+
+
+        //     $staff = $staff[0];
+
+        //     //laravel
+        //     return redirect()->intended('/system/dashboard')->with('staff', $staff);
+        //     //laravel
+
+
+        //     // return redirect()->intended('/react/dashboard')->with('staff', $staff);
+        // } else {
+        //     //laravel
+        //     return redirect()->back()->with('msg', 'Your username or password incorrect');
+        //     //laravel
+        // }
     }
 
     public function logout()

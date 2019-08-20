@@ -4,7 +4,7 @@ $(function() {
     function checkIfExist(data,fallback){
         
         if(data instanceof  jQuery && data.length>0){
-            console.log(data);
+            // console.log(data);
             fallback();
         }
        

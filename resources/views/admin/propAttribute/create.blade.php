@@ -23,7 +23,7 @@
     {{-- propAttributeDetail --}}
     @foreach ($propDetail as $item)
 
-    <div class="form-group">
+    <div class="form-group ">
         <label class="control-label" for="inputSuccess">{{$item}}</label>
         <input type="text" class="form-control" name="{{$item}}" placeholder="{{$item}}" value="{{old($item)}}" />
         <span class="help-block"></span>

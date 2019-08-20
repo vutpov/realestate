@@ -21,7 +21,7 @@ class App extends Component{
 
         
         <div className="aaaa">
-            Hello
+            
         </div>
 
     };

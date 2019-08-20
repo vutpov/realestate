@@ -31,6 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{ url('admin/dist/css/skins/skin-blue.min.css')}} ">
 
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -49,6 +50,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{url('admin/css/all.min.css')}}">
+
+  <!--Drop Zone-->
+  <link rel="stylesheet" href="{{url('admin/css/dropzone.css')}}">
 
   <!-- datatable -->
   <link rel="stylesheet" href="{{url('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}} ">
@@ -125,7 +129,7 @@ desired effect
                       <a href="#">
                         <div class="pull-left">
                           <!-- User Image -->
-                          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                          <img src='{{asset("admin/dist/img/avatar.png")}}' class="img-circle" alt="User Image">
                         </div>
                         <!-- Message title and timestamp -->
                         <h4>
@@ -212,7 +216,7 @@ desired effect
               <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
-                <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <img src="{{asset("admin/dist/img/avatar.png")}}" class="user-image" alt="User Image">
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
 
 
@@ -222,7 +226,7 @@ desired effect
               <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
                 <li class="user-header">
-                  <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                  <img src="{{asset("admin/dist/img/avatar.png")}}" class="img-circle" alt="User Image">
 
                   <p>
                     Alexandar Pierce - Web Developer
@@ -427,7 +431,7 @@ desired effect
   <!-- REQUIRED JS SCRIPTS -->
 
   <!-- jQuery 3 -->
-  <script src="{{ asset('js/app.js') }}"></script>
+
   <script src="{{url('admin/bower_components/jquery/dist/jquery.min.js')}}"></script>
   <!-- Bootstrap 3.3.7 -->
   <script src="{{url('admin/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
@@ -471,6 +475,30 @@ desired effect
 
   <script src="{{url('admin/js/script.js')}}"></script>
 
+  <script>
+    const renderResponseMessage=(response)=>{
+        console.log(response.responseJSON.data);
+        let responseJSON=response.responseJSON;
+
+        if(responseJSON.failOnValidate==true){
+            console.log(responseJSON.error);
+            let showError=document.createElement('ul');
+           
+            for (var error in responseJSON.error) {
+                let errorMessageList =document.createElement('li');
+                let message= document.createTextNode(responseJSON.error[error]);
+                errorMessageList.appendChild(message);
+                showError.appendChild(errorMessageList);
+                $('.show-error').html(showError);
+                $('.show-error').css('display','block')
+              
+                
+            }
+        }else{
+          console.log('hello');
+        }
+       }
+  </script>
 
   @yield('script');
 

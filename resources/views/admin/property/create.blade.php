@@ -5,9 +5,210 @@
 
 @section('col','col-md-6')
 
+@section('content')
+
+<form action="/system/storeProperty" method="POST" id="form-submit-property">
+    @csrf
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <div class="alert alert-danger show-error" style="display:none">
+
+    </div>
+
+
+    <input type="text" value="" id="propertyImageId">
+
+
+    <div class="form-group">
+        <label>Project</label>
+        <select name="project" class="form-control select2">
+            @foreach($project as $p)
+            <option value="{{$p->projectId}}">{{$p->project}}</option>
+            @endforeach
+
+        </select>
+    </div>
+
+
+
+    {{-- Property Type --}}
+    <div class="form-group">
+        <label>Property Type</label>
+        <select name="propertyType" class="form-control select2">
+            @foreach($propertyType as $p)
+            <option value="{{$p->propertyTypeId}}">{{$p->propertyType}}</option>
+            @endforeach
+
+        </select>
+    </div>
+
+
+    {{-- Description --}}
+    <div class="form-group">
+        <label class="control-label" for="inputSuccess">Description</label>
+        <input type="text" class="form-control" name="description" placeholder="Description" id="description"
+            value="{{old('Description')}}" />
+        <span class="help-block"></span>
+    </div>
+
+
+    {{-- Phone --}}
+    <div class="form-group">
+        <label class="control-label" for="inputSuccess">No</label>
+        <input type="text" class="form-control" name="no" placeholder="No" value="{{old('no')}}" />
+        <span class="help-block"></span>
+    </div>
+
+    {{-- St --}}
+    <div class="form-group">
+        <label class="control-label" for="inputSuccess">St</label>
+        <input type="email" class="form-control" name="st" placeholder="St" value="{{old('St')}}" />
+        <span class="help-block"></span>
+    </div>
+
+
+    {{-- Unit Mesurement Type --}}
+    <div class="form-group">
+        <label>Unit Mesurement Type</label>
+        <select name="mesurement" class="form-control select2">
+            @foreach($unitMesurementType as $u)
+            <option value="{{$u->umid}}">{{$u->um}}</option>
+            @endforeach
+
+        </select>
+    </div>
+
+
+    {{-- Unit --}}
+    <div class="form-group">
+        <label class="control-label" for="inputSuccess">Unit</label>
+        <input type="Text" class="form-control" name="unit" placeholder="Unit" value="{{old('Unit')}}" />
+        <span class="help-block"></span>
+    </div>
+
+    {{-- Property Attribute --}}
+    <div class="form-group">
+        <label>Property Attribute</label>
+        <select name="propAttribute" class="form-control select2">
+            @foreach($propAttribute as $p)
+            <option value="{{$p->propAttributeID}}">{{$p->propAttribute}}</option>
+            @endforeach
+        </select>
+    </div>
+
+
+
+    {{-- Thumbnail --}}
+    <div class="form-group">
+        <label class="control-label" for="thumbnial">Thumbnail</label>
+        <input name="thumbnail" type="file" />
+        <span class="help-block"></span>
+    </div>
+
+
+
+
+
+
+
+
+</form>
+
+<form action="{{ route('propertyImageUpload') }}" class="dropzone needsclick dz-clickable dropzone-wrapper"
+    id="propertyDropzone" enctype="multipart/form-data" method="post">
+    @csrf
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <div class="dz-message needsclick">
+        Drop files here or click to upload.<br>
+    </div>
+
+</form>
+
+
+<input type="submit" class="btn btn-primary" value="Submit" id="submitProperty" />
+<button class="btn btn-danger pull-right">
+    <a style="color:white;" href="/system/property">Cancel</a>
+</button>
+
+@endsection
+
 
 @section('display-detail','display:none')
 
 @section('script')
+<script>
+    var propertyDropzone;
+    $("#submitProperty").click(()=>{      
+        //$('#form-submit-property').submit();
+
+        propertyDropzone.processQueue();
+        let description = $("input[name='description']").val();
+        console.log('javascript:',description);
+        
+        var frmdata = new FormData($("#form-submit-property")[0])
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "{{route('storeProperty')}}",
+            processData:false,
+            contentType:false,
+            data: frmdata1,
+            success: (response)=>{
+                
+                console.log(response);
+
+            },
+            error: response=>{
+                
+                renderResponseMessage(response);
+                
+
+            },
+            dataType: "json",
+            // contentType : "application/json"
+        });
+    });
     
+
+    Dropzone.options.propertyDropzone = {
+        autoProcessQueue:false,
+        acceptedFiles: ".jpeg,.jpg,.png,.gif",
+        clickable: true,
+        addRemoveLinks:true,
+        timeout: 5000,
+
+        init: function() {
+            this.on("success", function(file, response) {             
+                let imageId=response.imageId;
+                
+                let existId = $("#propertyImageId").val();
+                existId+= imageId +",";
+                $("#propertyImageId").val(existId);
+                
+
+                response.forEach(element => {
+                    console.log(response.element);
+                });
+
+                
+            });
+
+            this.on("error", function(file, response) {
+                console.log(response);
+                  
+            });
+           
+            this.on("complete", function(file, response) {
+               
+            });
+            
+        }
+
+        
+    };
+    
+
+</script>
 @endsection
