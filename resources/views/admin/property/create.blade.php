@@ -137,41 +137,6 @@
 
 @section('script')
 <script>
-    var propertyDropzone;
-    $("#submitProperty").click(()=>{      
-        //$('#form-submit-property').submit();
-
-        propertyDropzone.processQueue();
-        let description = $("input[name='description']").val();
-        console.log('javascript:',description);
-        
-        var frmdata = new FormData($("#form-submit-property")[0])
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: "POST",
-            url: "{{route('storeProperty')}}",
-            processData:false,
-            contentType:false,
-            data: frmdata1,
-            success: (response)=>{
-                
-                console.log(response);
-
-            },
-            error: response=>{
-                
-                renderResponseMessage(response);
-                
-
-            },
-            dataType: "json",
-            // contentType : "application/json"
-        });
-    });
-    
-
     Dropzone.options.propertyDropzone = {
         autoProcessQueue:false,
         acceptedFiles: ".jpeg,.jpg,.png,.gif",
@@ -179,18 +144,21 @@
         addRemoveLinks:true,
         timeout: 5000,
 
+
+        
         init: function() {
+            let myDropzone=this;
             this.on("success", function(file, response) {             
-                let imageId=response.imageId;
+                // let imageId=response.imageId;
                 
-                let existId = $("#propertyImageId").val();
-                existId+= imageId +",";
-                $("#propertyImageId").val(existId);
+                // let existId = $("#propertyImageId").val();
+                // existId+= imageId +",";
+                // $("#propertyImageId").val(existId);
                 
 
-                response.forEach(element => {
-                    console.log(response.element);
-                });
+                // response.forEach(element => {
+                //     console.log(response.element);
+                // });
 
                 
             });
@@ -201,7 +169,42 @@
             });
            
             this.on("complete", function(file, response) {
-               
+                propertyDropzone.removeFile(file);
+            });
+
+
+
+            $("#submitProperty").click(()=>{      
+                //$('#form-submit-property').submit();
+
+                myDropzone.processQueue();
+                let description = $("input[name='description']").val();
+                console.log('javascript:',description);
+                
+                var frmdata = new FormData($("#form-submit-property")[0])
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "POST",
+                    url: "{{route('storeProperty')}}",
+                    processData:false,
+                    contentType:false,
+                    data: frmdata,
+                    success: (response)=>{
+                        
+                        console.log(response);
+
+                    },
+                    error: response=>{
+                        
+                        renderResponseMessage(response);
+                        
+
+                    },
+                    dataType: "json",
+                    // contentType : "application/json"
+                });
             });
             
         }
