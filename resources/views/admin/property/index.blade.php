@@ -19,7 +19,7 @@
     <tbody>
 
         @foreach ($propTypes as $item)
-            <tr>
+            {{-- <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$item->propertyType}}</td>
                 <td>
@@ -30,7 +30,7 @@
                         <a href="/system/PropTypesStatus/{{$item->propertyTypeId}}/recycle"><i class="fas fa-recycle"></i></a>
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
         @endforeach
 
     </tbody>

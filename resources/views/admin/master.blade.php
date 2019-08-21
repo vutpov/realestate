@@ -513,7 +513,7 @@ desired effect
         }
 
         $('.show-message').css('display','block');  
-
+        //console.log(responseJSON);
 
 
         window.scrollTo(0, 0);
@@ -521,7 +521,7 @@ desired effect
        }
   </script>
 
-  @yield('script');
+  @yield('script')
 
 
 </body>

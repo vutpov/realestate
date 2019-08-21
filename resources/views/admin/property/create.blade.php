@@ -16,7 +16,7 @@
     </div>
 
 
-    <input type="text" value="{{$nextId}}" id="propertyId" name="propertyId">
+    <input type="hidden" value="{{$nextId}}" id="propertyId" name="propertyId">
 
 
     <div class="form-group">
@@ -158,8 +158,8 @@
                 
         var frmdata = new FormData($("#form-submit-property")[0])
         
-        
-        return $.ajax({
+        let successSubmit;
+        $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -169,12 +169,15 @@
             contentType:false,
             data: frmdata,
             success: response =>{
-                console.log(response);
-                return true;
+               
+                successSubmit= true;
+                $("#propertyId").val(response.propertyId)
+
+
             },
             error: response=>{
                 console.log(response);
-                return false;
+                successSubmit= false;
 
             },
             complete: response=>{
@@ -183,6 +186,7 @@
             dataType: "json",
             // contentType : "application/json"
         });
+        return successSubmit;
     };
     
     Dropzone.options.propertyDropzone = {
@@ -230,13 +234,11 @@
                 if(sendData()){
                     console.log('send photo');
                     myDropzone.processQueue();
+                    
                 }else{
                     console.log('not send photo');
                 }
                    
-                
-                
-
             });
             
         }

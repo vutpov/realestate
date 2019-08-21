@@ -25,7 +25,16 @@ class PropertyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { }
+    {
+
+        $property = DB::table('properties')
+            ->join('contacts', 'users.id', '=', 'contacts.user_id')
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->select('users.*', 'contacts.phone', 'orders.price')
+            ->get();
+
+        return View('admin.property.index');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -46,14 +55,6 @@ class PropertyController extends Controller
 
 
         $nextId = $statement[0]->Auto_increment;
-
-
-        // foreach ($propAttribute as $prop) {
-        //     dd($prop);
-        // }
-
-
-
 
         $unitMesurementType = UM::select('umid', 'um')
             ->get();
@@ -90,26 +91,41 @@ class PropertyController extends Controller
             'mesurement' => 'required',
             'unit' => 'regex:/\dx\d/',
             'propAttribute' => 'required',
-            'thumbnail' => 'required'
+            'thumbnail' => 'required',
+
         ]);
+
+        $partnerId = DB::table('partners')
+            ->join('projects', 'projects.partnerId', '=', 'partners.partnerId')
+            ->select('partners.partnerId')
+            ->where('projects.projectId', '=', $request->project)
+            ->pluck('partnerId')[0];
 
 
         if ($validator->passes()) {
 
-            $property = new Property();
-            $property->projectId = $request->project;
-            $property->propertyCode = rand(0, 99) . substr(time() . '', 6);
-            $property->description = $request->description;
-            $property->no = $request->no;
-            $property->st = $request->st;
-            $property->umid = $request->mesurement;
-            $property->unit = $request->unit;
-            $property->propertyTypeId =  $request->propertyType;
-            $property->propAttribId = $request->propAttribute;
-            $property->price = $request->price;
-            $property->cost = $request->cost;
-            $property->partnerId = $request->partner;
-            $property->staffId = Auth::user()->staffId;
+            //join('contacts', 'users.id', '=', 'contacts.user_id')
+
+
+            DB::table('properties')->insert([
+                'projectId' => $request->project,
+                'propertyCode' => rand(0, 99) . substr(time() . '', 6),
+                'description' => $request->description,
+                'no' => $request->no,
+                'st' => $request->st,
+                'umid' => $request->mesurement,
+                'unit' => $request->unit,
+                'propertyTypeId' => $request->propertyType,
+                'propAttribId' => $request->propAttribute,
+                'price' => $request->price,
+                'cost' => $request->cost,
+                'partnerId' => $request->partner,
+                'staffId' => Auth::user()->staffId,
+                'partnerId' => $partnerId,
+            ]);
+            $newPropertyId = DB::getPdo()->lastInsertId() + 1;
+
+
 
             $path = request()->file('thumbnail')->store('propertyImage');
             $PropertyImage = new PropertyImage();
@@ -117,14 +133,14 @@ class PropertyController extends Controller
             $PropertyImage->is_featured = 1;
             $PropertyImage->propertyId = $request->propertyId;
 
-            $property->save();
+
             $PropertyImage->save();
 
-            return response()->json(['success' => 'Added new records.'], 200);
+            return response()->json(['success' => 'Added new records.', 'propertyId' => $newPropertyId], 200);
         }
 
 
-        return response()->json(['error' => $validator->errors()->all(), 'failOnValidate' => true, 'data' => substr(time() . '', 6)], 403);
+        return response()->json(['error' => $validator->errors()->all(), 'failOnValidate' => true, 'data' =>  $partnerId], 403);
     }
 
     /**
