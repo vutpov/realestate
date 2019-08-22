@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Validator;
 use App\PropertyImage;
 use Response;
 use Illuminate\Support\Facades\Auth;
+use App\Partner;
+
 
 class PropertyController extends Controller
 {
@@ -27,13 +29,49 @@ class PropertyController extends Controller
     public function index()
     {
 
+
+        $partnerQry = DB::table('partners')
+            ->select('partnerId', 'partner');
+
+        $projectQry = DB::table('projects')
+            ->select('projectId', 'project');
+
+
         $property = DB::table('properties')
-            ->join('contacts', 'users.id', '=', 'contacts.user_id')
-            ->join('orders', 'users.id', '=', 'orders.user_id')
-            ->select('users.*', 'contacts.phone', 'orders.price')
+            ->join('staffs', 'properties.staffId', '=', 'staffs.staffId')
+            ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+            ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttribId')
+            ->select(
+                'propertyCode',
+                'property_types.propertyType',
+                'prop_attributes.propAttribute',
+                'description',
+                'no',
+                'st',
+                'cost',
+                'price',
+                'free',
+                'properties.status',
+                'propertyType',
+                'staffs.name',
+                'properties.created_at',
+                'properties.updated_at',
+                'project',
+                'partner',
+                'propertyId'
+            )
+            ->leftJoinSub($partnerQry, 'partners', function ($join) {
+                $join->on('partners.partnerId', '=', 'properties.partnerId');
+            })
+            ->leftJoinSub($projectQry, 'projects', function ($join) {
+                $join->on('projects.projectId', '=', 'properties.projectId');
+            })
+
             ->get();
 
-        return View('admin.property.index');
+        $data = array('property' => $property);
+
+        return View('admin.property.index', $data);
     }
 
     /**

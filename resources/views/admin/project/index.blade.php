@@ -2,7 +2,7 @@
 
 @section('col','col-md-12')
 
-@section('page-header','View All Prjects')
+@section('page-header','View All Projects')
 
 @section('content')
 

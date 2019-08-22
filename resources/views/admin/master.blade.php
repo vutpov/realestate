@@ -11,9 +11,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>AdminLTE 2 | Starter</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="{{ url('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+  {{-- <link rel="stylesheet" href="{{ url('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') }}"> --}}
+
+  <link rel="stylesheet" href="{{ url('admin/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
+
+  <link rel="stylesheet" href="{{ url('admin/css/all.min.css') }}">
+
   <link rel="stylesheet" href="{{ url('admin/bower_components/font-awesome/css/font-awesome.min.css') }}">
+
+
   <!-- Ionicons -->
   <link rel="stylesheet" href="{{ url('admin/bower_components/Ionicons/css/ionicons.min.css') }}">
   <!-- Theme style -->
@@ -48,20 +55,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{url('admin/css/all.min.css')}}">
+
 
   <!--Drop Zone-->
   <link rel="stylesheet" href="{{url('admin/css/dropzone.css')}}">
 
-  <!-- datatable -->
-  <link rel="stylesheet" href="{{url('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}} ">
+
 
   <!-- modal -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
+
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.8/css/mdb.min.css" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="{{ url('front/css/mdb.min.css') }}">
+
+  <link rel="stylesheet" href="{{ url('admin/css/datatables.min.css') }}">
+
+
+  <link rel="stylesheet" href="{{url('admin/css/animations-extended.min.css')}}">
+
+
+
+
+
+
   <!-- Additional style -->
   <link rel="stylesheet" href="{{url('admin/css/style.css')}}">
+
 
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -111,7 +134,7 @@ desired effect
         </a>
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav fix-bootstrap4">
             <!-- Messages: style can be found in dropdown.less-->
             <li class="dropdown messages-menu">
               <!-- Menu toggle button -->
@@ -430,11 +453,22 @@ desired effect
 
   <!-- REQUIRED JS SCRIPTS -->
 
-  <!-- jQuery 3 -->
 
-  <script src="{{url('admin/bower_components/jquery/dist/jquery.min.js')}}"></script>
-  <!-- Bootstrap 3.3.7 -->
-  <script src="{{url('admin/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+  <!-- JQuery -->
+  <script type="text/javascript" src="{{url('front/js/jquery-3.4.1.min.js')}}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{{url('front/js/popper.min.js')}}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{{url('front/js/bootstrap.min.js')}}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{{url('front/js/mdb.min.js')}}"></script>
+
+  <script type="text/javascript" src="{{url('admin/js/datatables.min.js')}}"></script>
+
+
+
+
+
   <!-- AdminLTE App -->
   <script src="{{url('admin/dist/js/adminlte.min.js')}}"></script>
 
@@ -445,9 +479,7 @@ desired effect
   <!-- bootstrap datepicker -->
   <script src="{{url('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
-  <!-- DataTables -->
-  <script src="{{url('admin/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-  <script src="{{url('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+
   <!-- SlimScroll -->
   <script src="{{url('admin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
   <!-- FastClick -->
@@ -467,7 +499,7 @@ desired effect
 
 
   <!-- Select2 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js"></script>
+  <script src="{{url('admin/js/select2.min.js')}}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 

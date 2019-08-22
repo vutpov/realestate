@@ -1,6 +1,9 @@
 $(function() {
    
 
+    
+
+
     function checkIfExist(data,fallback){
         
         if(data instanceof  jQuery && data.length>0){
@@ -40,11 +43,9 @@ $(function() {
 
 
 
-    const table = jQuery.makeArray($('.dataTable'));
+
    
-    table.forEach(t => {
-        $(t).DataTable();
-    });
+   
 
     $('#trash-check-staff').click(() => {
         const go_to_url = $('#trash-check-staff').val();
@@ -143,6 +144,7 @@ $(function() {
 
 
 });
+
 
 
 

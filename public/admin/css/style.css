@@ -12,6 +12,7 @@ svg[class*="fa"] {
     width: 50%;
 }
 
+
 .content-header h2 {
     font-size: 20px;
 }
@@ -90,3 +91,30 @@ svg[class*="fa"] {
 .dropzone-wrapper {
     margin-bottom: 25px;
 }
+
+/* admin navbar */
+nav .fix-bootstrap4 {
+    flex-direction: row;
+}
+
+/* end admin navbar */
+
+
+/*dummy scroll*/
+
+.dummy-wrapper {
+
+    min-height: 1px;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 25px;
+}
+
+.dummy {
+
+    height: 1px;
+
+}
+
+/*end of dummy scroll*/
