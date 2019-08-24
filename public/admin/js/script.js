@@ -1,51 +1,57 @@
-$(function() {
-   
-
-    
+$(function () {
 
 
-    function checkIfExist(data,fallback){
-        
-        if(data instanceof  jQuery && data.length>0){
+
+
+
+    function checkIfExist(data, fallback) {
+
+        if (data instanceof jQuery && data.length > 0) {
             // console.log(data);
             fallback();
         }
-       
+
     }
-    
+
+    $('.dataTable').DataTable({
+
+        'autoWidth': true
+    });
 
 
-    const makeDatePicker = () =>{ 
+
+
+    const makeDatePicker = () => {
         $('.datepicker').datepicker({
-        autoclose: true,
+            autoclose: true,
         })
     };
-    checkIfExist($('.datepicker'),makeDatePicker);
+    checkIfExist($('.datepicker'), makeDatePicker);
 
 
-    const makeInputmask = () =>{ 
+    const makeInputmask = () => {
         $('.datemask').inputmask('dd/mm/yyyy', { placeholder: 'dd/mm/yyyy' });
     };
-    checkIfExist($('.datemask'),makeInputmask);
+    checkIfExist($('.datemask'), makeInputmask);
 
 
-    
-    const makeSelect2 = () =>{
+
+    const makeSelect2 = () => {
         $('.select2').select2({
             theme: 'classic',
             width: 'resolve',
         });
-    }   
+    }
 
-    checkIfExist($('.select2'),makeSelect2);
-    
-
+    checkIfExist($('.select2'), makeSelect2);
 
 
 
 
-   
-   
+
+
+
+
 
     $('#trash-check-staff').click(() => {
         const go_to_url = $('#trash-check-staff').val();
@@ -57,10 +63,10 @@ $(function() {
 
     // checkbox for propertyType
 
-    $("#chkbox-proptyType").click(function(){
-        if($(this).prop("checked") == true){
+    $("#chkbox-proptyType").click(function () {
+        if ($(this).prop("checked") == true) {
             document.location = "/system/PropTypes/trash";
-        }else{
+        } else {
             document.location = "/system/PropTypes";
         }
     });
@@ -71,7 +77,7 @@ $(function() {
         }
     });
 
-    $('[data-toggle="tooltip"]').tooltip();
+
     const stringPattern = /^(\w+\s)*\w+$/;
     const numberPattern = /^\d*\.?\d*$/;
 
@@ -80,12 +86,12 @@ $(function() {
     $('form#detail').submit(e => {
         e.preventDefault();
 
-        if($("#btnAdd").text()=='Cancel'){
-            changeBtnContext('#btnAdd','1');
+        if ($("#btnAdd").text() == 'Cancel') {
+            changeBtnContext('#btnAdd', '1');
             return;
         }
-        
-       
+
+
         const inputText = document.querySelectorAll('.text-validate');
 
         inputText.forEach(item => {
@@ -129,15 +135,163 @@ $(function() {
         }
     });
 
+
+
+
+
+
+
+
+
+    const renderResponseMessage = (response) => {
+        console.log(response.responseJSON.data);
+        let responseJSON = response.responseJSON;
+
+        let showMessage = document.createElement('ul');
+        let dataToRender = '';
+
+
+        console.log(responseJSON);
+        if (responseJSON.failOnValidate == true) {
+
+            dataToRender = responseJSON.error;
+            $('.show-message').addClass('alert-danger');
+            $('.show-message').removeClass('alert-success');
+
+        } else {
+            dataToRender = responseJSON.success;
+
+            $('.show-message').addClass('alert-success');
+            $('.show-message').removeClass('alert-danger');
+        }
+
+
+        if (responseJSON.failOnValidate) {
+            for (var data in dataToRender) {
+                let messageList = document.createElement('li');
+                let message = document.createTextNode(dataToRender[data]);
+                messageList.appendChild(message);
+                showMessage.appendChild(messageList);
+                $('.show-message').html(showMessage);
+
+            }
+        } else {
+            $('.show-message').html(dataToRender);
+        }
+
+        $('.show-message').css('display', 'block');
+        //console.log(responseJSON);
+
+
+        window.scrollTo(0, 0);
+
+    }
+
+    //clear toggle active class
+
+
+    $('.my-switch').removeClass('active');
+
+
+
+    let defaultTooltip = {
+        'placement': 'bottom',
+        'title': '',
+        'trigger':'manual'
+    };
+
     
+    $('[data-toggle="tooltip"]').tooltip(defaultTooltip);
 
-   
-
-
-
+    $('[data-toggle="tooltip"]').removeAttr('data-original-title');
 
 
-    /* Add property detail to project */
+
+
+    //currency input
+
+    $("input[data-type='currency']").on({
+        keyup: function() {
+          formatCurrency($(this));
+        },
+        blur: function() { 
+          formatCurrency($(this), "blur");
+        }
+    });
+    
+    
+    function formatNumber(n) {
+      // format number 1000000 to 1,234,567
+      return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+    
+    
+    function formatCurrency(input, blur) {
+      // appends $ to value, validates decimal side
+      // and puts cursor back in right position.
+      
+      // get input value
+      var input_val = input.val();
+      
+      // don't validate empty input
+      if (input_val === "") { return; }
+      
+      // original length
+      var original_len = input_val.length;
+    
+      // initial caret position 
+      var caret_pos = input.prop("selectionStart");
+        
+      // check for decimal
+      if (input_val.indexOf(".") >= 0) {
+    
+        // get position of first decimal
+        // this prevents multiple decimals from
+        // being entered
+        var decimal_pos = input_val.indexOf(".");
+    
+        // split number by decimal point
+        var left_side = input_val.substring(0, decimal_pos);
+        var right_side = input_val.substring(decimal_pos);
+    
+        // add commas to left side of number
+        left_side = formatNumber(left_side);
+    
+        // validate right side
+        right_side = formatNumber(right_side);
+        
+        // On blur make sure 2 numbers after decimal
+        if (blur === "blur") {
+          right_side += "00";
+        }
+        
+        // Limit decimal to only 2 digits
+        right_side = right_side.substring(0, 2);
+    
+        // join number by .
+        input_val = "$" + left_side + "." + right_side;
+    
+      } else {
+        // no decimal entered
+        // add commas to number
+        // remove all non-digits
+        input_val = formatNumber(input_val);
+        input_val = "$" + input_val;
+        
+        // final formatting
+        if (blur === "blur") {
+          input_val += ".00";
+        }
+      }
+      
+      // send updated string to input
+      input.val(input_val);
+    
+      // put caret back in the right position
+      var updated_len = input_val.length;
+      caret_pos = updated_len - original_len + caret_pos;
+      input[0].setSelectionRange(caret_pos, caret_pos);
+    }
 
 
 
@@ -164,7 +318,7 @@ function addProjectDetail() {
     const stType = $(
         `#propertyType option[value="${type.value}"]`
     ).html();
-    const stPublish =$(
+    const stPublish = $(
         `#publish option[value="${publish.value}"]`
     ).html();
 
@@ -181,7 +335,7 @@ function addProjectDetail() {
         <td rel="price" alt='${price.value}'>${price.value}</td>
         <td rel="free" alt='${free.value}'>${free.value}</td>
         <td rel="publish" alt='${
-            publish.value
+        publish.value
         }' class='pro-detail-publish'>${stPublish}</td>
         <td>
             <a rel="edit"  class="btn btn-primary edit">Edit</a>
@@ -210,30 +364,30 @@ function addProjectDetail() {
 
 function getProjectItemForEdit(rowIndex) {
     var children = document.querySelector(`#detail-row-${rowIndex}`).children;
-    children=Array.from(children);
-    var data=[];
+    children = Array.from(children);
+    var data = [];
 
-    
+
     children
-        .filter(e=>{            
-            return typeof $(e).attr('rel') !== 'undefined' 
+        .filter(e => {
+            return typeof $(e).attr('rel') !== 'undefined'
         })
-        .forEach(e=>{
-            data[$(e).attr('rel')]=$(e).attr('alt')
+        .forEach(e => {
+            data[$(e).attr('rel')] = $(e).attr('alt')
         });
 
     showPropertyPopup(data);
 
 }
 
-function showPropertyPopup(data){
+function showPropertyPopup(data) {
     $('#trigger-detail').modal();
     const type = document.querySelector('#propertyType');
     const code = document.querySelector('#code');
     const description = document.querySelector('#description');
     const no = document.querySelector('#no');
     const st = document.querySelector('#st');
-    
+
     const cost = document.querySelector('#cost');
     const price = document.querySelector('#price');
     const free = document.querySelector('#free');
@@ -245,59 +399,59 @@ function showPropertyPopup(data){
     $('#attribute').select2().trigger('change');
 
 
-    setSelect(type,data['type']);
+    setSelect(type, data['type']);
 
-    code.value=data['code'];
-    description.value=data['description'];
+    code.value = data['code'];
+    description.value = data['description'];
     no.value = data['no'];
     st.value = data['st'];
- 
+
     cost.value = data['cost'];
     price.value = data['price'];
     free.value = data['free'];
     st.value = data['st'];
-    
-    setSelect(publish,data['publish']);
+
+    setSelect(publish, data['publish']);
 }
 
 
-function deleteDetail(rowIndex){
+function deleteDetail(rowIndex) {
     let row = document.querySelector(`#detail-row-${rowIndex}`);
     row.remove();
 
-    let table=document.querySelector(`#project-detail-body`);
+    let table = document.querySelector(`#project-detail-body`);
 
     resetId(table)
 }
 
-function resetId(table){
-    let rows=table.children;
+function resetId(table) {
+    let rows = table.children;
 
-    rows=Array.from(rows);
+    rows = Array.from(rows);
 
 
-    rows.forEach((value,index)=>{
-        console.log(index,value);
+    rows.forEach((value, index) => {
+        console.log(index, value);
         value.setAttribute('id', `detail-row-${index}`);
         value.setAttribute('alt', index);
-        value.children[0].innerText=index+1;
+        value.children[0].innerText = index + 1;
     });
 
 }
 
-function changeSummaryValue(){
-    
+function changeSummaryValue() {
+
 }
 
 
 
 
 
-function setSelect(select,data){
-    const typeChildren= Array.from(select.children);
+function setSelect(select, data) {
+    const typeChildren = Array.from(select.children);
 
-    typeChildren.forEach(child=>{
-        if(child.value == data){
+    typeChildren.forEach(child => {
+        if (child.value == data) {
             select.value = data;
         }
     });

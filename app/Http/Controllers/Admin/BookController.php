@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Property;
+use App\Customer;
+use App\Agency;
 
 class BookController extends Controller
 {
@@ -14,6 +17,7 @@ class BookController extends Controller
      */
     public function index()
     {
+
         return View('admin.book.index');
     }
 
@@ -24,7 +28,16 @@ class BookController extends Controller
      */
     public function create()
     {
-        return View('admin.book.create');
+        $property = Property::select('propertyId', 'propertyCode', 'cost', 'price')->get();
+        $customer = Customer::select('customerId', 'name')->get();
+        $agency = Agency::select('agencyId', 'agency')->get();
+
+        $data = [
+            'property' => $property,
+            'customer' => $customer,
+            'agency' => $agency
+        ];
+        return View('admin.book.create', $data);
     }
 
     /**

@@ -172,16 +172,19 @@
                
                 successSubmit= true;
                 $("#propertyId").val(response.propertyId)
-
+              
+                renderMessage($('.show-message'),'success', response.message);
 
             },
             error: response=>{
-                console.log(response);
+               
+                renderMessage($('.show-message'),'error', response.responseJSON.message);
                 successSubmit= false;
 
             },
             complete: response=>{
-                renderResponseMessage(response);
+                console.log(response);
+               
             },
             dataType: "json",
             // contentType : "application/json"

@@ -174,11 +174,11 @@ class PropertyController extends Controller
 
             $PropertyImage->save();
 
-            return response()->json(['success' => 'Added new records.', 'propertyId' => $newPropertyId], 200);
+            return response()->json(['message' => ['Added new records.'], 'propertyId' => $newPropertyId], 200);
         }
 
 
-        return response()->json(['error' => $validator->errors()->all(), 'failOnValidate' => true, 'data' =>  $partnerId], 403);
+        return response()->json(['message' => $validator->errors()->all(), 'failOnValidate' => true, 'data' =>  $partnerId], 403);
     }
 
     /**

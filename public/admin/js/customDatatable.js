@@ -1,85 +1,85 @@
-$(document).ready(()=>{
+// $(document).ready(()=>{
 
     
-    $('#btnCancel').css('display','none');
-    column=['No','Name','Description','Action']
-    showDiff=[false,false,false,true];
+//     $('#btnCancel').css('display','none');
+//     column=['No','Name','Description','Action']
+//     showDiff=[false,false,false,true];
 
 
 
-    let detail = new customTable($('#table'),column,showDiff);
+//     let detail = new customTable($('#table'),column,showDiff);
 
 
-    $('#btnAdd').click((e)=>{
+//     $('#btnAdd').click((e)=>{
         
-        if($(e.target).text()==='Add'){
-            let id=$('#table tr').length;
+//         if($(e.target).text()==='Add'){
+//             let id=$('#table tr').length;
 
-            let name=$('#name').val();
+//             let name=$('#name').val();
 
-            let description=$('#description').val();
+//             let description=$('#description').val();
 
-            let btn=`<Button class="btn btn-primary edit" alt=${id-1}>Edit</Button>
-                <Button class="btn btn-danger delete" alt=${id-1}>Delete</Button>
-            `
+//             let btn=`<Button class="btn btn-primary edit" alt=${id-1}>Edit</Button>
+//                 <Button class="btn btn-danger delete" alt=${id-1}>Delete</Button>
+//             `
 
            
-            detail.addRow([id,name,description,['edit',btn]])
+//             detail.addRow([id,name,description,['edit',btn]])
             
-            // let value=detail.getValue(0);
+//             // let value=detail.getValue(0);
             
-            // detail.setValue(0,1,'hello');
+//             // detail.setValue(0,1,'hello');
 
-            //console.log(value);
-            // detail.deleteRow(0);
-        }else{
-            let name=$('#name').val();
-            let description=$('#description').val();
+//             //console.log(value);
+//             // detail.deleteRow(0);
+//         }else{
+//             let name=$('#name').val();
+//             let description=$('#description').val();
 
-            detail.setValue(detail.selectedIndex,1,name);
-            detail.setValue(detail.selectedIndex,2,description);
+//             detail.setValue(detail.selectedIndex,1,name);
+//             detail.setValue(detail.selectedIndex,2,description);
             
-        }
+//         }
 
         
         
-    });
+//     });
 
 
-    const handleCancel=()=>{
-        $('#btnCancel').css('display','none');
-        $('#btnAdd').html('Add');
+//     const handleCancel=()=>{
+//         $('#btnCancel').css('display','none');
+//         $('#btnAdd').html('Add');
        
-    }
+//     }
 
-    $('#btnCancel').click(()=>{handleCancel()});
+//     $('#btnCancel').click(()=>{handleCancel()});
 
 
 
-    $('#table').click((e)=>{
-        e.stopPropagation();
-        if($(e.target).hasClass('edit')){
-            var selectedIndex=Number($(e.target).attr('alt'));
-            let selectedRow=detail.getValue(selectedIndex);
+//     $('#table').click((e)=>{
+//         e.stopPropagation();
+//         if($(e.target).hasClass('edit')){
+//             var selectedIndex=Number($(e.target).attr('alt'));
+//             let selectedRow=detail.getValue(selectedIndex);
            
-            console.log(selectedRow);
-            $('#name').val(selectedRow.name);
-            $('#description').val(selectedRow.description);
+//             console.log(selectedRow);
+//             $('#name').val(selectedRow.name);
+//             $('#description').val(selectedRow.description);
 
-            $('#btnAdd').html('Update');
-            $('#btnCancel').css('display','initial');
+//             $('#btnAdd').html('Update');
+//             $('#btnCancel').css('display','initial');
 
-            detail.selectedIndex=selectedIndex;  
-        }else if($(e.target).hasClass('delete')){
-            var selectedIndex=Number($(e.target).attr('alt'));
-            console.log(selectedIndex);
-            handleCancel(); 
-            $(e.target).parents('tr').remove();
-        }
-    })
+//             detail.selectedIndex=selectedIndex;  
+//         }else if($(e.target).hasClass('delete')){
+//             var selectedIndex=Number($(e.target).attr('alt'));
+//             console.log(selectedIndex);
+//             handleCancel(); 
+//             $(e.target).parents('tr').remove();
+//         }
+//     })
 
 
-})
+// })
 
 
 function checkIfExist(data,fallback){

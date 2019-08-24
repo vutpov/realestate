@@ -77,7 +77,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <link rel="stylesheet" href="{{url('admin/css/animations-extended.min.css')}}">
 
-
+  <!-- Additional style -->
+  <link rel="stylesheet" href="{{url('admin/css/mdb-style.min.css')}}">
 
 
 
@@ -323,6 +324,10 @@ desired effect
               </div>
             </div>
           </div>
+
+
+
+
         </div>
       </section>
       <!-- /.content -->
@@ -339,7 +344,7 @@ desired effect
 
         </section>
         <!-- Detail content -->
-        <section class="content container-fluid">
+        <section class="content container-fluid detail">
           <div class="row">
             <div class="@yield('col-detail')">
               <div class="box box-primary">
@@ -503,55 +508,11 @@ desired effect
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
-
-
+  <script src="{{url('admin/js/helper.js')}}"></script>
+  <script src="{{url('admin/js/customDatatable.js')}}"></script>
   <script src="{{url('admin/js/script.js')}}"></script>
 
-  <script>
-    const renderResponseMessage=(response)=>{
-        console.log(response.responseJSON.data);
-        let responseJSON=response.responseJSON;
 
-        let showMessage=document.createElement('ul');
-        let dataToRender='';
-
-
-        console.log(responseJSON);
-        if(responseJSON.failOnValidate==true){
-          
-          dataToRender=responseJSON.error;    
-          $('.show-message').addClass('alert-danger');
-          $('.show-message').removeClass('alert-success');
-          
-        }else{
-          dataToRender=responseJSON.success;
-
-          $('.show-message').addClass('alert-success');
-          $('.show-message').removeClass('alert-danger');
-        }
-
-
-        if(responseJSON.failOnValidate){
-          for (var data in dataToRender) {
-            let messageList =document.createElement('li');
-            let message= document.createTextNode(dataToRender[data]);
-            messageList.appendChild(message);
-            showMessage.appendChild(messageList);
-            $('.show-message').html(showMessage);
-            
-          }
-        }else{
-          $('.show-message').html(dataToRender);
-        }
-
-        $('.show-message').css('display','block');  
-        //console.log(responseJSON);
-
-
-        window.scrollTo(0, 0);
-
-       }
-  </script>
 
   @yield('script')
 

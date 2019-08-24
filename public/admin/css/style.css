@@ -8,7 +8,8 @@ svg[class*="fa"] {
 }
 
 /*end of datatable*/
-.w-50 {
+.w-50,
+.book-detail .form-group {
     width: 50%;
 }
 
@@ -118,3 +119,143 @@ nav .fix-bootstrap4 {
 }
 
 /*end of dummy scroll*/
+
+
+/*nav bar toggle*/
+
+.main-header .sidebar-toggle {
+    padding: 0 15px;
+}
+
+/*end of nav bar toggle*/
+
+
+/*toggle*/
+
+
+.my-switch {
+    width: 50px;
+    height: 30px;
+    padding: 5px;
+    display: inline-block;
+    position: relative;
+
+}
+
+.my-switch .my-slider {
+    background-color: #ccc;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    -webkit-transition: .4s;
+    transition: .4s;
+    cursor: pointer;
+}
+
+.my-switch .my-slider:before {
+    content: "";
+    height: 20px;
+    left: 5px;
+    top: 5px;
+    width: 20px;
+    background-color: #fff;
+    position: absolute;
+    -webkit-transition: .4s;
+    transition: .4s;
+
+
+}
+
+
+
+
+label[class="my-switch"] input[type="checkbox"]:checked+.my-slider:before {
+    transform: translateX(20px);
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+}
+
+label[class="my-switch"] input[type="checkbox"]:checked+.my-slider {
+    background: #2196F3;
+
+
+}
+
+
+
+
+label[class="my-switch"] input[type="checkbox"] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+label[class="my-switch"] input[type="checkbox"]+.my-slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+/*end of toggle*/
+
+/*limit amount wrapper*/
+
+.limit-amount-wrapper {
+    width: 80%;
+}
+
+
+/*end of limit amount wrapper*/
+
+
+/*input group addon*/
+
+.input-group .input-group-addon-end {
+    line-height: 40px;
+
+    background-color: #fff;
+    padding: 0 15px;
+    display: inline;
+    border: 1px solid #ccc;
+    font-weight: 600;
+    border-left: none;
+}
+
+
+/*end of input group adddon*/
+
+
+/*date picker*/
+
+.input-group.date svg {
+    display: none;
+}
+
+/*end of date picker*/
+
+
+.control-label {
+    margin-top: 10px;
+}
+
+
+/*inform profit wrapper*/
+
+.inform-profitable-wrapper {
+    display: none;
+}
+
+
+.red-color {
+    color: #7f0000;
+}
+
+.green-color {
+    color: #003300;
+}
+
+.display-profitable {
+    font-weight: 600;
+}
+
+/*end of inform profit wrapper*/
