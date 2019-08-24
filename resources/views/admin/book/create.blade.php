@@ -165,7 +165,8 @@
         <label>Property</label>
         <select class="form-control select2 " id="propertySelect" name="property">
             @foreach ($property as $item)
-            <option data-price="{{$item->price}}" data-cost="{{$item->cost}}" value="{{$item->propertyId}}">
+            <option data-price="{{$item->price}}" data-cost="{{$item->cost}}" data-code="{{$item->propertyCode}}"
+                value="{{$item->propertyId}}">
                 {{$item->propertyCode}}</option>
             @endforeach
         </select>
@@ -216,7 +217,7 @@
     <div class="form-group">
         <label class="control-label" for="inputSuccess"> Amount</label>
         <input type="number" class="form-control" id="amountDetail" name="amount" placeholder="Amount"
-            value="{{old('Amount')}}" />
+            value="{{old('Amount')}}" disabled />
 
 
         <div class="inform-profitable-wrapper">
@@ -237,15 +238,16 @@
     </div>
 
 
-    <div class="form-group">
+    <div class="form-group" style="display:inline-flex;">
         <button type="button" class="btn btn-primary" id="btn-addProperty">Add Property</button>
+        <button type="button" class="btn btn-secondary" id="btn-cancel">Cancel</button>
     </div>
 
 
 
     {{-- Book Detail --}}
 
-    <table class="table table-hover" id="detail">
+    <table class="table table-hover detail has-action" id="detail">
 
 
 
@@ -265,8 +267,13 @@
 <script>
     $(document).ready(()=>{
         
-
+        $('#propertySelect').val('').change();
         $('#costDetail').keyup(e=> e.preventDefault());
+
+        $('#amountDetail').keyup(e => {
+            e.preventDefault();
+            console.log('ddd');
+        });
             
         $('#priceDetail').keyup(e=>{
             checkProfitable();
@@ -287,7 +294,7 @@
             
             
             let profitableDisplay=`${profitableControl} .display-profitable`;
-            console.log(message);
+            //console.log(message);
             $(profitableWrapper).css('display','block');
             $(profitableControl).css('display','block');
             $(profitableDisplay).html(message);
@@ -326,13 +333,13 @@
 
             $('#amountDetail').val(subtotal);
 
-            console.log(cost,price,discount,subtotal,message);
+            //console.log(cost,price,discount,subtotal,message);
 
             showProfitable( $('.inform-profitable-wrapper'),profitableControl,message);
         };
 
 
-        $('#propertySelect').val('').change();
+       
 
         // console.log($('#propertySelect'));
 
@@ -340,7 +347,7 @@
 
             let price=$("#propertySelect").find(":selected").data("price");
             let cost=$("#propertySelect").find(":selected").data("cost");
-            let discount=$("#propertySelect").find(":selected").data("cost");
+            let discount=$("#propertySelect").find(":selected").data("discount");
 
             $('#costDetail').val(cost);
             $('#priceDetail').val(price);
@@ -356,14 +363,28 @@
 
         //init datatable detail
 
-        let column=['No','Property','Commission','Cost','Price','Discount','Amount','Action']
-        let showDiff=[false,true,false,false,false,false,false,false];
+        let column=['No','Code','Commission','Cost','Price','Discount','Amount','Action']
+        let showDiff=[false,true,false,false,false,false,false,true];
 
         let detail = new customTable($('#detail'),column,showDiff);
+        let arrPropertyCode=[];
 
 
 
-        const validateDetail=()=>{
+        const checkPropertyExists=()=>{
+            const selectProperty=String($('#propertySelect').find(":selected").data("code"));
+            
+           
+            if($.inArray(selectProperty,arrPropertyCode)!=-1){
+                renderMessage($('.show-message.detail'),'error',['Property Exists']); 
+                
+                return false; 
+            }
+           
+            return true;
+        };
+
+        const validateDetail=(validateProperty)=>{
             let commission=Number($('#commissionDetail').val());
 
             const hasCommision= commission == 0;
@@ -371,23 +392,142 @@
             const selectProperty=$('#propertySelect').val();
           
             if(selectProperty==null){
-                
+                renderMessage($('.show-message.detail'),'error',['Property is Required']);
+                return false; 
             }
+
+            //console.log($.inArray(selectProperty,arrPropertyCode));
+
             
-            
-            return true;
-            
+
+            return validateProperty;
 
         };
 
 
-        $('#btn-addProperty').click(()=>{
-            
-            if(validateDetail()){
 
+        
+        const validatePropertyUpdate=(propertyCode)=>{
+            
+            const selectedPropertyCode=String($("#propertySelect").find(":selected").data("code"));
+
+            let tempPropertyCode = arrPropertyCode;
+
+            tempPropertyCode=tempPropertyCode.filter((temp)=>{
+                //console.log(`temp:${temp}`,`propertyCode:${propertyCode}`);
+                return temp!=propertyCode;
+            });
+
+            tempPropertyCode.push(selectedPropertyCode);
+
+            //console.log(arrPropertyCode,tempPropertyCode);
+
+            let count = $.grep(tempPropertyCode, function (elem) {
+                return elem === selectedPropertyCode;
+            }).length;
+
+            
+            //console.log(count);
+            
+
+
+            return count;
+        }
+
+        $('#btn-addProperty').click((e)=>{
+            
+            if($(e.target).text()==='Add Property'){
+
+                if(validateDetail(checkPropertyExists())){
+                    renderMessage($('.show-message.detail'),'success',['Added a new property']); 
+                    arrPropertyCode.push(String($('#propertySelect').find(":selected").data("code")));
+
+                    const count=$('#detail tr').length;
+
+                    const propertyId = $('#propertySelect').val();
+
+                    const propertyCode=$("#propertySelect").find(":selected").data("code");
+
+
+                    const commission =$('#commissionDetail').val();
+
+                    const cost=$('#costDetail').val();
+
+                    const price=$('#priceDetail').val();
+
+                    const discount=$('#discountDetail').val();
+
+                    const amount=$('#amountDetail').val();
+
+
+
+                    let btn=`<Button class="btn btn-primary detail-edit" alt=${propertyCode}>Edit</Button>
+                        <Button class="btn btn-danger detail-delete" alt=${propertyCode}>Delete</Button>
+                    `
+
+                    detail.addRow([count,[propertyId,propertyCode],commission,cost,price,discount,amount,['edit',btn]]);
+
+
+
+                } 
+            }else if($(e.target).text()==='Update'){
+
+                const propertyCode=$(e.target).data('code');
+
+                if(validatePropertyUpdate(propertyCode)>=2){
+                    renderMessage($('.show-message.detail'),'error',['Property Duplicated']);
+                    return false;
+                }
+            }          
+        });
+
+
+
+        const handleCancel=(e)=>{
+            $('#propertySelect').val('').change();
+
+
+            const commission =$('#commissionDetail').val("0");
+
+            const cost=$('#costDetail').val("");
+
+            const price=$('#priceDetail').val("");
+
+            const discount=$('#discountDetail').val("");
+
+            const amount=$('#amountDetail').val("");
+
+            $('#btn-addProperty').removeAttr('data-code');
+            $('#btn-addProperty').html('Add Property');
+
+
+            $(e.target).css('display','none');
+
+            $('.inform-profitable-wrapper').css('display','none');
+
+            $('.show-message').css('display','none');
+        };
+
+
+        $('#btn-cancel').click((e)=> handleCancel(e));
+
+        $('#detail').click((e)=>{
+            e.stopPropagation();
+            if($(e.target).hasClass('detail-edit')){
+                $('#btn-cancel').css('display','block');
+
+                let propertyCode=$(e.target).attr('alt');
+               
+                $('#btn-addProperty').attr("data-code",propertyCode);
+                $('#btn-addProperty').html("Update");
+
+                
+
+            }else if($(e.target).hasClass('detail-delete')){
+                handleCancel(e); 
+                $(e.target).parents('tr').remove();
             }
         });
-        
 
     });
 

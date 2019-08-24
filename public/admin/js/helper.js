@@ -4,13 +4,13 @@ const renderMessage=(container,messageType,arrMessage)=>{
     if(messageType==="success"){
         $(container).addClass('alert-success');
         $(container).removeClass('alert-danger');
-    }else{
+    }else if(messageType==="error"){
         $(container).addClass('alert-danger');
         $(container).removeClass('alert-success');
     }
 
     
-    console.log(arrMessage);
+    console.log(container);
     $(container).css('display','block');
     $(container).empty();
     let message='';
@@ -23,5 +23,5 @@ const renderMessage=(container,messageType,arrMessage)=>{
 
     container.append(messageWrapper);
 
-    $("html, body").animate({ scrollTop: 0 }, "slow");
+    $("html, body").animate({ scrollTop:  $(container).offset().top-100 }, "slow");
 }

@@ -9,7 +9,8 @@ svg[class*="fa"] {
 
 /*end of datatable*/
 .w-50,
-.book-detail .form-group {
+.book-detail .form-group,
+.book-detail .show-message {
     width: 50%;
 }
 
@@ -259,3 +260,20 @@ label[class="my-switch"] input[type="checkbox"]+.my-slider {
 }
 
 /*end of inform profit wrapper*/
+
+
+/*table button*/
+
+table.has-action tr td:last-child {
+    padding: 0;
+}
+
+/*table button*/
+
+/*btn cancel*/
+
+.btn-secondary {
+    display: none;
+}
+
+/*end of btn cancel*/

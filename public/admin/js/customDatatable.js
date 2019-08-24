@@ -82,6 +82,9 @@
 // })
 
 
+
+
+
 function checkIfExist(data,fallback){
     
    
@@ -118,6 +121,10 @@ class customTable {
             
             elem.append(renderHead);
         }
+    }
+
+    resetTableIncrement(){
+        console.log(this.column); 
     }
     
 

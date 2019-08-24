@@ -159,6 +159,7 @@
         var frmdata = new FormData($("#form-submit-property")[0])
         
         let successSubmit;
+
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -189,6 +190,7 @@
             dataType: "json",
             // contentType : "application/json"
         });
+        
         return successSubmit;
     };
     
