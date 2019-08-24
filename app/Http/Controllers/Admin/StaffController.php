@@ -10,7 +10,6 @@ use App\Http\Helpers\Helper;
 use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Support\Facades\DB;
 
 class StaffController extends Controller
@@ -98,6 +97,7 @@ class StaffController extends Controller
             'profile' => 'mimes:jpeg,jpg,png',
             'position' => 'required'
         ]);
+        
 
         $path = null;
         if ($request->file('profile') != null) {
