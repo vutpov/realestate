@@ -24,4 +24,14 @@ const renderMessage=(container,messageType,arrMessage)=>{
     container.append(messageWrapper);
 
     $("html, body").animate({ scrollTop:  $(container).offset().top-100 }, "slow");
+};
+
+
+const clearBtnAddData=(elem,data)=>{
+
+
+    $(elem).removeData(data);
+    $(elem).removeAttr(`data-${data}`);
+
+    
 }

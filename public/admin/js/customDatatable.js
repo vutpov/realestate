@@ -133,7 +133,7 @@ class customTable {
     }
     
 
-    addRow(row){
+    addRow(key="",row){
 
         let renderRow='';
 
@@ -161,7 +161,7 @@ class customTable {
 
         
 
-        renderRow=`<tr ${renderRow}>${renderAllCol}</tr>`; 
+        renderRow=`<tr alt="${key}" ${renderRow}>${renderAllCol}</tr>`; 
 
         this.table.find('tbody').append(renderRow);
        
@@ -182,10 +182,12 @@ class customTable {
         let columnName=this.column[col];
         if(this.showDiff[col]){
             $(targetRow).attr(`data-${columnName}`,value[0]);
+            $(targetRow).data(value[0]);
             $(cell).html(value[1]);
           
         }else{
             $(targetRow).attr(`data-${columnName}`,value[0]);
+            $(targetRow).data(value[0]);
             $(cell).html(value[0]);
         }
     }
