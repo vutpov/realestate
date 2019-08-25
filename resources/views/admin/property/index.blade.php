@@ -40,8 +40,6 @@
 
 
 
-
-
             @foreach ($property as $item)
             <tr>
                 <td>{{$loop->iteration}}</td>

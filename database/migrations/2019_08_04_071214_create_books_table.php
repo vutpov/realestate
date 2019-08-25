@@ -16,16 +16,18 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             //Book (BookId, BookDate, LimitAmount, DeadLine, TAmount, discount, SubTotal, Deposit, Credit, Commission, status, created, modified, deleted, staffId, CustomerId , AgentId,) 
             $table->bigIncrements('bookId');
-            $table->double('limitAmount', 15, 2);
+            $table->double('limitAmount', 3, 0);
+            $table->double('limitMoney', 15, 2);
             $table->date('deadline');
+            $table->double('amount', 15, 2);
             $table->double('discount', 15, 2);
             $table->double('subTotal', 15, 2);
             $table->double('deposit', 15, 2);
             $table->double('credit', 15, 2);
-            $table->double('comission', 15, 2);
+            $table->double('commission', 15, 2);
             $table->String('status');
 
-            
+
 
             $table->unsignedSmallInteger('staffId');
             $table->unsignedBigInteger('customerId');

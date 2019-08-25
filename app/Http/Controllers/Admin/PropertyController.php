@@ -66,8 +66,10 @@ class PropertyController extends Controller
             ->leftJoinSub($projectQry, 'projects', function ($join) {
                 $join->on('projects.projectId', '=', 'properties.projectId');
             })
-
             ->get();
+
+
+
 
         $data = array('property' => $property);
 
@@ -174,7 +176,7 @@ class PropertyController extends Controller
 
             $PropertyImage->save();
 
-            return response()->json(['message' => ['Added new records.'], 'propertyId' => $newPropertyId], 200);
+            return response()->json(['message' => ['Added new records.'], 'propertyId' => $newPropertyId, 'data' =>  Auth::user()->staffId], 200);
         }
 
 

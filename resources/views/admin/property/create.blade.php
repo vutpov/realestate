@@ -177,7 +177,7 @@
                 $("#propertyId").val(response.propertyId)
               
                 myDropzone.processQueue();
-
+                console.log(response);
                 renderMessage($('.show-message'),'success', response.message);
                 
             },
@@ -189,7 +189,7 @@
 
             },
             complete: response=>{
-                console.log(response);
+                console.log(response.data);
                
             },
             dataType: "json",
