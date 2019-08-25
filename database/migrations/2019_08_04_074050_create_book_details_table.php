@@ -20,7 +20,7 @@ class CreateBookDetailsTable extends Migration
             $table->timestamps();
 
             $table->double('price', 15, 2);
-            $table->double('discount', 3, 2);
+            $table->double('discount', 15, 2);
             $table->double('amount', 15, 2);
 
             $table->foreign('propertyId')->references('propertyId')->on('properties');

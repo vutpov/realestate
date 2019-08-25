@@ -146,8 +146,8 @@
 
             <div class="form-group">
                 <label class="control-label" for="inputSuccess"> Amount</label>
-                <input type="number" class="form-control" id="amountDetail" name="amount" placeholder="Amount"
-                    value="0" disabled />
+                <input type="number" class="form-control" id="amountDetail" name="amount" placeholder="Amount" value="0"
+                    disabled />
 
 
                 <div class="inform-profitable-wrapper">
@@ -206,7 +206,7 @@
 
             <div class="form-group">
                 <label class="control-label" for="inputSuccess">Amount</label>
-                <input type="number" class="form-control" name="amount" placeholder="Amount" id="amountMaster" value=""
+                <input type="number" class="form-control" name="amount" placeholder="Amount" id="amountMaster" value="0"
                     disabled />
                 <span class="help-block"></span>
             </div>
@@ -283,7 +283,7 @@
 
 @endsection
 
-
+{{-- JAVASCRIPT --}}
 @section('script')
 <script>
     $(document).ready(()=>{
@@ -376,8 +376,6 @@
             $('#priceDetail').val(price);
             $('#discountDetail').val('0');
            
-
-
             checkProfitable();
         };
 
@@ -385,7 +383,7 @@
         //init datatable detail
 
         let column=['No','Code','Commission','Cost','Price','Discount','Amount','Action']
-        let showDiff=[false,true,false,false,false,false,false,true];
+        let showDiff=[false,false,false,false,false,false,false,true];
 
         let detail = new customTable($('#detail'),column,showDiff);
         let arrPropertyCode=[];
@@ -426,18 +424,21 @@
 
 
         
-        const validatePropertyUpdate=(rowNumber)=>{
+        const validatePropertyUpdate=(propertyCode)=>{
             
             const selectedPropertyCode=String($("#propertySelect").find(":selected").data("code"));
 
             let tempPropertyCode = arrPropertyCode;
 
-            //console.log(rowNumber);
-            tempPropertyCode[rowNumber-1]=selectedPropertyCode;
+            tempPropertyCode=tempPropertyCode.filter(item=>{
+                //console.log(item,propertyCode);
+                return item!=propertyCode;
 
-            //console.log(rowNumber-1);
+            })
 
-            // console.log(arrPropertyCode,tempPropertyCode);
+            tempPropertyCode.push(selectedPropertyCode);
+
+            //console.log('arr',arrPropertyCode,'temp',tempPropertyCode);
 
             let count = $.grep(tempPropertyCode, function (elem) {
                 return elem === selectedPropertyCode;
@@ -514,10 +515,11 @@
 
                     const count=$('#detail tr').length;
 
-                    const propertyId = $('#propertySelect').val();
+                    const propertyId=$("#propertySelect").val();
+                    console.log(propertyId);
 
                     const propertyCode=$("#propertySelect").find(":selected").data("code");
-
+                    console.log(propertyCode);
 
                     const commission =Number($('#commissionDetail').val());
 
@@ -535,7 +537,7 @@
                         <Button class="btn btn-danger detail-delete" alt=${propertyCode}>Delete</Button>
                     `
 
-                    detail.addRow([count,[propertyId,propertyCode],commission,cost,price,discount,amount,['edit',btn]]);
+                    detail.addRow(propertyId,[count,propertyCode,commission,cost,price,discount,amount,['edit',btn]]);
 
                     changeTotalMaster(0,amount);
                     changeSubTotalMaster();
@@ -545,47 +547,71 @@
                 } 
             }else if($(e.target).text()==='Update'){
 
-                let rowNumber='';
-                console.log(rowNumber);
-                rowNumber=$(e.target).data('no');
-                console.log(e.target,rowNumber);
-                if(validatePropertyUpdate(rowNumber)>=2){
+                let propertyCode=$(e.target).data('code');
+                let amount=$(e.target).data('amount');
+                //console.log(propertyCode);
+                if(validatePropertyUpdate(propertyCode)>=2){
                     renderMessage($('.show-message.detail'),'error',['Property Duplicated']);
                     return ;
                 }
 
-
                 
                 
 
-                const propertyId = $('#propertySelect').val();
+                const propertyId = $('#propertySelect').val()+"";
 
-                propertyCode=$("#propertySelect").find(":selected").data("code");
-
-
-                const commission =Number($('#commissionDetail').val());
-
-                const cost=Number($('#costDetail').val());
-
-                const price=Number($('#priceDetail').val());
-
-                const discount=Number($('#discountDetail').val());
-
-                const amount=Number($('#amountDetail').val());
+                let newPropertyCode=$("#propertySelect").find(":selected").data("code")+"";
 
 
+                const commission =Number($('#commissionDetail').val())+"";
+
+                const cost=Number($('#costDetail').val())+"";
+
+                const price=Number($('#priceDetail').val())+"";
+
+                const discount=Number($('#discountDetail').val())+"";
+
+                const newAmount=Number($('#amountDetail').val())+"";
 
 
+                //setValue(row,col,...value)
 
+                const selectedRowIndex=$(e.target).data('index');
+               
+
+                arrPropertyCode=arrPropertyCode.filter((item)=>{
+                    return item!=propertyCode;
+                });
+
+                arrPropertyCode.push(newPropertyCode+"");
+                console.log(arrPropertyCode);
+
+                detail.setValue(selectedRowIndex,1,newPropertyCode);
+                detail.setValue(selectedRowIndex,2,commission);
+                detail.setValue(selectedRowIndex,3,cost);
+                detail.setValue(selectedRowIndex,4,price);
+                detail.setValue(selectedRowIndex,5,discount);
+                detail.setValue(selectedRowIndex,6,newAmount);
+
+                handleCancel('none');
+
+                console.log(amount,newAmount);
+
+                changeTotalMaster(amount,newAmount);
+                changeSubTotalMaster();
+                changeLimitAmount();
+                changeCreditMaster();
+
+                renderMessage($('.show-message.detail'),'success',['Updated Success']);
             }          
         });
 
-
+      
 
         const handleCancel=(e)=>{
             $('#propertySelect').val('').change();
 
-
+            selectedRowNum=-1;
             const commission =$('#commissionDetail').val("0");
 
             const cost=$('#costDetail').val("");
@@ -596,8 +622,6 @@
 
             const amount=$('#amountDetail').val("");
 
-            $('#btn-addProperty').removeAttr('data-code');
-            $('#btn-addProperty').removeAttr('data-no');
             $('#btn-addProperty').html('Add Property');
 
 
@@ -607,30 +631,39 @@
 
             $('.show-message').css('display','none');
 
-
-           
+            $('#btn-cancel').css('display','none');
+            clearBtnAddData('#btn-addProperty','no');
+            clearBtnAddData('#btn-addProperty','code');
+            clearBtnAddData('#btn-addProperty','index');
+            clearBtnAddData('#btn-addProperty','amount');
         };
+
+
+        
 
 
         $('#btn-cancel').click((e)=> handleCancel(e));
 
         $('#detail').click((e)=>{
             e.stopPropagation();
-            let propertyCode=$(e.target).attr('alt');
+            let propertyCode=$(e.target).parents('tr').data('code');
             if($(e.target).hasClass('detail-edit')){
                 $('#btn-cancel').css('display','initial');
 
-                let selectedRowNum=$(e.target).parents('tr').data('no');
+                selectedRowNum=$(e.target).parents('tr').index();
                
-                $('#btn-addProperty').removeData("no");
-                $('#btn-addProperty').removeAttr("data-no");
-
-                $('#btn-addProperty').attr("data-no",selectedRowNum);
+                //console.log(selectedRowNum);
+                clearBtnAddData('#btn-addProperty','index');
+                clearBtnAddData('#btn-addProperty','no');
+                clearBtnAddData('#btn-addProperty','code');
+                clearBtnAddData('#btn-addProperty','amount');
+            
                 $('#btn-addProperty').attr("data-code",propertyCode);
+                $('#btn-addProperty').attr("data-index",selectedRowNum);
                 $('#btn-addProperty').html("Update");
 
-                let propertyId=$(e.target).parents('tr').data('code');
-
+                let propertyId=$(e.target).parents('tr').attr('alt');
+                //console.log(propertyId);
                 
                 
                 $('#propertySelect').val(propertyId).trigger('change');
@@ -640,7 +673,7 @@
 
             }else if($(e.target).hasClass('detail-delete')){
                 handleCancel(e);
-
+                console.log(propertyCode);
                 arrPropertyCode=arrPropertyCode.filter((element)=>{
                     return element!=propertyCode;
                 })
