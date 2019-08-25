@@ -55,8 +55,9 @@ class Property_Type extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'propertyType' => 'required'
+            'propertyType' => 'required|unique:property_types,propertyType'
         ]);
+        
 
         $propType = new PropertyType;
         $propType->propertyType = $request->propertyType;
@@ -99,7 +100,7 @@ class Property_Type extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'propertyType' => 'required'
+            'propertyType' => 'required|unique:property_types,propertyType'
         ]);
 
         PropertyType::where('propertyTypeId', $id)->update(['propertyType' => $request->propertyType]);
