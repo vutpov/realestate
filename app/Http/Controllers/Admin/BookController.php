@@ -48,7 +48,8 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        return response()->json(['message' => 'hello', 'errorCode' => true, 'data' => $request], 403);
     }
 
     /**

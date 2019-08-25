@@ -173,6 +173,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Book
     Route::get('book', 'admin\BookController@index');
     Route::get('createBook', 'admin\BookController@create');
+    Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
 
     //Project
     Route::get('project', 'admin\ProjectController@index');

@@ -7,15 +7,12 @@
 @section('content')
 
 
-<form action="{{url('/system/storeUser')}}" method="POST" enctype="multipart/form-data">
+
+<form id="form-submit-book" method="POST" enctype="multipart/form-data">
     @csrf
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="alert show-message master">
+
     </div>
     @endif
 
@@ -171,7 +168,7 @@
             <div class="form-group" style="">
                 <button type="button" class="btn btn-primary" id="btn-addProperty">Add Property</button>
                 <button type="button" class="btn btn-secondary" id="btn-cancel">Cancel</button>
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button type="submit" class="btn btn-primary pull-right" id="btn-Submit">Submit</button>
 
             </div>
 
@@ -464,7 +461,7 @@
         }
 
         const changeTotalMaster=(oldAmount,newAmount)=>{
-            totalMaster=totalMaster-oldAmount+newAmount;
+            totalMaster=totalMaster-Number(oldAmount)+Number(newAmount);
             $('#amountMaster').val(totalMaster);
         }
 
@@ -646,12 +643,15 @@
 
         $('#detail').click((e)=>{
             e.stopPropagation();
+            let oldAmount=Number($(e.target).parents('tr').data('amount'));
             let propertyCode=$(e.target).parents('tr').data('code');
             if($(e.target).hasClass('detail-edit')){
                 $('#btn-cancel').css('display','initial');
 
                 selectedRowNum=$(e.target).parents('tr').index();
                
+                
+
                 //console.log(selectedRowNum);
                 clearBtnAddData('#btn-addProperty','index');
                 clearBtnAddData('#btn-addProperty','no');
@@ -660,6 +660,7 @@
             
                 $('#btn-addProperty').attr("data-code",propertyCode);
                 $('#btn-addProperty').attr("data-index",selectedRowNum);
+                $('#btn-addProperty').attr("data-amount",oldAmount);
                 $('#btn-addProperty').html("Update");
 
                 let propertyId=$(e.target).parents('tr').attr('alt');
@@ -678,7 +679,7 @@
                     return element!=propertyCode;
                 })
 
-                let oldAmount=Number($(e.target).parents('tr').data('amount'));
+                
 
                 changeTotalMaster(oldAmount,0);
                 changeSubTotalMaster();
@@ -695,6 +696,49 @@
 
             }
         });
+
+
+        /*send request*/
+        
+        $("#btn-Submit").click(()=>{
+
+
+            var frmdata = new FormData($("#form-submit-book")[0]);
+
+            $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "{{route('storeBook')}}",
+            processData:false,
+            contentType:false,
+            data: frmdata,
+            success: response =>{
+               
+                successSubmit= true;
+                $("#propertyId").val(response.propertyId)
+              
+                renderMessage($('.show-message'),'success', response.message);
+
+            },
+            error: response=>{
+               
+                renderMessage($('.show-message'),'error', response.responseJSON.message);
+                successSubmit= false;
+
+            },
+            complete: response=>{
+                console.log(response);
+            },
+            dataType: "json",
+            // contentType : "application/json"
+        });
+
+
+        });
+
+        /*end of send request*/
 
     });
 
