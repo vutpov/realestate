@@ -10,11 +10,11 @@ const renderMessage=(container,messageType,arrMessage)=>{
     }
 
     
-    console.log(container);
+    //console.log(container);
     $(container).css('display','block');
     $(container).empty();
     let message='';
-    console.log(arrMessage);
+    //console.log(arrMessage);
     arrMessage.forEach(element => {
         message=document.createElement('li');
         message.textContent=element;

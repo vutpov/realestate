@@ -351,10 +351,6 @@ desired effect
                 <div class="box-body">
                   @yield('detail')
 
-
-
-
-
                 </div>
               </div>
             </div>

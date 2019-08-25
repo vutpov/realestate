@@ -8,9 +8,7 @@ svg[class*="fa"] {
 }
 
 /*end of datatable*/
-.w-50,
-.book-detail .form-group,
-.book-detail .show-message {
+.w-50 {
     width: 50%;
 }
 
@@ -213,10 +211,10 @@ label[class="my-switch"] input[type="checkbox"]+.my-slider {
 
 .input-group .input-group-addon-end {
     line-height: 40px;
-
+    width: 40px;
     background-color: #fff;
     padding: 0 15px;
-    display: inline;
+
     border: 1px solid #ccc;
     font-weight: 600;
     border-left: none;
@@ -236,7 +234,7 @@ label[class="my-switch"] input[type="checkbox"]+.my-slider {
 
 
 .control-label {
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 

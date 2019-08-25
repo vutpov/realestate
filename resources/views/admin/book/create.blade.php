@@ -44,32 +44,6 @@
 
 
 
-
-
-
-
-
-
-    {{-- Limit Amount --}}
-    <div class="form-group">
-        <label class="control-label" for="commission">Limit Amount</label><!-- Default checked -->
-
-
-        <div class="input-group">
-            <input type="number" value="20" class="form-control" name="limitAmount" placeholder="Limit Amount" disabled>
-            <span class="input-group-addon-end">%</span>
-        </div>
-
-
-
-
-
-        <span class="help-block"></span>
-    </div>
-
-
-
-
     {{-- date_of_birth --}}
     <div class="form-group">
         <label>Deadline:</label>
@@ -85,56 +59,8 @@
 
 
 
-    {{-- Amount --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Amount</label>
-        <input type="number" class="form-control" name="amount" placeholder="Amount" value="" disabled />
-        <span class="help-block"></span>
-    </div>
 
 
-
-    {{-- Total Discount --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Total Discount</label>
-        <input type="number" class="form-control" name="totalDiscount" placeholder="Total Discount"
-            value="{{old('commission')}}" disabled />
-        <span class="help-block"></span>
-    </div>
-
-
-
-
-
-    {{-- SubTotal --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Subtotal</label>
-        <input type="number" class="form-control" name="subtotal" placeholder="Subtotal" value="{{old('subtotal')}}"
-            disabled />
-        <span class="help-block"></span>
-    </div>
-
-
-
-    {{-- Deposit --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Deposit</label>
-        <input type="number" class="form-control" name="deposit" placeholder="Deposit" value="{{old('deposit')}}" />
-        <span class="help-block"></span>
-    </div>
-
-
-    {{-- Credit --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Credit</label>
-        <input type="number" class="form-control" name="credit" placeholder="Credit" value="{{old('credit')}}" />
-        <span class="help-block"></span>
-    </div>
 
 
 </form>
@@ -154,94 +80,189 @@
 
 
 <div class="book-detail">
-    <div class="alert show-message detail" style="display:none">
 
-    </div>
+    <div class="row">
 
+        <div class="col-md-6">
+            <div class="alert show-message detail" style="display:none">
 
-
-    {{-- Property --}}
-    <div class="form-group">
-        <label>Property</label>
-        <select class="form-control select2 " id="propertySelect" name="property">
-            @foreach ($property as $item)
-            <option data-price="{{$item->price}}" data-cost="{{$item->cost}}" data-code="{{$item->propertyCode}}"
-                value="{{$item->propertyId}}">
-                {{$item->propertyCode}}</option>
-            @endforeach
-        </select>
-    </div>
-
-    {{-- Commission --}}
-
-    <div class="form-group">
-        <label class="control-label" for="commission">Commission</label>
-        <input type="number" class="form-control" name="commission" id="commissionDetail" placeholder="Commission"
-            value="0" />
-        <span class="help-block"></span>
-    </div>
-
-
-    {{--  Cost --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Cost</label>
-        <input type="number" class="form-control" id="costDetail" name="costDetail" placeholder="Cost" disabled
-            value="{{old('Cost')}}" />
-        <span class="help-block"></span>
-    </div>
+            </div>
 
 
 
-    {{--  Price --}}
+            {{-- Property --}}
+            <div class="form-group">
+                <label>Property</label>
+                <select class="form-control select2 " id="propertySelect" name="property">
+                    @foreach ($property as $item)
+                    <option data-price="{{$item->price}}" data-cost="{{$item->cost}}"
+                        data-code="{{$item->propertyCode}}" value="{{$item->propertyId}}">
+                        {{$item->propertyCode}}</option>
+                    @endforeach
+                </select>
+            </div>
 
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Price</label>
-        <input type="number" data-toggle="tooltip" class="form-control my-toggle-bottom" id="priceDetail"
-            name="priceDetail" placeholder="Price" value="{{old('Price')}}" />
-        <span class="help-block"></span>
-    </div>
+            {{-- Commission --}}
 
-    {{--  Discount --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Discount</label>
-        <input type="number" data-toggle="tooltip" class="form-control my-toggle-bottom" id="discountDetail"
-            name="discount" placeholder="Discount" value="{{old('Discount')}}" />
-
-    </div>
-
-
-    {{--  Amount --}}
-
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess"> Amount</label>
-        <input type="number" class="form-control" id="amountDetail" name="amount" placeholder="Amount"
-            value="{{old('Amount')}}" disabled />
+            <div class="form-group">
+                <label class="control-label" for="commission">Commission</label>
+                <input type="number" class="form-control" name="commission" id="commissionDetail"
+                    placeholder="Commission" value="0" />
+                <span class="help-block"></span>
+            </div>
 
 
-        <div class="inform-profitable-wrapper">
+            {{--  Cost --}}
 
-            <label class="control-label gain green-color" for="inputSuccess">
-                <i class="fas fa-check"></i>
-                <span class="display-profitable"></span>
-            </label>
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Cost</label>
+                <input type="number" class="form-control" id="costDetail" name="costDetail" placeholder="Cost" disabled
+                    value="0" />
+                <span class="help-block"></span>
+            </div>
 
-            <label class="control-label loss red-color" for="inputError">
-                <i class="fas fa-times"></i>
-                <span class="display-profitable"></span>
-            </label>
+
+
+            {{--  Price --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Price</label>
+                <input type="number" data-toggle="tooltip" class="form-control my-toggle-bottom" id="priceDetail"
+                    name="priceDetail" placeholder="Price" value="0" />
+                <span class="help-block"></span>
+            </div>
+
+            {{--  Discount --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Discount</label>
+                <input type="number" data-toggle="tooltip" class="form-control my-toggle-bottom" id="discountDetail"
+                    name="discount" placeholder="Discount" value="0" />
+
+            </div>
+
+
+            {{--  Amount --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess"> Amount</label>
+                <input type="number" class="form-control" id="amountDetail" name="amount" placeholder="Amount"
+                    value="0" disabled />
+
+
+                <div class="inform-profitable-wrapper">
+
+                    <label class="control-label gain green-color" for="inputSuccess">
+                        <i class="fas fa-check"></i>
+                        <span class="display-profitable"></span>
+                    </label>
+
+                    <label class="control-label loss red-color" for="inputError">
+                        <i class="fas fa-times"></i>
+                        <span class="display-profitable"></span>
+                    </label>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group" style="">
+                <button type="button" class="btn btn-primary" id="btn-addProperty">Add Property</button>
+                <button type="button" class="btn btn-secondary" id="btn-cancel">Cancel</button>
+                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+
+            </div>
 
         </div>
 
 
+        <div class="col-md-6">
+            {{-- Limit Amount --}}
+            <div class="form-group">
+                <label class="control-label" for="commission">Limit Amount</label><!-- Default checked -->
+
+
+                <div class="input-group">
+                    <input type="number" value="20" class="form-control" name="limitAmount" id="limitAmount"
+                        placeholder="Limit Amount" disabled>
+                    <span class="input-group-addon-end">%</span>
+                </div>
+
+                <span class="help-block"></span>
+
+                <div class="input-group" style="margin-top:20px">
+                    <input type="number" value="0" class="form-control" name="limitMoney" id="limitMoney"
+                        placeholder="Limit Amount" disabled>
+                    <span class="input-group-addon-end">$</span>
+                </div>
+
+                <span class="help-block"></span>
+            </div>
+
+
+            {{-- Amount --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Amount</label>
+                <input type="number" class="form-control" name="amount" placeholder="Amount" id="amountMaster" value=""
+                    disabled />
+                <span class="help-block"></span>
+            </div>
+
+
+
+            {{-- Total Discount --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Total Discount</label>
+                <input type="number" class="form-control" name="totalDiscount" id="discountMaster"
+                    placeholder="Total Discount" value="0" />
+                <span class="help-block"></span>
+            </div>
+
+
+
+
+
+            {{-- SubTotal --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Subtotal</label>
+                <input type="number" class="form-control" name="subtotal" placeholder="Subtotal" id="subtotalMaster"
+                    value="0" disabled />
+                <span class="help-block"></span>
+            </div>
+
+
+
+            {{-- Deposit --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Deposit</label>
+                <input type="number" class="form-control" name="deposit" placeholder="Deposit" id="depositMaster"
+                    value="0" />
+                <span class="help-block"></span>
+            </div>
+
+
+            {{-- Credit --}}
+
+            <div class="form-group">
+                <label class="control-label" for="inputSuccess">Credit</label>
+                <input type="number" class="form-control" name="credit" placeholder="Credit" id="creditMaster"
+                    value="0" />
+                <span class="help-block"></span>
+            </div>
+
+
+        </div>
+
     </div>
 
 
-    <div class="form-group" style="display:inline-flex;">
-        <button type="button" class="btn btn-primary" id="btn-addProperty">Add Property</button>
-        <button type="button" class="btn btn-secondary" id="btn-cancel">Cancel</button>
-    </div>
+
 
 
 
@@ -254,7 +275,7 @@
 
     </table>
 
-    <input type="submit" class="btn btn-primary" />
+
 
 </div>
 
@@ -299,10 +320,7 @@
             $(profitableControl).css('display','block');
             $(profitableDisplay).html(message);
             $(profitableControl).siblings().css('display','none');
-
-
-
-            
+ 
 
         };
 
@@ -345,6 +363,11 @@
 
         $('#propertySelect').on('select2:select', (e)=> {
 
+            handleChangeSelect();
+        });
+
+        
+        const handleChangeSelect=()=>{
             let price=$("#propertySelect").find(":selected").data("price");
             let cost=$("#propertySelect").find(":selected").data("cost");
             let discount=$("#propertySelect").find(":selected").data("discount");
@@ -356,9 +379,7 @@
 
 
             checkProfitable();
-        });
-
-        
+        };
 
 
         //init datatable detail
@@ -398,8 +419,6 @@
 
             //console.log($.inArray(selectProperty,arrPropertyCode));
 
-            
-
             return validateProperty;
 
         };
@@ -407,32 +426,83 @@
 
 
         
-        const validatePropertyUpdate=(propertyCode)=>{
+        const validatePropertyUpdate=(rowNumber)=>{
             
             const selectedPropertyCode=String($("#propertySelect").find(":selected").data("code"));
 
             let tempPropertyCode = arrPropertyCode;
 
-            tempPropertyCode=tempPropertyCode.filter((temp)=>{
-                //console.log(`temp:${temp}`,`propertyCode:${propertyCode}`);
-                return temp!=propertyCode;
-            });
+            //console.log(rowNumber);
+            tempPropertyCode[rowNumber-1]=selectedPropertyCode;
 
-            tempPropertyCode.push(selectedPropertyCode);
+            //console.log(rowNumber-1);
 
-            //console.log(arrPropertyCode,tempPropertyCode);
+            // console.log(arrPropertyCode,tempPropertyCode);
 
             let count = $.grep(tempPropertyCode, function (elem) {
                 return elem === selectedPropertyCode;
             }).length;
 
             
-            //console.log(count);
+            //console.log(tempPropertyCode);
             
 
 
             return count;
         }
+
+
+        /* master*/
+        var totalMaster=0;
+        var subTotalMaster=0;
+
+        const changeLimitAmount=()=>{
+            let limitAmount=Number($('#limitAmount').val())/100;
+            let limitMoney=totalMaster*limitAmount;
+            $('#limitMoney').val(limitMoney);
+        }
+
+        const changeTotalMaster=(oldAmount,newAmount)=>{
+            totalMaster=totalMaster-oldAmount+newAmount;
+            $('#amountMaster').val(totalMaster);
+        }
+
+        const changeSubTotalMaster=()=>{
+            let discountMaster=$('#discountMaster').val();
+            subTotalMaster=totalMaster-discountMaster;
+            //console.log(subTotalMaster);
+            $('#subtotalMaster').val(subTotalMaster);
+        }
+
+        const changeCreditMaster=()=>{
+            let credit=subTotalMaster-(Number($('#depositMaster').val()));
+            $('#creditMaster').val(credit);
+        };
+
+
+        $('#depositMaster').keyup(()=>{
+            changeCreditMaster();
+        });
+
+        $('#discountMaster').keyup(()=>{
+            changeSubTotalMaster();
+            changeCreditMaster();
+        });
+
+        const changeMaster=()=>{
+
+            //for reference
+
+            // changeTotalMaster(0,amount);
+            // changeSubTotalMaster();
+            // changeLimitAmount();
+            // changeCreditMaster();
+        }
+
+
+
+        /* end of master*/
+
 
         $('#btn-addProperty').click((e)=>{
             
@@ -449,15 +519,15 @@
                     const propertyCode=$("#propertySelect").find(":selected").data("code");
 
 
-                    const commission =$('#commissionDetail').val();
+                    const commission =Number($('#commissionDetail').val());
 
-                    const cost=$('#costDetail').val();
+                    const cost=Number($('#costDetail').val());
 
-                    const price=$('#priceDetail').val();
+                    const price=Number($('#priceDetail').val());
 
-                    const discount=$('#discountDetail').val();
+                    const discount=Number($('#discountDetail').val());
 
-                    const amount=$('#amountDetail').val();
+                    const amount=Number($('#amountDetail').val());
 
 
 
@@ -467,17 +537,46 @@
 
                     detail.addRow([count,[propertyId,propertyCode],commission,cost,price,discount,amount,['edit',btn]]);
 
-
+                    changeTotalMaster(0,amount);
+                    changeSubTotalMaster();
+                    changeLimitAmount();
+                    changeCreditMaster();
 
                 } 
             }else if($(e.target).text()==='Update'){
 
-                const propertyCode=$(e.target).data('code');
-
-                if(validatePropertyUpdate(propertyCode)>=2){
+                let rowNumber='';
+                console.log(rowNumber);
+                rowNumber=$(e.target).data('no');
+                console.log(e.target,rowNumber);
+                if(validatePropertyUpdate(rowNumber)>=2){
                     renderMessage($('.show-message.detail'),'error',['Property Duplicated']);
-                    return false;
+                    return ;
                 }
+
+
+                
+                
+
+                const propertyId = $('#propertySelect').val();
+
+                propertyCode=$("#propertySelect").find(":selected").data("code");
+
+
+                const commission =Number($('#commissionDetail').val());
+
+                const cost=Number($('#costDetail').val());
+
+                const price=Number($('#priceDetail').val());
+
+                const discount=Number($('#discountDetail').val());
+
+                const amount=Number($('#amountDetail').val());
+
+
+
+
+
             }          
         });
 
@@ -498,6 +597,7 @@
             const amount=$('#amountDetail').val("");
 
             $('#btn-addProperty').removeAttr('data-code');
+            $('#btn-addProperty').removeAttr('data-no');
             $('#btn-addProperty').html('Add Property');
 
 
@@ -506,6 +606,9 @@
             $('.inform-profitable-wrapper').css('display','none');
 
             $('.show-message').css('display','none');
+
+
+           
         };
 
 
@@ -513,19 +616,50 @@
 
         $('#detail').click((e)=>{
             e.stopPropagation();
+            let propertyCode=$(e.target).attr('alt');
             if($(e.target).hasClass('detail-edit')){
-                $('#btn-cancel').css('display','block');
+                $('#btn-cancel').css('display','initial');
 
-                let propertyCode=$(e.target).attr('alt');
+                let selectedRowNum=$(e.target).parents('tr').data('no');
                
+                $('#btn-addProperty').removeData("no");
+                $('#btn-addProperty').removeAttr("data-no");
+
+                $('#btn-addProperty').attr("data-no",selectedRowNum);
                 $('#btn-addProperty').attr("data-code",propertyCode);
                 $('#btn-addProperty').html("Update");
 
+                let propertyId=$(e.target).parents('tr').data('code');
+
                 
+                
+                $('#propertySelect').val(propertyId).trigger('change');
+            
+                
+                handleChangeSelect();
 
             }else if($(e.target).hasClass('detail-delete')){
-                handleCancel(e); 
+                handleCancel(e);
+
+                arrPropertyCode=arrPropertyCode.filter((element)=>{
+                    return element!=propertyCode;
+                })
+
+                let oldAmount=Number($(e.target).parents('tr').data('amount'));
+
+                changeTotalMaster(oldAmount,0);
+                changeSubTotalMaster();
+                changeLimitAmount();
+                changeCreditMaster();
+
+
+                console.log(arrPropertyCode);
+
                 $(e.target).parents('tr').remove();
+
+                detail.resetTableIncrement();
+                
+
             }
         });
 

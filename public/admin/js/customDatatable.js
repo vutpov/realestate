@@ -124,7 +124,12 @@ class customTable {
     }
 
     resetTableIncrement(){
-        console.log(this.column); 
+        let row=this.table.find('tbody').children();
+        let firstCell='';
+        $.each(row,(index,value)=>{
+            firstCell=$(value).children()[0];
+            $(firstCell).html(index+1);
+        });
     }
     
 
