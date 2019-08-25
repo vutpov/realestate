@@ -1,86 +1,277 @@
 /*datatable*/
 table svg[class*="fa"] {
-  font-size: 18px; }
+    font-size: 18px;
+}
 
 svg[class*="fa"] {
-  margin-right: 5px; }
+    margin-right: 5px;
+}
 
 /*end of datatable*/
 .w-50 {
-  width: 50%; }
+    width: 50%;
+}
+
 
 .content-header h2 {
-  font-size: 20px; }
+    font-size: 20px;
+}
 
 .content {
-  min-height: auto; }
+    min-height: auto;
+}
 
 .box-body {
-  position: relative; }
+    position: relative;
+}
 
 .form-profile .form-group {
-  width: 74%; }
+    width: 74%;
+}
 
 .my-dropzone {
-  border: 1px solid #d2d6de;
-  height: 200px;
-  display: table; }
-  .my-dropzone .my-dz-details {
-    text-align: center; }
-  .my-dropzone.input[type="file"] {
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    width: 23%; }
-  .my-dropzone.profile {
-    position: absolute;
-    right: 15px;
-    top: 35px;
-    width: 23%;
-    margin-bottom: 0; }
-  .my-dropzone .dz-default.dz-message {
-    display: table-cell;
-    vertical-align: middle; }
-  .my-dropzone .form-group {
-    margin: 0; }
-  .my-dropzone span {
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-    color: #999; }
+    border: 1px solid #d2d6de;
+    min-height: 250px;
+    width: 100%;
+
+}
+
+.dropzone.dz-clickable {
+    cursor: pointer;
+}
+
+
 
 .summary {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  width: 70%; }
-  .summary div {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    width: 70%;
+}
+
+.summary div {
     margin-right: 15%;
     display: block;
-    font-weight: 600; }
+    font-weight: 600;
+}
 
 .selected-row {
-  background-color: #00C0EF;
-  color: black; }
+    background-color: #00C0EF;
+    color: black;
+}
 
 .detail-row {
-  cursor: pointer; }
+    cursor: pointer;
+}
 
 .primary .my-pT-summary {
-  padding-top: 105px; }
+    padding-top: 105px;
+}
 
 .form-control.select2 .select2-container--classic,
 .select2-selection--single,
 .select2-selection__rendered {
-  line-height: 35px !important; }
+    line-height: 35px !important;
+}
 
 .my-mb-15 {
-  margin-bottom: 15px; }
+    margin-bottom: 15px;
+}
 
 .modal {
-  overflow: visible;
-  z-index: 111;
-  margin-top: 40px; }
+    overflow: visible;
+    z-index: 111;
+    margin-top: 40px;
+}
 
 .primary-color {
-  color: #00C0EF; }
+    color: #00C0EF;
+}
+
+.dropzone-wrapper {
+    margin-bottom: 25px;
+}
+
+/* admin navbar */
+nav .fix-bootstrap4 {
+    flex-direction: row;
+}
+
+/* end admin navbar */
+
+
+/*dummy scroll*/
+
+.dummy-wrapper {
+
+    min-height: 1px;
+
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-bottom: 25px;
+}
+
+.dummy {
+
+    height: 1px;
+
+}
+
+/*end of dummy scroll*/
+
+
+/*nav bar toggle*/
+
+.main-header .sidebar-toggle {
+    padding: 0 15px;
+}
+
+/*end of nav bar toggle*/
+
+
+/*toggle*/
+
+
+.my-switch {
+    width: 50px;
+    height: 30px;
+    padding: 5px;
+    display: inline-block;
+    position: relative;
+
+}
+
+.my-switch .my-slider {
+    background-color: #ccc;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    -webkit-transition: .4s;
+    transition: .4s;
+    cursor: pointer;
+}
+
+.my-switch .my-slider:before {
+    content: "";
+    height: 20px;
+    left: 5px;
+    top: 5px;
+    width: 20px;
+    background-color: #fff;
+    position: absolute;
+    -webkit-transition: .4s;
+    transition: .4s;
+
+
+}
+
+
+
+
+label[class="my-switch"] input[type="checkbox"]:checked+.my-slider:before {
+    transform: translateX(20px);
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+}
+
+label[class="my-switch"] input[type="checkbox"]:checked+.my-slider {
+    background: #2196F3;
+
+
+}
+
+
+
+
+label[class="my-switch"] input[type="checkbox"] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+label[class="my-switch"] input[type="checkbox"]+.my-slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+/*end of toggle*/
+
+/*limit amount wrapper*/
+
+.limit-amount-wrapper {
+    width: 80%;
+}
+
+
+/*end of limit amount wrapper*/
+
+
+/*input group addon*/
+
+.input-group .input-group-addon-end {
+    line-height: 40px;
+    width: 40px;
+    background-color: #fff;
+    padding: 0 15px;
+
+    border: 1px solid #ccc;
+    font-weight: 600;
+    border-left: none;
+}
+
+
+/*end of input group adddon*/
+
+
+/*date picker*/
+
+.input-group.date svg {
+    display: none;
+}
+
+/*end of date picker*/
+
+
+.control-label {
+    /* margin-top: 10px; */
+}
+
+
+/*inform profit wrapper*/
+
+.inform-profitable-wrapper {
+    display: none;
+}
+
+
+.red-color {
+    color: #7f0000;
+}
+
+.green-color {
+    color: #003300;
+}
+
+.display-profitable {
+    font-weight: 600;
+}
+
+/*end of inform profit wrapper*/
+
+
+/*table button*/
+
+table.has-action tr td:last-child {
+    padding: 0;
+}
+
+/*table button*/
+
+/*btn cancel*/
+
+.btn-secondary {
+    display: none;
+}
+
+/*end of btn cancel*/

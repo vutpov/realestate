@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Partner;
-use App\PropertyType;
-use App\PropAttribute;
+use App\Project;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -17,12 +19,20 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //partner propertyType
+        $projects = DB::table('projects')
+            ->join('staffs', 'projects.staffId', '=', 'staffs.staffId')
+            ->join('partners', 'projects.partnerId', '=', 'partners.partnerId')
+            ->select(DB::raw("
+                    projectId,
+                    project,
+                    name,
+                    partner,
+                    projects.created_at,
+                    projects.updated_at"))
+            ->get();
 
-
-
-
-        return View('admin.project.index');
+        $data = array('projects' => $projects);
+        return View('admin.project.index', $data);
     }
 
     /**
@@ -45,22 +55,12 @@ class ProjectController extends Controller
             ->where('status', '<>', 0)
             ->get();
 
-        $propertyType = PropertyType::select('propertyTypeId', 'propertyType')
-            ->where('status', '<>', 0)
-            ->get();
 
-        $propAttribute = PropAttribute::select('propAttributeID', 'propAttribute')
-            ->where('status', '<>', 0)
-            ->get();
 
         $data = array(
             'partner' => $partner,
-            'propertyType' => $propertyType,
-            'propAttribute' => $propAttribute
+
         );
-
-
-
 
 
 
@@ -75,7 +75,22 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'project' => [
+                'min:5|max:20',
+                Rule::unique('projects'),
+            ],
+        ]);
+
+        $project = new Project();
+        $project->project = $request->project;
+        $project->staffId = Auth::user()->staffId;
+        $project->partnerId =  $request->partner;
+
+        $project->save();
+
+        return redirect('/system/project');
     }
 
     /**
@@ -97,7 +112,25 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+
+
+
+        $project  = Project::where('projectId', $id)->get()[0];
+
+
+        $selectPartner = Partner::find($project->partnerId);
+        $partner = Partner::all();
+
+
+        $data = array(
+            'project' => $project,
+            'partner' =>  $partner,
+            'selectPartner' => $selectPartner
+        );
+
+
+
+        return View('admin.project.edit', $data);
     }
 
     /**
@@ -109,7 +142,25 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request, [
+            'project' => [
+                'min:5|max:20',
+                Rule::unique('projects')->ignore($id, 'projectId'),
+            ],
+            'partner' => 'required',
+
+        ]);
+
+
+
+        Project::where('projectId', $id)->update(array(
+            'project' => $request->project,
+            'partnerid' => $request->partner,
+        ));
+
+
+        return redirect('/system/project');
     }
 
     /**

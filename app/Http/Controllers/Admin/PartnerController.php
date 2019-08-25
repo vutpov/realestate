@@ -19,7 +19,7 @@ class PartnerController extends Controller
     {
         $partners = DB::table('partners')
             ->join('partner_types', 'partner_types.partnerTypeId', 'partners.partnerTypeId')
-            ->select('partnerId','partner', 'address', 'phone', 'email', 'partner_types.partnerType')
+            ->select('partnerId', 'partner', 'address', 'phone', 'email', 'partner_types.partnerType')
             ->where('partner_types.status', 1)
             ->get();
         return View('admin.partner.index', compact('partners', $partners));
@@ -47,7 +47,7 @@ class PartnerController extends Controller
         $this->validate($request, [
             'partner' => 'required|regex:/^[a-zA-Z ]+$/',
             'phone' => 'required|regex:/^[0-9 ]+$/',
-            'email' => 'required',
+            'email' => 'required|unique:partners',
             'address' => 'required|regex:/^[a-zA-Z ]+$/|min:5|max:15'
         ]);
 
@@ -60,7 +60,6 @@ class PartnerController extends Controller
         $partner->save();
 
         return redirect('/system/partner');
-
     }
 
     /**
@@ -104,19 +103,17 @@ class PartnerController extends Controller
             'address' => 'required|regex:/^[a-zA-Z ]+$/|min:5|max:15'
         ]);
 
-        
+
         Partner::where('partnerId', $id)
-                ->update([
-                    'partner' => $request->partner,
-                    'phone' => $request->phone,
-                    'email' => $request->email,
-                    'address' => $request->address,
-                    'partnerTypeId' => $request->partnerType
-                ]);
-        
+            ->update([
+                'partner' => $request->partner,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'address' => $request->address,
+                'partnerTypeId' => $request->partnerType
+            ]);
+
         return redirect('/system/partner');
-
-
     }
 
     /**
@@ -128,7 +125,7 @@ class PartnerController extends Controller
     public function destroy($id)
     {
         Partner::where('partnerId', $id)
-                ->delete();
+            ->delete();
 
         return redirect('/system/partner');
     }

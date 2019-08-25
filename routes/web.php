@@ -50,6 +50,26 @@ Route::group(['prefix' => 'system'], function () {
 
 
 
+
+
+
+Route::group(['prefix' => 'system'], function () {
+    //Create Company
+
+    Route::post('create-step2', 'auth\LoginController@postCreateStep2')->name("step2");
+    Route::get('create-step2', 'auth\LoginController@CreateStep2');
+    Route::post('', 'auth\LoginController@store');
+
+    //login
+    Route::get('', 'auth\LoginController@Index')->name("login");
+    Route::post('/login', 'auth\LoginController@login');
+});
+
+
+
+
+
+
 Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
 
 
@@ -58,7 +78,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('logout', 'auth\LoginController@logout');
 
     //Dashboard
-    Route::get('dashboard', 'admin\DashboardController@index');
+    Route::get('dashboard', 'admin\DashboardController@index')->name('dashboard');
 
     //Staff
     Route::get('staff/{trash?}', 'admin\StaffController@index');
@@ -157,4 +177,13 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Project
     Route::get('project', 'admin\ProjectController@index');
     Route::get('createProject', 'admin\ProjectController@create');
+    Route::post('storeProject/', 'admin\ProjectController@store');
+    Route::get('editProject/{id}', 'admin\ProjectController@edit');
+    Route::post('updateProject/{id}', 'admin\ProjectController@update');
+
+    //Property
+    Route::get('property', 'admin\PropertyController@index');
+    Route::get('createProperty', 'admin\PropertyController@create');
+    Route::post('storeProperty', 'admin\PropertyController@store')->name('storeProperty');
+    Route::post('propertyImageUpload', 'admin\PropertyController@propertyImageUpload')->name('propertyImageUpload');
 });

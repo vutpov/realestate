@@ -19,9 +19,7 @@ class CreatePropertyImagesTable extends Migration
             $table->tinyInteger('is_featured');
             $table->timestamps();
 
-            $table->unsignedBigInteger('propertyId');
-
-            $table->foreign('propertyId')->references('propertyId')->on('properties');
+            $table->unsignedBigInteger('propertyId')->nullable();
         });
     }
 
