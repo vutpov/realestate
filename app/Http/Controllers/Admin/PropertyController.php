@@ -41,6 +41,7 @@ class PropertyController extends Controller
             ->join('staffs', 'properties.staffId', '=', 'staffs.staffId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
             ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttribId')
+            ->join('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
             ->select(
                 'propertyCode',
                 'property_types.propertyType',
@@ -58,7 +59,8 @@ class PropertyController extends Controller
                 'properties.updated_at',
                 'project',
                 'partner',
-                'propertyId'
+                'image',
+                'properties.propertyId'
             )
             ->leftJoinSub($partnerQry, 'partners', function ($join) {
                 $join->on('partners.partnerId', '=', 'properties.partnerId');
@@ -66,6 +68,7 @@ class PropertyController extends Controller
             ->leftJoinSub($projectQry, 'projects', function ($join) {
                 $join->on('projects.projectId', '=', 'properties.projectId');
             })
+            ->where('is_featured', '=', '1')
             ->get();
 
 
@@ -257,6 +260,12 @@ class PropertyController extends Controller
 
     public static function updatePropertyStatus($id, $status)
     {
+        //status 
+        //1=available
+        //2=block
+        //3=book
+        //4=contract
+        //5=sold
         DB::table('properties')
             ->where('propertyId', '=', $id)
             ->update(['status' => $status]);

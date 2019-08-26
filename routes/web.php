@@ -174,6 +174,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('book', 'admin\BookController@index');
     Route::get('createBook', 'admin\BookController@create');
     Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
+    Route::get('editBook/{id}', 'admin\BookController@edit')->name('editBook');
 
     //Project
     Route::get('project', 'admin\ProjectController@index');

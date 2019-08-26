@@ -25,7 +25,30 @@ class BookController extends Controller
     public function index()
     {
 
-        return View('admin.book.index');
+
+        $book = DB::select(
+            DB::raw("select 
+            bookId,
+            s.name 'staff',
+            c.name 'customer',
+            agency,
+            b.created_at,
+            deadline,
+            b.status,
+            (case
+                when datediff(date(deadline),now()) >=20 then 2
+                when datediff(date(deadline),now()) >=10 then 1
+                when datediff(date(deadline),now()) >=0 then 0
+                else -1
+            end) as lateness
+        from books b 
+            join staffs s on b.staffId=s.staffId 
+            join customers c on c.customerId=b.customerId
+            left join agencies a on a.agencyId=b.agencyId;")
+        );
+
+        // dd($book);
+        return View('admin.book.index', compact('book'));
     }
 
     /**
@@ -58,16 +81,6 @@ class BookController extends Controller
     public function store(Request $request)
     {
 
-        // deadline : $('#deadLineDatePicker').val(),
-        // customer : $('#customerSelect').val(),
-        // agency : $('#agencySelect').val(),
-        // limitAmount :  $('#limitAmount').val(),
-        // limitMoney :  $('#limitMoney').val(),
-        // amount : $('#amountMaster').val(),
-        // discount : $('#discountMaster').val(),
-        // subTotal : $('#subtotalMaster').val(),
-        // deposit : $('#depositMaster').val(),
-        // credit : $('#creditMaster').val(),
 
         $validator = Validator::make($request->all(), [
 
@@ -123,16 +136,11 @@ class BookController extends Controller
             $temp["commission"] = $row["commission"];
             $temp["created_at"] = now();
 
-            PropertyController::updatePropertyStatus($row["id"], 0);
+            PropertyController::updatePropertyStatus($row["id"], 2);
             array_push($allRow, $temp);
         };
 
         BookDetail::insert($allRow);
-
-
-
-
-
 
 
 
@@ -162,7 +170,43 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = DB::table('books')
+            ->where('bookId', '=', $id)
+            ->first();
+
+
+        $customer =  DB::table('customers')
+            ->where('customerId', '=', $book->customerId)
+            ->first();
+
+        $agency =  DB::table('agencies')
+            ->where('agencyId', '=', $book->agencyId)
+            ->first();
+
+
+
+        $bookDetail = DB::table('book_details')
+            ->join('properties', 'properties.propertyId', 'book_details.propertyId')
+            ->where('bookId', '=', $id)
+            ->select(
+                'book_details.propertyId',
+                'propertyCode',
+                'commission',
+                'book_details.price',
+                'properties.cost',
+                'book_details.amount',
+                'book_details.discount'
+            )
+            ->get();
+
+        $data = [
+            "book" => $book,
+            "customer" => $customer,
+            "agency" => $agency,
+            "detail" => $bookDetail,
+        ];
+
+        return View('admin.book.edit', $data);
     }
 
     /**

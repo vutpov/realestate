@@ -13,4 +13,9 @@ class Helper
     {
         return  date('Y-m-d', strtotime($stringDate));
     }
+
+    public static function formatDateToString($stringDate, $formatPattern)
+    {
+        return  date($formatPattern, strtotime($stringDate));
+    }
 }
