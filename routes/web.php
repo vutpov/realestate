@@ -162,12 +162,14 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
 
+    //Schedule
+    Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');
 
 
     //Contract
     Route::get('contract', 'admin\ContractController@index');
     Route::get('createContract', 'admin\ContractController@create');
-    Route::get('schedule', 'admin\ContractController@schedule');
+
 
 
     //Book

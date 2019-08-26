@@ -54,7 +54,7 @@
 
             ?>
 
-            <input type="text" class="form-control pull-right datepicker" value="{{ $date}}" name="deadline"
+            <input type="text" class="form-control pull-right datepicker" value="{{$date}}" name="deadline"
                 id="deadLineDatePicker" disabled>
         </div>
         <!-- /.input group -->

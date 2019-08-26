@@ -81,6 +81,18 @@
       </li>
 
       <li class="treeview">
+        <a href="#"><i class="fas fa-calendar-alt"></i><span>Schedule</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+
+          <li><a href="{{route("schedule")}}">View All Schedule</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview">
         <a href="#"><i class="fas fa-dollar-sign"></i><span>Payment</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
