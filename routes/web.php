@@ -186,5 +186,6 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('property', 'admin\PropertyController@index');
     Route::get('createProperty', 'admin\PropertyController@create');
     Route::post('storeProperty', 'admin\PropertyController@store')->name('storeProperty');
+    Route::get('getAvailableProperty', 'admin\PropertyController@getAvailableProperty')->name('getAvailableProperty');
     Route::post('propertyImageUpload', 'admin\PropertyController@propertyImageUpload')->name('propertyImageUpload');
 });

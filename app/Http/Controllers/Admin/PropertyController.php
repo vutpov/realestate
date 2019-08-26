@@ -254,4 +254,11 @@ class PropertyController extends Controller
             ->where('status', '=', 1)
             ->get();
     }
+
+    public static function updatePropertyStatus($id, $status)
+    {
+        DB::table('properties')
+            ->where('propertyId', '=', $id)
+            ->update(['status' => $status]);
+    }
 }

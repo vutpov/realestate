@@ -92,13 +92,7 @@
             {{-- Property --}}
             <div class="form-group">
                 <label>Property</label>
-                {{-- <select class="form-control select2 " id="propertySelect" name="property">
-                    @foreach ($property as $item)
-                    <option data-price="{{$item->price}}" data-cost="{{$item->cost}}"
-                        data-code="{{$item->propertyCode}}" value="{{$item->propertyId}}">
-                        {{$item->propertyCode}}</option>
-                    @endforeach
-                </select> --}}
+
 
                 <select class="form-control select2 " id="propertySelect" name="property">
                     @foreach ($property as $item)
@@ -107,6 +101,9 @@
                         {{$item->propertyCode}}</option>
                     @endforeach
                 </select>
+
+
+
             </div>
 
 
@@ -383,6 +380,11 @@
             handleChangeSelect();
         });
 
+
+
+
+        
+
         
         const handleChangeSelect=()=>{
             let price=$("#propertySelect").find(":selected").data("price");
@@ -522,7 +524,7 @@
             // changeLimitAmount();
             // changeCreditMaster();
             
-        }
+        };
 
 
 
@@ -790,7 +792,7 @@
                 $("#propertyId").val(response.propertyId)
                 console.log(response);
                 renderMessage($('.show-message.master'),'success', response.message);
-
+                location.reload();
             },
             error: response=>{
                 console.log(response.responseJSON);

@@ -36,10 +36,8 @@ class BookController extends Controller
     public function create()
     {
 
-
-
         $property = PropertyController::getAvailableProperty();
-        
+
         $customer = Customer::select('customerId', 'name')->get();
         $agency = Agency::select('agencyId', 'agency')->get();
 
@@ -124,6 +122,8 @@ class BookController extends Controller
             $temp["amount"] = $row["amount"];
             $temp["commission"] = $row["commission"];
             $temp["created_at"] = now();
+
+            PropertyController::updatePropertyStatus($row["id"], 0);
             array_push($allRow, $temp);
         };
 
@@ -187,6 +187,4 @@ class BookController extends Controller
     {
         //
     }
-
-   
 }
