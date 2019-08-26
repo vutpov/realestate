@@ -10,6 +10,7 @@ use App\Agency;
 use App\Http\Helpers\Helper;
 use Illuminate\Support\Facades\Validator;
 use App\Book;
+use App\BookDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -37,7 +38,8 @@ class BookController extends Controller
 
 
 
-        $property = Property::select('propertyId', 'propertyCode', 'cost', 'price')->get();
+        $property = PropertyController::getAvailableProperty();
+        
         $customer = Customer::select('customerId', 'name')->get();
         $agency = Agency::select('agencyId', 'agency')->get();
 
@@ -84,7 +86,7 @@ class BookController extends Controller
             'commission' => 'required|numeric',
         ]);
 
-        $timeStamp = new DateTime();
+
 
         DB::table('books')->insert([
             'deadline' => Helper::formatMysqlDate($request->deadline),
@@ -105,16 +107,40 @@ class BookController extends Controller
 
 
 
-        $newBook = DB::getPdo()->lastInsertId();
+        $newBookId = DB::getPdo()->lastInsertId();
+
+        $detail = [];
+
+        $allRow = [];
+
+        foreach ($request->detail as $rowJson) {
+            $row = json_decode($rowJson, true);
+
+            $temp["bookId"] = $newBookId;
+            $temp["customerId"] = $request->customer;
+            $temp["propertyId"] = $row["id"];
+            $temp["price"] = $row["price"];
+            $temp["discount"] = $row["discount"];
+            $temp["amount"] = $row["amount"];
+            $temp["commission"] = $row["commission"];
+            $temp["created_at"] = now();
+            array_push($allRow, $temp);
+        };
+
+        BookDetail::insert($allRow);
+
+
+
+
 
 
 
 
         if ($validator->passes()) {
-            return response()->json(['message' => ['Added new book.']], 200);
+            return response()->json(['message' => ['Added new book.'], 'data' => $detail], 200);
         }
 
-        return response()->json(['message' => $validator->errors()->all(), 'errorCode' => true, 'data' => Auth::user()->staffId], 403);
+        return response()->json(['message' => $validator->errors()->all(), 'errorCode' => true, 'data' => $detail], 403);
     }
 
     /**
@@ -161,4 +187,6 @@ class BookController extends Controller
     {
         //
     }
+
+   
 }

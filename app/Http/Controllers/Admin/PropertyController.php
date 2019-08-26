@@ -247,4 +247,11 @@ class PropertyController extends Controller
 
         return response()->json(array('success' => true), 200);
     }
+
+    public static function getAvailableProperty()
+    {
+        return Property::select('propertyId', 'propertyCode', 'cost', 'price')
+            ->where('status', '=', 1)
+            ->get();
+    }
 }

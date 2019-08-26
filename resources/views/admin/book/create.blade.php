@@ -56,7 +56,7 @@
         <!-- /.input group -->
     </div>
 
-    <Button id="btnTest">Test</Button>
+    {{-- <Button id="btnTest">Test</Button> --}}
 
 
 
@@ -92,6 +92,14 @@
             {{-- Property --}}
             <div class="form-group">
                 <label>Property</label>
+                {{-- <select class="form-control select2 " id="propertySelect" name="property">
+                    @foreach ($property as $item)
+                    <option data-price="{{$item->price}}" data-cost="{{$item->cost}}"
+                        data-code="{{$item->propertyCode}}" value="{{$item->propertyId}}">
+                        {{$item->propertyCode}}</option>
+                    @endforeach
+                </select> --}}
+
                 <select class="form-control select2 " id="propertySelect" name="property">
                     @foreach ($property as $item)
                     <option data-price="{{$item->price}}" data-cost="{{$item->cost}}"
@@ -391,8 +399,8 @@
 
         //init datatable detail
 
-        let column=['No','Code','Commission','Cost','Price','Discount','Amount','Action']
-        let showDiff=[false,false,false,false,false,false,false,true];
+        let column=['No','Id','Code','Commission','Cost','Price','Discount','Amount','Action']
+        let showDiff=[false,false,false,false,false,false,false,false,true];
 
         let detail = new customTable($('#detail'),column,showDiff);
         let arrPropertyCode=[];
@@ -553,7 +561,7 @@
                         <Button class="btn btn-danger detail-delete">Delete</Button>
                     `
 
-                    detail.addRow(propertyId,[count,propertyCode,commission,cost,price,discount,amount,['edit',btn]]);
+                    detail.addRow(propertyId,[count,propertyId,propertyCode,commission,cost,price,discount,amount,['edit',btn]]);
 
                     changeTotalMaster(0,amount);
                     changeCommissionMaster(0,commission);
@@ -604,12 +612,13 @@
                 arrPropertyCode.push(newPropertyCode+"");
                 console.log(arrPropertyCode);
 
-                detail.setValue(selectedRowIndex,1,newPropertyCode);
-                detail.setValue(selectedRowIndex,2,newCommission);
-                detail.setValue(selectedRowIndex,3,cost);
-                detail.setValue(selectedRowIndex,4,price);
-                detail.setValue(selectedRowIndex,5,discount);
-                detail.setValue(selectedRowIndex,6,newAmount);
+                detail.setValue(selectedRowIndex,1,propertyId);
+                detail.setValue(selectedRowIndex,2,newPropertyCode);
+                detail.setValue(selectedRowIndex,3,newCommission);
+                detail.setValue(selectedRowIndex,4,cost);
+                detail.setValue(selectedRowIndex,5,price);
+                detail.setValue(selectedRowIndex,6,discount);
+                detail.setValue(selectedRowIndex,7,newAmount);
 
                 handleCancel('none');
 
@@ -666,7 +675,7 @@
             let oldCommssion=Number($(e.target).parents('tr').attr('data-commission'));
             let propertyCode=$(e.target).parents('tr').attr('data-code');
 
-            console.log(propertyCode);
+            //console.log(propertyCode);
             if($(e.target).hasClass('detail-edit')){
                 $('#btn-cancel').css('display','initial');
 
@@ -728,14 +737,6 @@
 
 
 
-        const getArrDetailData=()=>{
-           console.log(detail.getAllValue());
-        }
-
-        $('#btnTest').click((e)=>{
-            e.preventDefault();
-            getArrDetailData();
-        });
 
         /*send request*/
         
@@ -748,6 +749,13 @@
                 return;
             }
 
+            let arrDataRow=(detail.getAllValue()).map(element => {
+                
+                return JSON.stringify(element);
+            });
+            
+
+           
             var master = {
                 deadline : $('#deadLineDatePicker').val(),
                 customer : $('#customerSelect').val(),
@@ -760,7 +768,12 @@
                 subTotal : $('#subtotalMaster').val(),
                 deposit : $('#depositMaster').val(),
                 credit : $('#creditMaster').val(),
+                detail : arrDataRow,
             };
+
+            
+
+
             
             $.ajax({
             headers: {
@@ -789,7 +802,7 @@
 
             },
             complete: response=>{
-                console.log(response.responseJSON.data);
+                console.log(response);
             },
             
             });
