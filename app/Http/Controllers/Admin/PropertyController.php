@@ -159,6 +159,7 @@ class PropertyController extends Controller
                 'propAttribId' => $request->propAttribute,
                 'price' => $request->price,
                 'cost' => $request->cost,
+                'created_at' => now(),
                 'partnerId' => $request->partner,
                 'staffId' => Auth::user()->staffId,
                 'partnerId' => $partnerId,
@@ -175,6 +176,9 @@ class PropertyController extends Controller
 
 
             $PropertyImage->save();
+
+
+
 
             return response()->json(['message' => ['Added new records.'], 'propertyId' => $newPropertyId, 'data' =>  Auth::user()->staffId], 200);
         }

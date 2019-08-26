@@ -11,6 +11,8 @@ use App\Http\Helpers\Helper;
 use Illuminate\Support\Facades\Validator;
 use App\Book;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class BookController extends Controller
 {
@@ -82,21 +84,30 @@ class BookController extends Controller
             'commission' => 'required|numeric',
         ]);
 
-        $book = new Book;
-        $book->deadline =  Helper::formatMysqlDate($request->deadline);
-        $book->customerId = $request->customer;
-        $book->agencyId = $request->agency;
-        $book->limitAmount = $request->limitAmount;
-        $book->limitMoney = $request->limitMoney;
-        $book->amount = $request->amount;
-        $book->discount = $request->discount;
-        $book->subTotal = $request->subTotal;
-        $book->deposit = $request->deposit;
-        $book->credit = $request->credit;
-        $book->commission = $request->commission;
-        $book->staffId = Auth::user()->staffId;
-        $book->status = 1;
-        $book->save();
+        $timeStamp = new DateTime();
+
+        DB::table('books')->insert([
+            'deadline' => Helper::formatMysqlDate($request->deadline),
+            'customerId' => $request->customer,
+            'agencyId' => $request->agency,
+            'limitAmount' => $request->limitAmount,
+            'limitMoney' => $request->limitMoney,
+            'amount' => $request->amount,
+            'discount' => $request->discount,
+            'subTotal' => $request->subTotal,
+            'deposit' => $request->deposit,
+            'credit' => $request->credit,
+            'commission' => $request->commission,
+            'created_at' => now(),
+            'staffId' => Auth::user()->staffId,
+            'status' => 1
+        ]);
+
+
+
+        $newBook = DB::getPdo()->lastInsertId();
+
+
 
 
         if ($validator->passes()) {

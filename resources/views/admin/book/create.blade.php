@@ -56,7 +56,7 @@
         <!-- /.input group -->
     </div>
 
-
+    <Button id="btnTest">Test</Button>
 
 
 
@@ -727,6 +727,16 @@
         });
 
 
+
+        const getArrDetailData=()=>{
+           console.log(detail.getAllValue());
+        }
+
+        $('#btnTest').click((e)=>{
+            e.preventDefault();
+            getArrDetailData();
+        });
+
         /*send request*/
         
         $("#btn-Submit").click(()=>{
@@ -782,9 +792,7 @@
                 console.log(response.responseJSON.data);
             },
             
-        });
-
-
+            });
         });
 
         /*end of send request*/
