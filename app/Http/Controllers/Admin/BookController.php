@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Property;
 use App\Customer;
 use App\Agency;
+use App\Book;
+use App\BookDetail;
 
 class BookController extends Controller
 {
@@ -94,5 +96,16 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDetailBook($id)
+    {
+        $book = Book::find($id);
+        $book['customer'] = Book::find($id)->customer->name;
+        $book['agency'] = Book::find($id)->agency->agency;
+        
+        $detail = BookDetail::join('properties','book_details.propertyId', '=' , 'properties.propertyId')->select('propertyCode','book_details.price','discount','amount')->get();
+
+        return compact('book','detail');
     }
 }

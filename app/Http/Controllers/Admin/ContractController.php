@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use App\Book;
+use App\BookDetail;
 
 class ContractController extends Controller
 {
@@ -24,7 +29,12 @@ class ContractController extends Controller
      */
     public function create()
     {
-        return View('admin.contract.create');
+        $book = Book::all();
+
+        $statement = DB::select("SHOW TABLE STATUS LIKE 'contracts'");
+
+        $nextId = $statement[0]->Auto_increment;
+        return View('admin.contract.create',compact('book','nextId'));
     }
 
     /**
@@ -35,7 +45,37 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'bookId' => 'required',
+            'discount' => 'required|numeric',
+            'subtotal' => 'required|numeric',
+            'deposit' => 'required|numeric',
+            'credit' => 'required|numeric',
+        ]);
+
+        if($validator->passes())
+        {
+            $book = Book::find($request->bookId);
+
+            DB::table('contracts')->insert([
+                'discount' => $request->discount,
+                'subTotal' => $request->subtotal,
+                'deposit' => $request->deposit,
+                'credit' => $request->credit,
+                'bookId' => $request->bookId,
+                'staffId' => Auth::user()->staffId,
+                'left' => 0,
+                'status' => 1,
+                'amount' => $book['credit'],
+                'customerId' => $book['customerId'],
+                'agencyId' => $book['agencyId'],
+                'comission' => $book['comission']
+            ]);
+            $newContractId = DB::getPdo()->lastInsertId() + 1;
+
+            return response()->json(['message' => ['Added new records.'], 'contractId' => $newContractId], 200);
+        }
+        return response()->json(['message' => $validator->errors()->all(),], 403);
     }
 
     /**

@@ -168,11 +168,13 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('contract', 'admin\ContractController@index');
     Route::get('createContract', 'admin\ContractController@create');
     Route::get('schedule', 'admin\ContractController@schedule');
+    Route::post('storeContract', 'admin\ContractController@store')->name('storeContract');
 
 
     //Book
     Route::get('book', 'admin\BookController@index');
     Route::get('createBook', 'admin\BookController@create');
+    Route::get('getDetailBook/{id}','admin\BookController@getDetailBook');
 
     //Project
     Route::get('project', 'admin\ProjectController@index');
