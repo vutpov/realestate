@@ -103,17 +103,36 @@ class customTable {
     consoleRed = 'background: #black; color: red';
     btnDelete='<button type="button" class="btn btn-danger custom-delete">Delete</button>';
     selectedIndex=null;
-    constructor(elem,column,showDiff){
-
+    constructor(elem,column,showDiff,isDisplayable=[]){
         if(checkIfExist(elem) && Array.isArray(column) && Array.isArray(showDiff)){
             this.table=elem;
-            this.column=column;      
+            this.column=column.map((item)=>{
+
+                return item.toLowerCase();
+
+            });      
             this.showDiff=showDiff;
             $(elem).addClass('custom-datatable')
             let renderCol='';
             
-            column.forEach(element => {
-                renderCol+=`<th>${element}</th>`
+            this.isDisplayable=isDisplayable;
+
+            // if(isDisplayable==undefined){
+            //     column.forEach((element,index) => {
+            //         renderCol+=`<th>${element}</th>`
+            //     });
+            // }else{
+            //     let headCell;
+            //     column.forEach((element,index) => {
+            //         headCell=isDisplayable[index]?`<th>${element}</th>`:`<th style="display:none>"${element}</th>`
+            //         renderCol+=headCell;
+            //     });
+            // }
+            let headCell='';
+
+            column.forEach((element,index) => {
+                headCell=isDisplayable[index]==false?`<th style="display:none">${element}</th>`:`<th>${element}</th>`
+                renderCol+=headCell;
             });
             
 
@@ -143,16 +162,19 @@ class customTable {
             
             let col=this.column[key];
             
+            let setDisplayCell = this.isDisplayable[key]==false?`style="display:none"`:'';
+
+
             if(this.showDiff[key]){
 
                 renderRow+=`data-${col}="${data[0]}" `;
 
-                renderCol=`<td>${data[1]}</td>`;
+                renderCol=`<td ${setDisplayCell}>${data[1]}</td>`;
                
             }else{
                 renderRow+=`data-${col}="${data}" `;
 
-                renderCol=`<td>${data}</td>`;
+                renderCol=`<td ${setDisplayCell}>${data}</td>`;
             }
             
 
@@ -192,6 +214,31 @@ class customTable {
         }
     }
 
+    getAllValue(){
+        let allRow=$(this.table).find(".custom-datatable-body tr");
+
+        let arrDetailData=[];
+
+        let dataTableColumn = this.column;
+
+        
+
+        $.each(allRow,(index,value)=>{
+            let dataRow={};
+            $.each(dataTableColumn,(index,col)=>{
+                
+                dataRow[col]=$(value).attr(`data-${col}`);
+            });
+            arrDetailData.push(dataRow);
+        });
+
+
+        return arrDetailData;
+
+
+
+
+    }
     
 
 }

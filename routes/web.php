@@ -162,6 +162,8 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
 
+    //Schedule
+    Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');
 
 
     //Contract
@@ -175,6 +177,8 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('book', 'admin\BookController@index');
     Route::get('createBook', 'admin\BookController@create');
     Route::get('getDetailBook/{id}','admin\BookController@getDetailBook');
+    Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
+    Route::get('editBook/{id}', 'admin\BookController@edit')->name('editBook');
 
     //Project
     Route::get('project', 'admin\ProjectController@index');
@@ -187,5 +191,6 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('property', 'admin\PropertyController@index');
     Route::get('createProperty', 'admin\PropertyController@create');
     Route::post('storeProperty', 'admin\PropertyController@store')->name('storeProperty');
+    Route::get('getAvailableProperty', 'admin\PropertyController@getAvailableProperty')->name('getAvailableProperty');
     Route::post('propertyImageUpload', 'admin\PropertyController@propertyImageUpload')->name('propertyImageUpload');
 });

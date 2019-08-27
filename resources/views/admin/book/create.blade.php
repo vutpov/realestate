@@ -7,23 +7,20 @@
 @section('content')
 
 
-<form action="{{url('/system/storeUser')}}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+
+<form id="form-submit-book" method="POST" enctype="multipart/form-data">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <div class="alert show-message master" style="display:none">
+
     </div>
-    @endif
+
 
 
     {{-- Customer --}}
     <div class="form-group">
         <label>Customer</label>
-        <select class="form-control select2" name="cutomer">
+        <select class="form-control select2" name="customer" id="customerSelect">
             @foreach ($customer as $item)
             <option value="{{$item->customerId}}">{{$item->name}}</option>
             @endforeach
@@ -34,13 +31,15 @@
     {{-- Agency --}}
     <div class="form-group">
         <label>Agency</label>
-        <select class="form-control select2" name="agency">
+        <select class="form-control select2" name="agency" id="agencySelect">
             @foreach ($agency as $item)
             <option value="{{$item->agencyId}}">{{$item->agency}}</option>
             @endforeach
 
         </select>
     </div>
+
+
 
 
 
@@ -52,12 +51,12 @@
             <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </div>
-            <input type="text" class="form-control pull-right datepicker" name="deadline" value="{{old('deadline')}}">
+            <input type="text" class="form-control pull-right datepicker" name="deadline" id="deadLineDatePicker">
         </div>
         <!-- /.input group -->
     </div>
 
-
+    {{-- <Button id="btnTest">Test</Button> --}}
 
 
 
@@ -93,6 +92,8 @@
             {{-- Property --}}
             <div class="form-group">
                 <label>Property</label>
+
+
                 <select class="form-control select2 " id="propertySelect" name="property">
                     @foreach ($property as $item)
                     <option data-price="{{$item->price}}" data-cost="{{$item->cost}}"
@@ -100,7 +101,11 @@
                         {{$item->propertyCode}}</option>
                     @endforeach
                 </select>
+
+
+
             </div>
+
 
             {{-- Commission --}}
 
@@ -171,7 +176,7 @@
             <div class="form-group" style="">
                 <button type="button" class="btn btn-primary" id="btn-addProperty">Add Property</button>
                 <button type="button" class="btn btn-secondary" id="btn-cancel">Cancel</button>
-                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                <button type="submit" class="btn btn-primary pull-right" id="btn-Submit">Submit</button>
 
             </div>
 
@@ -198,6 +203,15 @@
                     <span class="input-group-addon-end">$</span>
                 </div>
 
+                <span class="help-block"></span>
+            </div>
+
+            {{-- Commission --}}
+
+            <div class="form-group">
+                <label class="control-label" for="commission">Commission</label>
+                <input type="number" class="form-control" name="commission" id="commissionMaster"
+                    placeholder="Commission" value="0" />
                 <span class="help-block"></span>
             </div>
 
@@ -251,8 +265,8 @@
 
             <div class="form-group">
                 <label class="control-label" for="inputSuccess">Credit</label>
-                <input type="number" class="form-control" name="credit" placeholder="Credit" id="creditMaster"
-                    value="0" />
+                <input type="number" class="form-control" name="credit" placeholder="Credit" id="creditMaster" value="0"
+                    disabled />
                 <span class="help-block"></span>
             </div>
 
@@ -293,7 +307,7 @@
 
         $('#amountDetail').keyup(e => {
             e.preventDefault();
-            console.log('ddd');
+            //console.log('ddd');
         });
             
         $('#priceDetail').keyup(e=>{
@@ -366,6 +380,11 @@
             handleChangeSelect();
         });
 
+
+
+
+        
+
         
         const handleChangeSelect=()=>{
             let price=$("#propertySelect").find(":selected").data("price");
@@ -382,8 +401,8 @@
 
         //init datatable detail
 
-        let column=['No','Code','Commission','Cost','Price','Discount','Amount','Action']
-        let showDiff=[false,false,false,false,false,false,false,true];
+        let column=['No','Id','Code','Commission','Cost','Price','Discount','Amount','Action']
+        let showDiff=[false,false,false,false,false,false,false,false,true];
 
         let detail = new customTable($('#detail'),column,showDiff);
         let arrPropertyCode=[];
@@ -456,15 +475,20 @@
         /* master*/
         var totalMaster=0;
         var subTotalMaster=0;
-
+        var commissionMaster=0;
         const changeLimitAmount=()=>{
             let limitAmount=Number($('#limitAmount').val())/100;
             let limitMoney=totalMaster*limitAmount;
             $('#limitMoney').val(limitMoney);
         }
 
+        const changeCommissionMaster=(oldAmount,newAmount)=>{
+            commissionMaster=commissionMaster-Number(oldAmount)+Number(newAmount);
+            $('#commissionMaster').val(commissionMaster);
+        }
+
         const changeTotalMaster=(oldAmount,newAmount)=>{
-            totalMaster=totalMaster-oldAmount+newAmount;
+            totalMaster=totalMaster-Number(oldAmount)+Number(newAmount);
             $('#amountMaster').val(totalMaster);
         }
 
@@ -495,10 +519,12 @@
             //for reference
 
             // changeTotalMaster(0,amount);
+            //changeCommissionMaster(0,commission);
             // changeSubTotalMaster();
             // changeLimitAmount();
             // changeCreditMaster();
-        }
+            
+        };
 
 
 
@@ -533,13 +559,14 @@
 
 
 
-                    let btn=`<Button class="btn btn-primary detail-edit" alt=${propertyCode}>Edit</Button>
-                        <Button class="btn btn-danger detail-delete" alt=${propertyCode}>Delete</Button>
+                    let btn=`<Button class="btn btn-primary detail-edit">Edit</Button>
+                        <Button class="btn btn-danger detail-delete">Delete</Button>
                     `
 
-                    detail.addRow(propertyId,[count,propertyCode,commission,cost,price,discount,amount,['edit',btn]]);
+                    detail.addRow(propertyId,[count,propertyId,propertyCode,commission,cost,price,discount,amount,['edit',btn]]);
 
                     changeTotalMaster(0,amount);
+                    changeCommissionMaster(0,commission);
                     changeSubTotalMaster();
                     changeLimitAmount();
                     changeCreditMaster();
@@ -549,6 +576,7 @@
 
                 let propertyCode=$(e.target).data('code');
                 let amount=$(e.target).data('amount');
+                let commission=$(e.target).data('commission');
                 //console.log(propertyCode);
                 if(validatePropertyUpdate(propertyCode)>=2){
                     renderMessage($('.show-message.detail'),'error',['Property Duplicated']);
@@ -563,7 +591,7 @@
                 let newPropertyCode=$("#propertySelect").find(":selected").data("code")+"";
 
 
-                const commission =Number($('#commissionDetail').val())+"";
+                const newCommission =Number($('#commissionDetail').val())+"";
 
                 const cost=Number($('#costDetail').val())+"";
 
@@ -586,18 +614,20 @@
                 arrPropertyCode.push(newPropertyCode+"");
                 console.log(arrPropertyCode);
 
-                detail.setValue(selectedRowIndex,1,newPropertyCode);
-                detail.setValue(selectedRowIndex,2,commission);
-                detail.setValue(selectedRowIndex,3,cost);
-                detail.setValue(selectedRowIndex,4,price);
-                detail.setValue(selectedRowIndex,5,discount);
-                detail.setValue(selectedRowIndex,6,newAmount);
+                detail.setValue(selectedRowIndex,1,propertyId);
+                detail.setValue(selectedRowIndex,2,newPropertyCode);
+                detail.setValue(selectedRowIndex,3,newCommission);
+                detail.setValue(selectedRowIndex,4,cost);
+                detail.setValue(selectedRowIndex,5,price);
+                detail.setValue(selectedRowIndex,6,discount);
+                detail.setValue(selectedRowIndex,7,newAmount);
 
                 handleCancel('none');
 
-                console.log(amount,newAmount);
+                console.log(commission,newCommission);
 
                 changeTotalMaster(amount,newAmount);
+                changeCommissionMaster(commission,newCommission);
                 changeSubTotalMaster();
                 changeLimitAmount();
                 changeCreditMaster();
@@ -637,34 +667,43 @@
             clearBtnAddData('#btn-addProperty','index');
             clearBtnAddData('#btn-addProperty','amount');
         };
-
-
         
-
 
         $('#btn-cancel').click((e)=> handleCancel(e));
 
         $('#detail').click((e)=>{
             e.stopPropagation();
-            let propertyCode=$(e.target).parents('tr').data('code');
+            let oldAmount=Number($(e.target).parents('tr').attr('data-amount'));
+            let oldCommssion=Number($(e.target).parents('tr').attr('data-commission'));
+            let propertyCode=$(e.target).parents('tr').attr('data-code');
+
+            //console.log(propertyCode);
             if($(e.target).hasClass('detail-edit')){
                 $('#btn-cancel').css('display','initial');
 
                 selectedRowNum=$(e.target).parents('tr').index();
                
+                
+
                 //console.log(selectedRowNum);
                 clearBtnAddData('#btn-addProperty','index');
                 clearBtnAddData('#btn-addProperty','no');
                 clearBtnAddData('#btn-addProperty','code');
                 clearBtnAddData('#btn-addProperty','amount');
+                clearBtnAddData('#btn-addProperty','commission');
             
                 $('#btn-addProperty').attr("data-code",propertyCode);
                 $('#btn-addProperty').attr("data-index",selectedRowNum);
+                $('#btn-addProperty').attr("data-amount",oldAmount);
+                $('#btn-addProperty').attr("data-commission",oldCommssion);
+               
                 $('#btn-addProperty').html("Update");
 
                 let propertyId=$(e.target).parents('tr').attr('alt');
-                //console.log(propertyId);
+                $('#btn-addProperty').attr('alt',propertyId);
+                //console.log(propertyCode);
                 
+                $('#commissionDetail').val($(e.target).parents('tr').data('commission'));
                 
                 $('#propertySelect').val(propertyId).trigger('change');
             
@@ -673,20 +712,22 @@
 
             }else if($(e.target).hasClass('detail-delete')){
                 handleCancel(e);
-                console.log(propertyCode);
+                //console.log(propertyCode);
                 arrPropertyCode=arrPropertyCode.filter((element)=>{
                     return element!=propertyCode;
                 })
 
-                let oldAmount=Number($(e.target).parents('tr').data('amount'));
+                
 
                 changeTotalMaster(oldAmount,0);
+                changeCommissionMaster(oldCommssion,0);
                 changeSubTotalMaster();
                 changeLimitAmount();
                 changeCreditMaster();
+                
 
 
-                console.log(arrPropertyCode);
+                //console.log(arrPropertyCode);
 
                 $(e.target).parents('tr').remove();
 
@@ -695,6 +736,81 @@
 
             }
         });
+
+
+
+
+        /*send request*/
+        
+        $("#btn-Submit").click(()=>{
+            /*working js*/
+            
+            if(Number($('#subtotalMaster').val())<=0){
+
+                renderMessage($(".show-message.detail"),"error","Please make sure subtotal is greater than 0");
+                return;
+            }
+
+            let arrDataRow=(detail.getAllValue()).map(element => {
+                
+                return JSON.stringify(element);
+            });
+            
+
+           
+            var master = {
+                deadline : $('#deadLineDatePicker').val(),
+                customer : $('#customerSelect').val(),
+                agency : $('#agencySelect').val(),
+                limitAmount :  $('#limitAmount').val(),
+                limitMoney :  $('#limitMoney').val(),
+                commission : $('#commissionMaster').val(),
+                amount : $('#amountMaster').val(),
+                discount : $('#discountMaster').val(),
+                subTotal : $('#subtotalMaster').val(),
+                deposit : $('#depositMaster').val(),
+                credit : $('#creditMaster').val(),
+                detail : arrDataRow,
+            };
+
+            
+
+
+            
+            $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: "POST",
+            url: "{{route('storeBook')}}",
+            dataType: 'json',
+            contentType:'application/json',
+            data: JSON.stringify(master),
+            success: response =>{
+               
+               
+                $("#propertyId").val(response.propertyId)
+                console.log(response);
+                renderMessage($('.show-message.master'),'success', response.message);
+                location.reload();
+            },
+            error: response=>{
+                console.log(response.responseJSON);
+
+               
+
+                renderMessage($('.show-message.master'),'error', response.responseJSON.message);
+                
+
+            },
+            complete: response=>{
+                console.log(response);
+            },
+            
+            });
+        });
+
+        /*end of send request*/
 
     });
 

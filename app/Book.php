@@ -22,4 +22,5 @@ class Book extends Model
     {
         return $this->hasMany('App\BookDetail','bookId','bookId');
     }
+    protected $fillable = ['created_at', 'updated_at'];
 }

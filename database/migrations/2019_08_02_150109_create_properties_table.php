@@ -34,7 +34,7 @@ class CreatePropertiesTable extends Migration
             $table->unsignedBigInteger('projectId')->nullable();
             $table->unsignedSmallInteger('partnerId')->nullable();
             $table->unsignedSmallInteger('CProID')->nullable();
-            $table->unsignedSmallInteger('staffId');
+            $table->unsignedSmallInteger('staffId')->nullable();
             $table->unsignedSmallInteger('propertyTypeId');
             $table->unsignedSmallInteger('umId');
             $table->unsignedBigInteger('propAttribId');
