@@ -29,6 +29,7 @@ INSERT INTO `realestate`.`agencies`(`agency`, `address`, `phone`, `email`, `tCOm
 
 
 
+
 --///////////Function///////////
 
 DELIMITER $$
@@ -60,3 +61,14 @@ END $$
 
 DELIMITER ;
 
+
+
+--///////////For Testing///////////
+
+--SCHEDULE
+
+--contract
+INSERT INTO `realestate`.`contracts`(`contractId`, `discount`, `subTotal`, `deposit`, `credit`, `comission`, `amount`, `left`, `status`, `created_at`, `staffId`, `customerId`, `bookId`, `agencyId`) VALUES (1, 0, 40000, 10000, 40000, 0, 50000, 40000, 'Pending', '2019-08-01 18:42:36', 1, 1, NULL, NULL)
+
+
+--///////////End For Testing///////////

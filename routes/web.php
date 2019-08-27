@@ -164,6 +164,8 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
 
     //Schedule
     Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');
+    Route::post('storeSchedule', 'admin\InstallScheduleController@store')->name('storeSchedule');
+    Route::get('test', 'admin\InstallScheduleController@test')->name('test');
 
 
     //Contract

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\InstallSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +19,18 @@ class InstallScheduleController extends Controller
         $schedule = DB::table('install_schedules')
             ->select();
 
+        $data = [
+            'schedule' => $schedule
+        ];
 
 
         return View("admin.schedule.index", $data);
+    }
+
+
+    public function test()
+    {
+        return View("admin.schedule.test");
     }
 
     /**
@@ -40,7 +51,26 @@ class InstallScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $allRow = [];
+        foreach ($request->scheduleList as $rowJson) {
+            $row = json_decode($rowJson, true);
+
+            $temp["amountToPay"] = $row["amountToPay"];
+            $temp["principle"] = $row["principle"];
+            $temp["interest"] = $row["interest"];
+            $temp["outPrinciple"] = $row["outPrinciple"];
+            $temp["outDebt"] = $row["outDebt"];
+            $temp["receive"] = 0;
+            $temp["penalty"] = 0;
+            $temp["status"] = 1;
+            $temp["created_at"] = now();
+
+            array_push($allRow, $temp);
+        };
+
+        InstallSchedule::insert($allRow);
+
+        return response()->json(['data' => $request->scheduleList], 200);
     }
 
     /**
