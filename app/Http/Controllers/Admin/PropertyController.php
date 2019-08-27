@@ -41,6 +41,7 @@ class PropertyController extends Controller
             ->join('staffs', 'properties.staffId', '=', 'staffs.staffId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
             ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttribId')
+            ->join('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
             ->select(
                 'propertyCode',
                 'property_types.propertyType',
@@ -58,7 +59,8 @@ class PropertyController extends Controller
                 'properties.updated_at',
                 'project',
                 'partner',
-                'propertyId'
+                'image',
+                'properties.propertyId'
             )
             ->leftJoinSub($partnerQry, 'partners', function ($join) {
                 $join->on('partners.partnerId', '=', 'properties.partnerId');
@@ -66,8 +68,11 @@ class PropertyController extends Controller
             ->leftJoinSub($projectQry, 'projects', function ($join) {
                 $join->on('projects.projectId', '=', 'properties.projectId');
             })
-
+            ->where('is_featured', '=', '1')
             ->get();
+
+
+
 
         $data = array('property' => $property);
 
@@ -157,6 +162,7 @@ class PropertyController extends Controller
                 'propAttribId' => $request->propAttribute,
                 'price' => $request->price,
                 'cost' => $request->cost,
+                'created_at' => now(),
                 'partnerId' => $request->partner,
                 'staffId' => Auth::user()->staffId,
                 'partnerId' => $partnerId,
@@ -174,7 +180,10 @@ class PropertyController extends Controller
 
             $PropertyImage->save();
 
-            return response()->json(['message' => ['Added new records.'], 'propertyId' => $newPropertyId], 200);
+
+
+
+            return response()->json(['message' => ['Added new records.'], 'propertyId' => $newPropertyId, 'data' =>  Auth::user()->staffId], 200);
         }
 
 
@@ -240,5 +249,25 @@ class PropertyController extends Controller
 
 
         return response()->json(array('success' => true), 200);
+    }
+
+    public static function getAvailableProperty()
+    {
+        return Property::select('propertyId', 'propertyCode', 'cost', 'price')
+            ->where('status', '=', 1)
+            ->get();
+    }
+
+    public static function updatePropertyStatus($id, $status)
+    {
+        //status 
+        //1=available
+        //2=block
+        //3=book
+        //4=contract
+        //5=sold
+        DB::table('properties')
+            ->where('propertyId', '=', $id)
+            ->update(['status' => $status]);
     }
 }

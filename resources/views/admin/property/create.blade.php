@@ -152,13 +152,15 @@
 
 @section('script')
 <script>
+    var myDropzone;
+
     const sendData = () =>{
         let description = $("input[name='description']").val();
                
                 
         var frmdata = new FormData($("#form-submit-property")[0])
         
-        let successSubmit;
+        
 
         $.ajax({
             headers: {
@@ -171,29 +173,33 @@
             data: frmdata,
             success: response =>{
                
-                successSubmit= true;
+                
                 $("#propertyId").val(response.propertyId)
               
+                myDropzone.processQueue();
+                console.log(response);
                 renderMessage($('.show-message'),'success', response.message);
-
+                
             },
             error: response=>{
                
                 renderMessage($('.show-message'),'error', response.responseJSON.message);
-                successSubmit= false;
+                
+                
 
             },
             complete: response=>{
-                console.log(response);
+                console.log(response.data);
                
             },
             dataType: "json",
             // contentType : "application/json"
         });
         
-        return successSubmit;
     };
     
+   
+
     Dropzone.options.propertyDropzone = {
         autoProcessQueue:false,
         acceptedFiles: ".jpeg,.jpg,.png,.gif",
@@ -204,7 +210,7 @@
 
         
         init: function() {
-            let myDropzone=this;
+            myDropzone=this;
             this.on("success", function(file, response) {             
                 
                 this.removeFile(file);
@@ -236,13 +242,16 @@
 
             $("#submitProperty").click(()=>{      
                 //$('#form-submit-property').submit();
-                if(sendData()){
-                    console.log('send photo');
-                    myDropzone.processQueue();
+
+                sendData();
+
+                // if(sendData()){
+                //     console.log('send photo');
+                //     myDropzone.processQueue();
                     
-                }else{
-                    console.log('not send photo');
-                }
+                // }else{
+                //     console.log('not send photo');
+                // }
                    
             });
             

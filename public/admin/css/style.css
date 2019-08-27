@@ -249,6 +249,30 @@ label[class="my-switch"] input[type="checkbox"]+.my-slider {
     color: #7f0000;
 }
 
+.red-background {
+    background: #ff6659;
+}
+
+.dark-red-background {
+    background: #870000;
+}
+
+
+.yellow-background {
+    background: #fff263;
+}
+
+.white-color {
+    color: white;
+}
+
+
+table.table-hover tbody tr.white-color:hover {
+    color: black;
+}
+
+
+
 .green-color {
     color: #003300;
 }

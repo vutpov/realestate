@@ -17,15 +17,8 @@
             <th>Staff</th>
             <th>Customer</th>
             <th>Agent</th>
-            <th>Date</th>
-            <th>Limit Amount</th>
+            <th>Created Date</th>
             <th>Dead Line</th>
-            <th>Total</th>
-            <th>Discount</th>
-            <th>SubTotal</th>
-            <th>Deposit</th>
-            <th>Credit</th>
-            <th>Commission</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -34,17 +27,56 @@
     <tbody>
 
 
-        {{-- @foreach ($user as $u)
-        <tr>
+        @foreach ($book as $item)
+        <?php
+        
+            $rowColor='';
+        
+            switch ($item->lateness) {
+                case 1:
+                    $rowColor='yellow-background';
+                    break;
+                
+                case 0:
+                    $rowColor='red-background ';
+                    break;
+                
+                case -1:
+                    $rowColor='dark-red-background white-color';
+                    break;
+            }
+       
+        ?>
+
+        <tr class="{{$rowColor}}">
             <td>{{$loop->iteration}}</td>
-        <td>{{$u->username}}</td>
-        <td>{{$u->name}}</td>
-        <td>{{$u->role}}</td>
-        <td>{{$u->status}}</td>
-        <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
-            <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
+            <td>{{$item->bookId}}</td>
+            <td>{{$item->staff}}</td>
+            <td>{{$item->customer}}</td>
+            <td>{{$item->agency}}</td>
+            <td>{{$item->created_at}}</td>
+            <td>{{$item->deadline}}</td>
+            <td>
+                <?php
+                    $status;
+                    switch ($item->status) {
+                        case 1:
+                            $status="Pending";
+                            break;
+                        case 2:
+                            $status="Success";
+                            break;
+                        default:
+                            $status="Void";
+                            break;
+                    }
+                ?>
+                {{$status}}
+            </td>
+            <td><a href="{{route("editBook",['id'=>$item->bookId])}}"><i class="fas fa-search"></i></a>
+            </td>
         </tr>
-        @endforeach --}}
+        @endforeach
 
 
     </tbody>

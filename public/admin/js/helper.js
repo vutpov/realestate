@@ -1,4 +1,4 @@
-const renderMessage=(container,messageType,arrMessage)=>{
+const renderMessage=(container,messageType,...arrMessage)=>{
     let messageWrapper=document.createElement('ul');
 
     if(messageType==="success"){

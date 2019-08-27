@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
+<<<<<<< HEAD
     protected $primaryKey = 'bookId';
 
     public function customer()
@@ -22,4 +23,7 @@ class Book extends Model
     {
         return $this->hasMany('App\BookDetail','bookId','bookId');
     }
+=======
+    protected $fillable = ['created_at', 'updated_at'];
+>>>>>>> 516581d830f2a8e2c844470262cd9beeaf491e4c
 }

@@ -16,6 +16,8 @@ $(function () {
     $('.dataTable').DataTable({
 
         'autoWidth': true
+
+        
     });
 
 

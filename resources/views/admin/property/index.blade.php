@@ -2,7 +2,7 @@
 
 @section('col','col-md-12')
 
-@section('page-header','View All Property Types')
+@section('page-header','View All Properties')
 
 @section('content')
 
@@ -27,6 +27,7 @@
                 <th>Cost</th>
                 <th>Price</th>
                 <th>Free</th>
+                <th>Thumbnail</th>
                 <th>Project</th>
                 <th>Partner</th>
                 <th>Staff</th>
@@ -37,8 +38,6 @@
         </thead>
 
         <tbody>
-
-
 
 
 
@@ -54,7 +53,8 @@
                 <td>{{$item->cost}}</td>
                 <td>{{$item->price}}</td>
                 <td>{{$item->free}}</td>
-
+                <td><img src="{{url('/storage')}}/{{$item->image}}" alt="" class="img-fluid" width="100" height="100" />
+                </td>
                 @if($item->project)
                 <td>{{$item->project}}</td>
                 @else
