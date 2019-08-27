@@ -7,18 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Property;
 use App\Customer;
 use App\Agency;
-<<<<<<< HEAD
 use App\Book;
 use App\BookDetail;
-=======
 use App\Http\Helpers\Helper;
 use Illuminate\Support\Facades\Validator;
-use App\Book;
-use App\BookDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use DateTime;
->>>>>>> 516581d830f2a8e2c844470262cd9beeaf491e4c
 
 class BookController extends Controller
 {
