@@ -7,10 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Property;
 use App\Customer;
 use App\Agency;
-use App\Http\Helpers\Helper;
-use Illuminate\Support\Facades\Validator;
 use App\Book;
 use App\BookDetail;
+use App\Http\Helpers\Helper;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -230,5 +230,16 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDetailBook($id)
+    {
+        $book = Book::find($id);
+        $book['customer'] = Book::find($id)->customer->name;
+        $book['agency'] = Book::find($id)->agency->agency;
+        
+        $detail = BookDetail::join('properties','book_details.propertyId', '=' , 'properties.propertyId')->select('propertyCode','book_details.price','discount','amount')->where('bookId',$id)->get();
+
+        return compact('book','detail');
     }
 }
