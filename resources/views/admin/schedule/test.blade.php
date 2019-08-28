@@ -19,40 +19,7 @@
 
 
 
-    {{-- Amount --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Amount</label>
-        <input type="text" class="form-control" name="amount" placeholder="Amount" id="amount" />
-        <span class="help-block"></span>
-    </div>
-
-    {{-- Rate --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Rate</label>
-        <input type="text" class="form-control" name="rate" placeholder="Rate" id="rate" />
-        <span class="help-block"></span>
-    </div>
-
-    {{-- Druation --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Duration</label>
-        <input type="text" class="form-control" name="duration" placeholder="Duration" id="duration" />
-        <span class="help-block"></span>
-    </div>
-
-    {{-- Start --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Start</label>
-        <input type="date" class="form-control" name="start" placeholder="start" id="start" />
-        <span class="help-block"></span>
-    </div>
-
-
-
-    <input type="submit" class="btn btn-primary" value="Submit" id="submitTest" />
-    <button class="btn btn-danger pull-right">
-        <a style="color:white;" href="/system/property">Cancel</a>
-    </button>
+    
 
 
 
@@ -152,6 +119,11 @@
         scheduleList[scheduleList.length-1]["outPrinciple"]=0;
         scheduleList[scheduleList.length-1]["outDebt"]=0;
         console.log(scheduleList);
+
+
+
+
+        //prepare data to send
 
         let rowSt='';
 

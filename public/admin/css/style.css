@@ -299,3 +299,24 @@ table.has-action tr td:last-child {
 }
 
 /*end of btn cancel*/
+
+/* schedule modal*/
+
+.main-sidebar {
+
+    z-index: 1;
+
+}
+
+
+#scheule-wrapper {
+    max-width: 80%;
+    padding-right: 30px !important;
+    background: #ECF0F5;
+}
+
+
+
+
+
+/*end schedule modal*/
