@@ -38,7 +38,9 @@ class InsertDefaultData extends Command
      */
     public function handle()
     {
+        ini_set('memory_limit', '-1');
         $sep = DIRECTORY_SEPARATOR;
         DB::unprepared(file_get_contents('database' . $sep . 'custom_sql' . $sep . 'data.sql'));
+       
     }
 }

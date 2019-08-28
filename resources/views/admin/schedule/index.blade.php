@@ -1,6 +1,6 @@
 @extends('admin.master')
 
-@section('col','col-md-6')
+@section('col','col-md-12')
 
 @section('page-header','View All Schedule')
 
@@ -9,7 +9,7 @@
 <table class="table table-hover dataTable">
 
     <thead>
-        SchID, ConID, Date, Customer, Status
+
         <tr>
             <th>#</th>
             <th>Contract ID</th>
@@ -22,18 +22,22 @@
 
     <tbody>
 
-        @foreach ($propTypes as $item)
+        @foreach ($schedule as $item)
         <tr>
             <td>{{$loop->iteration}}</td>
-            <td>{{$item->propertyType}}</td>
+            <td>{{$item->contractId}}</td>
+            <td>{{$item->created_at}}</td>
+            <td>{{$item->name}}</td>
             <td>
-                <a href="/system/editPropTypes/{{$item->propertyTypeId}}"><i class="fa fa-edit"></i></a>
-                @if($item->status == 1)
-                <a href="/system/PropTypesStatus/{{$item->propertyTypeId}}/trash"><i class="fa fa-trash"></i></a>
+                @if ($item->status==1)
+                Pending
                 @else
-                <a href="/system/PropTypesStatus/{{$item->propertyTypeId}}/recycle"><i class="fas fa-recycle"></i></a>
+                Done
                 @endif
             </td>
+            <td><a href="{{route("showSchedule",['id'=>$item->contractId])}}"><i class="fas fa-search"></i></a>
+
+
         </tr>
         @endforeach
 
@@ -44,12 +48,7 @@
 
 </table>
 
-<div class="form-group">
-    <label for="">
-        <input type="checkbox" name="chkbox" id="chkbox-proptyType" {{$check}}>
-        Trash
-    </label>
-</div>
+
 
 @endsection
 

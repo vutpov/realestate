@@ -16,8 +16,28 @@ class InstallScheduleController extends Controller
      */
     public function index()
     {
-        $schedule = DB::table('install_schedules')
-            ->select();
+
+
+
+
+
+        $schedule = DB::table('install_schedules as i')
+            ->join('contracts as c', 'c.contractId', '=', 'i.contractId')
+            ->join('customers as cus', 'cus.customerId', '=', 'c.customerId')
+            ->select(
+                DB::raw(
+                    'i.contractId,
+                    i.created_at as created_at,
+                    name,
+                    payDate,
+                    summeriseScheduleStatus(i.contractId) as status'
+                )
+            )
+            ->groupBy('i.contractId', 'i.contractId', 'created_at', 'name', 'status')
+            ->get();
+
+
+
 
         $data = [
             'schedule' => $schedule
@@ -64,7 +84,8 @@ class InstallScheduleController extends Controller
             $temp["penalty"] = 0;
             $temp["status"] = 1;
             $temp["created_at"] = now();
-
+            $temp["payDate"] = $row["payDate"];
+            $temp["contractId"] = 1; //for testing
             array_push($allRow, $temp);
         };
 
@@ -81,7 +102,12 @@ class InstallScheduleController extends Controller
      */
     public function show($id)
     {
-        //
+        $schedule = InstallSchedule::find($id)->get();
+
+
+
+
+        return View('admin.schedule.view', compact('schedule'));
     }
 
     /**

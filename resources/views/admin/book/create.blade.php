@@ -559,7 +559,11 @@
 
 
 
-                    let btn=`<Button class="btn btn-primary detail-edit">Edit</Button>
+                    // let btn=`<Button class="btn btn-primary detail-edit">Edit</Button>
+                    //     <Button class="btn btn-danger detail-delete">Delete</Button>
+                    // `
+
+                    let btn=`
                         <Button class="btn btn-danger detail-delete">Delete</Button>
                     `
 

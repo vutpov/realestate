@@ -29,46 +29,20 @@ INSERT INTO `realestate`.`agencies`(`agency`, `address`, `phone`, `email`, `tCOm
 
 
 
-
---///////////Function///////////
-
-DELIMITER $$
-
-CREATE DEFINER=`root`@`localhost` FUNCTION `summeriseScheduleStatus`(`pContractId` integer) RETURNS int(11)
-BEGIN
-	DECLARE scheduleStatus INTEGER;
-  SELECT 
-		count(*)
-	INTO @countDone
-	FROM install_schedules
-	WHERE contractId= pContractId and status=2;
-	
-	SELECT 
-        count(*)
-	INTO @countAll
-	FROM install_schedules
-	WHERE contractId= pContractId;
-	
-	IF countDone<countAll THEN
-        set scheduleStatus=0;
-	ELSE
-        set scheduleStatus=1;
-	END IF;
-	
-  RETURN scheduleStatus;
-
-END $$
-
-DELIMITER ;
-
-
-
---///////////For Testing///////////
+--For Testing
 
 --SCHEDULE
 
 --contract
-INSERT INTO `realestate`.`contracts`(`contractId`, `discount`, `subTotal`, `deposit`, `credit`, `comission`, `amount`, `left`, `status`, `created_at`, `staffId`, `customerId`, `bookId`, `agencyId`) VALUES (1, 0, 40000, 10000, 40000, 0, 50000, 40000, 'Pending', '2019-08-01 18:42:36', 1, 1, NULL, NULL)
+INSERT INTO `realestate`.`contracts`(`contractId`, `discount`, `subTotal`, `deposit`, `credit`, `comission`, `amount`, `left`, `status`, `created_at`, `updated_at`, `staffId`, `customerId`, `bookId`, `agencyId`) VALUES (1, 0, 0, 0, 0, 0, 0, 0, '0', '2019-08-27 16:27:39', '2019-08-27 16:27:42', 1, 1, 1, 1)
+--End For Testing
+
+SET GLOBAL event_scheduler = ON;
 
 
---///////////End For Testing///////////
+
+
+
+
+
+

@@ -71,13 +71,7 @@
                 <td>{{$item->created_at}}</td>
                 <td>{{$item->updated_at}}</td>
                 <td>
-                    <a href="/system/editPropTypes/{{$item->propertyId}}"><i class="fa fa-edit"></i></a>
-                    @if($item->status == 1)
-                    {{-- <a href="/system/PropTypesStatus/{{$item->propertyId}}/trash"><i class="fa fa-trash"></i></a>
-                    --}}
-                    @else
-                    <a href="/system/PropTypesStatus/{{$item->propertyId}}/recycle"><i class="fas fa-recycle"></i></a>
-                    @endif
+                    
                 </td>
             </tr>
             @endforeach

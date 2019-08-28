@@ -3,75 +3,10 @@
 @section('page-header','Test')
 
 
-@section('col','col-md-6')
+@section('col','col-md-12')
 
 @section('content')
 
-<form action="/system/storeProperty" method="POST" id="test">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <div class="alert show-message" style="display:none">
-
-    </div>
-
-
-
-
-
-
-    {{-- Amount --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Amount</label>
-        <input type="text" class="form-control" name="amount" placeholder="Amount" id="amount" />
-        <span class="help-block"></span>
-    </div>
-
-    {{-- Rate --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Rate</label>
-        <input type="text" class="form-control" name="rate" placeholder="Rate" id="rate" />
-        <span class="help-block"></span>
-    </div>
-
-    {{-- Druation --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Duration</label>
-        <input type="text" class="form-control" name="duration" placeholder="Duration" id="duration" />
-        <span class="help-block"></span>
-    </div>
-
-    {{-- Start --}}
-    <div class="form-group">
-        <label class="control-label" for="inputSuccess">Start</label>
-        <input type="date" class="form-control" name="start" placeholder="start" id="start" />
-        <span class="help-block"></span>
-    </div>
-
-
-
-    <input type="submit" class="btn btn-primary" value="Submit" id="submitTest" />
-    <button class="btn btn-danger pull-right">
-        <a style="color:white;" href="/system/property">Cancel</a>
-    </button>
-
-
-
-
-</form>
-
-
-
-
-
-
-@endsection
-
-
-@section('col-detail','col-md-12')
-
-@section('detail-header','Test Detail')
-
-@section('detail')
 <table class="table" id="schedule">
     <thead>
         <tr>
@@ -82,14 +17,49 @@
             <th scope="col">Amount To Pay</th>
             <th scope="col">Out Principle</th>
             <th scope="col">Out Debt</th>
+            <th scope="col">Penalty</th>
+            <th scope="col">Total</th>
+            <th scope="col">Status</th>
         </tr>
     </thead>
     <tbody>
 
+        @foreach ($schedule as $item)
+
+        <tr>
+            <td>{{$loop->iteration}}</td>
+            <td>{{$item->payDate}}</td>
+            <td>{{$item->interest}}</td>
+            <td>{{$item->principle}}</td>
+            <td>{{$item->amountToPay}}</td>
+            <td>{{$item->outPrinciple}}</td>
+            <td>{{$item->outDebt}}</td>
+            <td>{{$item->penalty}}</td>
+            <td>0</td>
+            <td>
+                @if($item->status==1)
+                Pending
+                @else
+                Done
+                @endif
+            </td>
+        </tr>
+        @endforeach
+
+
     </tbody>
 </table>
 
+
+
+
+
+
 @endsection
+
+
+@section('display-detail','display:none')
+
 
 @section('script')
 <script>
@@ -129,7 +99,7 @@
 
         for(let i = 1;i<=duration;i++){
             let schedule={};
-            schedule['payDate']=formatDateYMD(dateStart);
+            schedule['dateStart']=formatDateYMD(dateStart);
             schedule['interest']=interest;
             schedule['principle']=principle;
             schedule['amountToPay']=amountToPay;
