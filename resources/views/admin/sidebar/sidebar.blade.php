@@ -87,7 +87,7 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/system/schedule">View All Schedule</a></li>
+          <li><a href="{{route('schedule')}}">View All Schedule</a></li>
         </ul>
       </li>
 

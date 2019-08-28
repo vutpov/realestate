@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Book;
 use App\BookDetail;
+use App\ContractDetail;
 
 class ContractController extends Controller
 {
@@ -69,11 +70,28 @@ class ContractController extends Controller
                 'amount' => $book['credit'],
                 'customerId' => $book['customerId'],
                 'agencyId' => $book['agencyId'],
-                'comission' => $book['comission']
+                'comission' => $book['commission']
             ]);
-            $newContractId = DB::getPdo()->lastInsertId() + 1;
 
-            return response()->json(['message' => ['Added new records.'], 'contractId' => $newContractId], 200);
+            $newContractId = DB::getPdo()->lastInsertId();
+
+            $detail = BookDetail::select('propertyId','price','discount','amount')->where('bookId',$request->bookId)->get();
+
+            $allRow = [];
+            foreach ($detail as $item){
+                $temp['propertyid'] = $item["propertyId"];
+                $temp['price'] = $item["price"];
+                $temp['discount'] = $item["discount"];
+                $temp['amount'] = $item["amount"];
+                $temp['contractId'] = $newContractId;
+
+                array_push($allRow,$temp);
+            }
+            ContractDetail::insert($allRow);
+
+            Book::where('bookId',$request->bookId)->update(['status' => '3']);
+
+            return response()->json(['message' => ['Added new records.']], 200);
         }
         return response()->json(['message' => $validator->errors()->all(),], 403);
     }

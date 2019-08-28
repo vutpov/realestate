@@ -238,7 +238,7 @@ class BookController extends Controller
         $book['customer'] = Book::find($id)->customer->name;
         $book['agency'] = Book::find($id)->agency->agency;
         
-        $detail = BookDetail::join('properties','book_details.propertyId', '=' , 'properties.propertyId')->select('propertyCode','book_details.price','discount','amount')->get();
+        $detail = BookDetail::join('properties','book_details.propertyId', '=' , 'properties.propertyId')->select('propertyCode','book_details.price','discount','amount')->where('bookId',$id)->get();
 
         return compact('book','detail');
     }
