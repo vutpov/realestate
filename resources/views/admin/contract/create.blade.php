@@ -17,7 +17,7 @@
     </div>
     @endif
 
-    <div class="alert show-message" style="display:none">
+    <div class="alert show-message master" style="display:none">
 
     </div>
 
@@ -26,11 +26,9 @@
     <div class="form-group">
         <label>Book ID</label>
         <select name="bookId" class="form-control select2" id="book">
-            <option value="" selected disabled>-- Please choose a BookId --</option>
+            <option value="first" selected>-- Please choose a BookId --</option>
             @foreach($book as $item)
-                {{-- <option value="{{$item->bookId}}">{{$item->bookId}}</option> --}}
-                <option value="1">1</option>
-                <option value="2">2</option>
+                <option value="{{$item->bookId}}">{{$item->bookId}}</option>
             @endforeach
         </select>
         {{-- <input type="text" class="form-control" name="bookId" placeholder="Book ID" value="{{old('bookId')}}" /> --}}
@@ -190,19 +188,26 @@
             let contract = new customTable($('#contract'),column,showDiff);
             
             $('#book').change(function(){
+                $('.custom-datatable-body').html('');
                 var text = $(this).val();
                 var url = window.location.origin + "/system/getDetailBook/" + text;
 
                 $.get(url,function(data, status){
+                    console.log(data);
                     var date = new Date().toLocaleDateString();
                     var deadline = new Date(data.book.deadline).toLocaleDateString();
                     if(deadline < date){
-                        alert('Please select another Booking');
-                        return;
+                        renderMessage($('.show-message'),'error',['Deadline is already expired.']);
+                        location.reload();
                     }
+                    if(data.book.status != "2"){
+                        renderMessage($('.show-message'),'error',['Limit Amount not yet']);
+                        location.reload();
+                    }
+                        
                     $('#agency').val(data.book.agency);
                     $('#customer').val(data.book.customer);
-                    $('#commission').val(data.book.comission);
+                    $('#commission').val(data.book.commission);
                     $('#amount').val(data.book.credit);
                     $('#subtotal').val(data.book.credit);
                     $('#credit').val(data.book.credit);
@@ -246,47 +251,40 @@
                 });
             });
 
-            const sendData = ()=>{
-                var frmdata = new FormData($('#form-contract')[0]);
+            $("#submitContract").click(()=>{    
 
-                let successSubmit;
-                console.log(1);
-
+                var master = {
+                    bookId : $('#book').val(),
+                    commission : $('#commission').val(),
+                    amount : $('#amount').val(),
+                    discount : $('#discount').val(),
+                    subtotal : $('#subtotal').val(),
+                    deposit : $('#deposit').val(),
+                    credit : $('#credit').val(),
+                }
+                
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type : 'POST',
                     url: "{{route('storeContract')}}",
-                    processData:false,
-                    contentType:false,
-                    data: frmdata,
+                    dataType : 'json',
+                    contentType:'application/json',
+                    data: JSON.stringify(master),
                     success: response =>{
-                        successSubmit= true;
-                        $("#propertyId").val(response.propertyId)
+                        $("#contractId").val(response.contractId)
                         
                         renderMessage($('.show-message'),'success', response.message);
+                        location.reload();
                     },
                     error: response=>{
                         renderMessage($('.show-message'),'error', response.responseJSON.message);
-                        successSubmit= false;
                     },
                     complete: response=>{
                         console.log(response);
                     },
-                    dataType: "json",
                 });
-                return successSubmit;
-            };
-            $("#submitContract").click(()=>{      
-                //$('#form-submit-property').submit();
-                if(sendData()){
-                    console.log('success');
-                    
-                }else{
-                    console.log('fail');
-                }
-                   
             });
         });
     </script>

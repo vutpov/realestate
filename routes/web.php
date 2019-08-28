@@ -169,7 +169,6 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Contract
     Route::get('contract', 'admin\ContractController@index');
     Route::get('createContract', 'admin\ContractController@create');
-    Route::get('schedule', 'admin\ContractController@schedule');
     Route::post('storeContract', 'admin\ContractController@store')->name('storeContract');
 
 
