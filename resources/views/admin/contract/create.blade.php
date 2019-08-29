@@ -26,10 +26,11 @@
     <div class="form-group">
         <label>Book ID</label>
         <select name="bookId" class="form-control select2" id="book">
-            <option value="first" selected>-- Please choose a BookId --</option>
+            <option selected>-- Please choose a BookId --</option>
             @foreach($book as $item)
             <option value="{{$item->bookId}}">{{$item->bookId}}</option>
             @endforeach
+            <option value="addNew">Add New Booking</option>
         </select>
         {{-- <input type="text" class="form-control" name="bookId" placeholder="Book ID" value="{{old('bookId')}}" />
         --}}
@@ -310,7 +311,8 @@
         let contract = new customTable($('#contract'),column,showDiff);
         
         $('#book').change(function(){
-
+            if($(this).children("option:selected").val() == 'addNew')
+                window.location = "{{route('createBook')}}";
 
             $(".schedule tbody").html('');
             $('.custom-datatable-body').html('');
@@ -326,10 +328,6 @@
                 var deadline = new Date(data.book.deadline).toLocaleDateString();
                 if(deadline < date){
                     renderMessage($('.show-message'),'error',['Deadline is already expired.']);
-                    return;
-                }
-                if(data.book.status != "2"){
-                    renderMessage($('.show-message'),'error',['Limit Amount not yet']);
                     return;
                 }
                     
