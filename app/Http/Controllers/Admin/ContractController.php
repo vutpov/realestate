@@ -11,6 +11,8 @@ use App\Book;
 use App\BookDetail;
 use App\ContractDetail;
 use App\InstallSchedule;
+use App\Contract;
+use App\Property;
 
 class ContractController extends Controller
 {
@@ -21,7 +23,15 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return View('admin.contract.index');
+        $contracts = Contract::all();
+
+        for($id =0; $id<count($contracts); $id++)
+        {
+            $contracts[$id]['customer'] = Book::find($contracts[$id]->bookId)->customer->name;
+            $contracts[$id]['agency'] = Book::find($contracts[$id]->bookId)->agency->agency;
+        }
+        // dd($contract);
+        return View('admin.contract.index',compact('contracts'));
     }
 
     /**
@@ -31,7 +41,7 @@ class ContractController extends Controller
      */
     public function create()
     {
-        $book = Book::all();
+        $book = Book::where('status',2)->get();
 
         $statement = DB::select("SHOW TABLE STATUS LIKE 'contracts'");
 
@@ -71,7 +81,8 @@ class ContractController extends Controller
                 'amount' => $book['credit'],
                 'customerId' => $book['customerId'],
                 'agencyId' => $book['agencyId'],
-                'comission' => $book['commission']
+                'comission' => $book['commission'],
+                'created_at' => now()
             ]);
 
             $newContractId = DB::getPdo()->lastInsertId();
@@ -140,7 +151,18 @@ class ContractController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contract = Contract::find($id);
+        $contract['customer'] = Contract::find($id)->customer->name;
+        $contract['agency'] = Contract::find($id)->agency->agency;
+
+        $detail = ContractDetail::where('contractId',$id)->get();
+
+        for($id =0; $id<count($detail); $id++)
+        {
+            $property = Property::select('propertyCode')->where('propertyId',$detail[$id]->propertyId)->get();
+            $detail[$id]['propertyCode'] = $property[0]->propertyCode;
+        }
+        return view('admin.contract.edit',compact('contract','detail'));
     }
 
     /**
