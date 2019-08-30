@@ -320,3 +320,22 @@ table.has-action tr td:last-child {
 
 
 /*end schedule modal*/
+
+
+/*my-max-height*/
+
+.my-max-height {
+    max-height: 600px;
+    overflow-y: scroll
+}
+
+/*end my-max-height*/
+
+
+/*check-table first-cell*/
+
+.check-table .first-cell {
+    cursor: pointer;
+}
+
+/*end check-table first-cell*/

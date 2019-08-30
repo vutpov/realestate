@@ -15,7 +15,7 @@ class CreateFunction extends Migration
     {
         DB::unprepared('CREATE DEFINER=`root`@`localhost` FUNCTION `summeriseScheduleStatus`(`pContractId` integer) RETURNS int(11)
         BEGIN
-            DECLARE scheduleStatus INTEGER;
+        DECLARE scheduleStatus INTEGER;
             
             DECLARE countDone INTEGER;
             
@@ -33,7 +33,7 @@ class CreateFunction extends Migration
             FROM install_schedules
             WHERE contractId= pContractId;
             
-            IF countDone<countAll THEN
+            IF @countDone<@countAll THEN
                 set scheduleStatus=0;
             ELSE
                 set scheduleStatus=1;
@@ -64,7 +64,7 @@ class CreateFunction extends Migration
             FROM install_schedules
             WHERE contractId= pContractId;
             
-            RETURN countDone/countAll;
+            RETURN  round(@countDone/@countAll*100);
         END ');
     }
 

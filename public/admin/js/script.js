@@ -295,6 +295,17 @@ $(function () {
       input[0].setSelectionRange(caret_pos, caret_pos);
     }
 
+    $('.check-table').click(e=>{
+        e.stopPropagation();
+        
+        if($(e.target).hasClass('first-cell')){
+
+            
+           
+            var checkBoxes = $(e.target).children();;
+            checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+        }
+    });
 
 
 
@@ -414,6 +425,9 @@ function showPropertyPopup(data) {
     st.value = data['st'];
 
     setSelect(publish, data['publish']);
+
+    
+
 }
 
 

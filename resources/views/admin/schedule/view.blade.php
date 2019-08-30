@@ -1,54 +1,70 @@
 @extends('admin.master')
 
-@section('page-header','Test')
-
+@section('page-header')
+View schedule for contractId:<b>{{$customer->contractId}}</b>
+<div class="pull-right">Customer:<b>{{$customer->name}}</b></div>
+@endsection
 
 @section('col','col-md-12')
 
 @section('content')
 
-<table class="table" id="schedule">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Date</th>
-            <th scope="col">Interest</th>
-            <th scope="col">Principle</th>
-            <th scope="col">Amount To Pay</th>
-            <th scope="col">Out Principle</th>
-            <th scope="col">Out Debt</th>
-            <th scope="col">Penalty</th>
-            <th scope="col">Total</th>
-            <th scope="col">Status</th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @foreach ($schedule as $item)
-
-        <tr>
-            <td>{{$loop->iteration}}</td>
-            <td>{{$item->payDate}}</td>
-            <td>{{$item->interest}}</td>
-            <td>{{$item->principle}}</td>
-            <td>{{$item->amountToPay}}</td>
-            <td>{{$item->outPrinciple}}</td>
-            <td>{{$item->outDebt}}</td>
-            <td>{{$item->penalty}}</td>
-            <td>0</td>
-            <td>
-                @if($item->status==1)
-                Pending
-                @else
-                Done
-                @endif
-            </td>
-        </tr>
-        @endforeach
 
 
-    </tbody>
-</table>
+<button type="button" class="btn btn-primary">Payment</button>
+
+
+
+
+<div class="my-max-height">
+    <table class="table check-table" id=" schedule">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">#</th>
+                <th scope="col">Pay Date</th>
+                <th scope="col">Interest</th>
+                <th scope="col">Principle</th>
+                <th scope="col">Amount To Pay</th>
+                <th scope="col">Out Principle</th>
+                <th scope="col">Out Debt</th>
+                <th scope="col">Penalty</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach ($schedule as $item)
+
+            <tr>
+                <td class="first-cell"><input type="checkbox" class="checkSchedule"></td>
+                <td>{{$loop->iteration}}</td>
+                <td>{{$item->payDate}}</td>
+                <td>{{$item->interest}}</td>
+                <td>{{$item->principle}}</td>
+                <td>{{$item->amountToPay}}</td>
+                <td>{{$item->outPrinciple}}</td>
+                <td>{{$item->outDebt}}</td>
+                <td>{{$item->penalty}}</td>
+                <td>0</td>
+                <td>
+                    @if($item->status==1)
+                    Pending
+                    @else
+                    Done
+                    @endif
+                </td>
+            </tr>
+            @endforeach
+
+
+        </tbody>
+    </table>
+
+</div>
+
+
 
 
 

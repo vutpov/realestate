@@ -29,7 +29,7 @@ class InstallScheduleController extends Controller
                     'i.contractId,
                     i.created_at as created_at,
                     name,
-                    payDate,
+                    getInstallmentPercent(i.contractId) as completion,
                     summeriseScheduleStatus(i.contractId) as status'
                 )
             )
@@ -91,6 +91,8 @@ class InstallScheduleController extends Controller
 
         InstallSchedule::insert($allRow);
 
+        DB::select('EXEC proc_update_penalty');
+
         return response()->json(['data' => $request->scheduleList], 200);
     }
 
@@ -104,10 +106,23 @@ class InstallScheduleController extends Controller
     {
         $schedule = InstallSchedule::find($id)->get();
 
+        $customer = DB::table('customers as cus')
+            ->join('contracts as c', 'c.customerId', 'cus.customerId')
+            ->select(
+                'name',
+                'contractId'
+            )
+            ->where('contractId', '=', $id)
+            ->get()[0];
 
 
 
-        return View('admin.schedule.view', compact('schedule'));
+        $data = [
+            'schedule' => $schedule,
+            'customer' => $customer
+        ];
+
+        return View('admin.schedule.view', $data);
     }
 
     /**

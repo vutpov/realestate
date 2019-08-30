@@ -16,6 +16,7 @@
             <th>Created At</th>
             <th>Customer</th>
             <th>Status</th>
+            <th>Completion</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -28,13 +29,15 @@
             <td>{{$item->contractId}}</td>
             <td>{{$item->created_at}}</td>
             <td>{{$item->name}}</td>
+
             <td>
-                @if ($item->status==1)
+                @if ($item->status==0)
                 Pending
                 @else
                 Done
                 @endif
             </td>
+            <td>{{$item->completion}}%</td>
             <td><a href="{{route("showSchedule",['id'=>$item->contractId])}}"><i class="fas fa-search"></i></a>
 
 
