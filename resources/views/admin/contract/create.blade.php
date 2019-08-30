@@ -495,15 +495,10 @@
             }   
 
 
-            scheduleList[scheduleList.length-1]["outPrinciple"]=0;
-            scheduleList[scheduleList.length-1]["outDebt"]=0;
+            // scheduleList[scheduleList.length-1]["outPrinciple"]=0;
+            // scheduleList[scheduleList.length-1]["outDebt"]=0;
             //console.log(scheduleList);
-
-
-
-
         
-
             let rowSt='';
 
         
