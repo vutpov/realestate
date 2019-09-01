@@ -44,7 +44,7 @@
                     href="/contact-us">Contact Us</a>
 
                 <a style="font-size:1.3rem; margin-left:3.5rem;@yield('search')" class="nav-item nav-link"
-                    href="/explore">Explore</a>
+                    href="/explores">Explore</a>
             </div>
         </div>
 
