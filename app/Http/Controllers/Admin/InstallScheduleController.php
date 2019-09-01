@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\InstallSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,12 +16,41 @@ class InstallScheduleController extends Controller
      */
     public function index()
     {
-        $schedule = DB::table('install_schedules')
-            ->select();
 
+
+
+
+
+        $schedule = DB::table('install_schedules as i')
+            ->join('contracts as c', 'c.contractId', '=', 'i.contractId')
+            ->join('customers as cus', 'cus.customerId', '=', 'c.customerId')
+            ->select(
+                DB::raw(
+                    'i.contractId,
+                    i.created_at as created_at,
+                    name,
+                    getInstallmentPercent(i.contractId) as completion,
+                    summeriseScheduleStatus(i.contractId) as status'
+                )
+            )
+            ->groupBy('i.contractId', 'i.contractId', 'created_at', 'name', 'status')
+            ->get();
+
+
+
+
+        $data = [
+            'schedule' => $schedule
+        ];
 
 
         return View("admin.schedule.index", $data);
+    }
+
+
+    public function test()
+    {
+        return View("admin.schedule.test");
     }
 
     /**
@@ -40,7 +71,29 @@ class InstallScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $allRow = [];
+        foreach ($request->scheduleList as $rowJson) {
+            $row = json_decode($rowJson, true);
+
+            $temp["amountToPay"] = $row["amountToPay"];
+            $temp["principle"] = $row["principle"];
+            $temp["interest"] = $row["interest"];
+            $temp["outPrinciple"] = $row["outPrinciple"];
+            $temp["outDebt"] = $row["outDebt"];
+            $temp["receive"] = 0;
+            $temp["penalty"] = 0;
+            $temp["status"] = 1;
+            $temp["created_at"] = now();
+            $temp["payDate"] = $row["payDate"];
+            $temp["contractId"] = 1; //for testing
+            array_push($allRow, $temp);
+        };
+
+        InstallSchedule::insert($allRow);
+
+        DB::select('EXEC proc_update_penalty');
+
+        return response()->json(['data' => $request->scheduleList], 200);
     }
 
     /**
@@ -51,7 +104,25 @@ class InstallScheduleController extends Controller
      */
     public function show($id)
     {
-        //
+        $schedule = InstallSchedule::find($id)->get();
+
+        $customer = DB::table('customers as cus')
+            ->join('contracts as c', 'c.customerId', 'cus.customerId')
+            ->select(
+                'name',
+                'contractId'
+            )
+            ->where('contractId', '=', $id)
+            ->get()[0];
+
+
+
+        $data = [
+            'schedule' => $schedule,
+            'customer' => $customer
+        ];
+
+        return View('admin.schedule.view', $data);
     }
 
     /**

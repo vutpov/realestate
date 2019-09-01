@@ -35,3 +35,34 @@ const clearBtnAddData=(elem,data)=>{
 
     
 }
+
+
+
+const roundToTwo=(num)=> {    
+    return +(Math.round(num + "e+2")  + "e-2");
+};
+
+function roundUp(num, precision) {
+    precision = Math.pow(10, precision)
+    return Math.ceil(num * precision) / precision
+}
+
+function roundDown(num, precision) {
+    precision = Math.pow(10, precision)
+    return Math.floor(num * precision) / precision
+}
+
+
+
+
+const paddingDate=(data)=>{
+    return Number(data)<10?`0${data}`:data;
+}
+
+const formatDateYMD=(date)=>{
+    return `${date.getFullYear()}-${paddingDate(date.getMonth()+1)}-${paddingDate(date.getDate())}`;
+}
+
+
+
+

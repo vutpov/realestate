@@ -167,18 +167,20 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
 
     //Schedule
     Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');
+    Route::post('storeSchedule', 'admin\InstallScheduleController@store')->name('storeSchedule');
+    Route::get('showSchedule/{id}', 'admin\InstallScheduleController@show')->name('showSchedule');
+    Route::get('test', 'admin\InstallScheduleController@test')->name('test');
 
 
     //Contract
     Route::get('contract', 'admin\ContractController@index');
     Route::get('createContract', 'admin\ContractController@create');
-    Route::get('schedule', 'admin\ContractController@schedule');
     Route::post('storeContract', 'admin\ContractController@store')->name('storeContract');
-
+    Route::get('editContract/{id}', 'admin\ContractController@edit');
 
     //Book
     Route::get('book', 'admin\BookController@index');
-    Route::get('createBook', 'admin\BookController@create');
+    Route::get('createBook', 'admin\BookController@create')->name('createBook');
     Route::get('getDetailBook/{id}','admin\BookController@getDetailBook');
     Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
     Route::get('editBook/{id}', 'admin\BookController@edit')->name('editBook');

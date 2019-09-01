@@ -25,9 +25,9 @@ class CreateInstallSchedulesTable extends Migration
             $table->double('receive', 15, 2);
             $table->double('penalty', 15, 2);
             $table->String('status');
-
-            $table->unsignedBigInteger('contractId');
-            $table->foreign('contractId')->references('contractId')->on('contracts');
+            $table->date('payDate');
+            $table->unsignedBigInteger('contractId')->nullable();
+            // $table->foreign('contractId')->references('contractId')->on('contracts');
             $table->timestamps();
         });
     }

@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Book;
 use App\BookDetail;
+use App\ContractDetail;
+use App\InstallSchedule;
+use App\Contract;
+use App\Property;
 
 class ContractController extends Controller
 {
@@ -19,7 +23,15 @@ class ContractController extends Controller
      */
     public function index()
     {
-        return View('admin.contract.index');
+        $contracts = Contract::all();
+
+        for($id =0; $id<count($contracts); $id++)
+        {
+            $contracts[$id]['customer'] = Book::find($contracts[$id]->bookId)->customer->name;
+            $contracts[$id]['agency'] = Book::find($contracts[$id]->bookId)->agency->agency;
+        }
+        // dd($contract);
+        return View('admin.contract.index',compact('contracts'));
     }
 
     /**
@@ -29,12 +41,12 @@ class ContractController extends Controller
      */
     public function create()
     {
-        $book = Book::all();
+        $book = Book::where('status',2)->get();
 
         $statement = DB::select("SHOW TABLE STATUS LIKE 'contracts'");
 
         $nextId = $statement[0]->Auto_increment;
-        return View('admin.contract.create',compact('book','nextId'));
+        return View('admin.contract.create', compact('book', 'nextId'));
     }
 
     /**
@@ -45,16 +57,16 @@ class ContractController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'bookId' => 'required',
             'discount' => 'required|numeric',
             'subtotal' => 'required|numeric',
             'deposit' => 'required|numeric',
             'credit' => 'required|numeric',
+            'scheduleList' => 'required'
         ]);
 
-        if($validator->passes())
-        {
+        if ($validator->passes()) {
             $book = Book::find($request->bookId);
 
             DB::table('contracts')->insert([
@@ -69,13 +81,55 @@ class ContractController extends Controller
                 'amount' => $book['credit'],
                 'customerId' => $book['customerId'],
                 'agencyId' => $book['agencyId'],
-                'comission' => $book['comission']
+                'comission' => $book['commission'],
+                'created_at' => now()
             ]);
-            $newContractId = DB::getPdo()->lastInsertId() + 1;
 
-            return response()->json(['message' => ['Added new records.'], 'contractId' => $newContractId], 200);
+            $newContractId = DB::getPdo()->lastInsertId();
+
+            $detail = BookDetail::select('propertyId', 'price', 'discount', 'amount')->where('bookId', $request->bookId)->get();
+
+            $allRow = [];
+            foreach ($detail as $item) {
+                $temp['propertyid'] = $item["propertyId"];
+                $temp['price'] = $item["price"];
+                $temp['discount'] = $item["discount"];
+                $temp['amount'] = $item["amount"];
+                $temp['contractId'] = $newContractId;
+
+                array_push($allRow, $temp);
+            }
+            ContractDetail::insert($allRow);
+
+            Book::where('bookId', $request->bookId)->update(['status' => '3']);
+
+
+            $allRow = [];
+            $temp = [];
+            foreach ($request->scheduleList as $rowJson) {
+                $row = json_decode($rowJson, true);
+
+                $temp["amountToPay"] = $row["amountToPay"];
+                $temp["principle"] = $row["principle"];
+                $temp["interest"] = $row["interest"];
+                $temp["outPrinciple"] = $row["outPrinciple"];
+                $temp["outDebt"] = $row["outDebt"];
+                $temp["receive"] = 0;
+                $temp["penalty"] = 0;
+                $temp["status"] = 1;
+                $temp["created_at"] = now();
+                $temp["payDate"] = $row["payDate"];
+                $temp["contractId"] = $newContractId;
+                array_push($allRow, $temp);
+            };
+
+            InstallSchedule::insert($allRow);
+
+
+
+            return response()->json(['message' => ['Added new record.']], 200);
         }
-        return response()->json(['message' => $validator->errors()->all(),], 403);
+        return response()->json(['message' => $validator->errors()->all(), 'data' => $request->scheduleList], 403);
     }
 
     /**
@@ -97,7 +151,18 @@ class ContractController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contract = Contract::find($id);
+        $contract['customer'] = Contract::find($id)->customer->name;
+        $contract['agency'] = Contract::find($id)->agency->agency;
+
+        $detail = ContractDetail::where('contractId',$id)->get();
+
+        for($id =0; $id<count($detail); $id++)
+        {
+            $property = Property::select('propertyCode')->where('propertyId',$detail[$id]->propertyId)->get();
+            $detail[$id]['propertyCode'] = $property[0]->propertyCode;
+        }
+        return view('admin.contract.edit',compact('contract','detail'));
     }
 
     /**

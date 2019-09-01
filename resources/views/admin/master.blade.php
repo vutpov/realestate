@@ -360,6 +360,10 @@ desired effect
     </div>
 
 
+    @yield('additional-info')
+
+    
+
   </div>
   <!-- /.content-wrapper -->
 
