@@ -17,9 +17,12 @@ Route::group(['prefix' => ''], function () {
     Route::get('', 'front\FrontController@Home');
     Route::get('/contact-us', 'front\FrontController@contact');
     Route::get('/about-us', 'front\FrontController@about');
-    Route::get('/explore', 'front\FrontController@search');
+    // Route::get('/explore', 'front\FrontController@search');
+    Route::get('/explores', 'front\FrontController@addCityDetails');
     Route::get('/show-result', 'front\FrontController@showResult');
-    Route::get('/show-result/show-detail', 'front\FrontController@showDetail');
+    Route::post('/show-result', 'front\FrontController@showResult');
+    Route::get('/show-result/show-detail/{id}', 'front\FrontController@showDetails');
+    Route::post('/show-result/show-detail', 'front\FrontController@showDetail');
 });
 
 
@@ -33,17 +36,17 @@ Route::group(['prefix' => ''], function () {
 
 
 
-Route::group(['prefix' => 'system'], function () {
-    //Create Company
+// Route::group(['prefix' => 'system'], function () {
+//     //Create Company
 
-    Route::post('create-step2', 'auth\LoginController@postCreateStep2')->name("step2");
-    Route::get('create-step2', 'auth\LoginController@CreateStep2');
-    Route::post('', 'auth\LoginController@store');
+//     Route::post('create-step2', 'auth\LoginController@postCreateStep2')->name("step2");
+//     Route::get('create-step2', 'auth\LoginController@CreateStep2');
+//     Route::post('', 'auth\LoginController@store');
 
-    //login
-    Route::get('', 'auth\LoginController@Index')->name("login");
-    Route::post('/login', 'auth\LoginController@login');
-});
+//     //login
+//     Route::get('', 'auth\LoginController@Index')->name("login");
+//     Route::post('/login', 'auth\LoginController@login');
+// });
 
 
 
@@ -73,7 +76,7 @@ Route::group(['prefix' => 'system'], function () {
 Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
 
 
-    //Login 
+    //Login
 
     Route::get('logout', 'auth\LoginController@logout');
 
