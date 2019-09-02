@@ -13,7 +13,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 
 <button type="button" class="btn btn-primary" id="btn-payment">Payment</button>
 
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <div id="modal-wrapper" class="modal">
 
@@ -75,7 +75,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 
         @foreach ($schedule as $item)
 
-        <tr>
+        <tr alt="{{$item->scheduleInstallId}}">
             <td class="first-cell"><input type="checkbox" class="checkSchedule"
                     data-check="{{$item->scheduleInstallId}}"></td>
             <td>{{$loop->iteration}}</td>
@@ -119,7 +119,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 @section('script')
 <script>
     var amountToPay;
-
+    var scheduleInstallId=[];
     $("#btn-payment").click((e)=>{
         e.preventDefault();
        
@@ -141,6 +141,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             return;
         }
         var dataRow=[];
+       
         $("#modal-wrapper").modal();
 
         for(let i=0;i<selectedRow.length;i++){
@@ -165,16 +166,18 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
         }
 
         
-    
+      
       
 
 
         $('#installment-detail').html("");
-
+        
+        scheduleInstallId=[];
         let j=1;
         for(let i=dataRow.length-1;i>=0;i--){
             let stRow='';
-        
+            scheduleInstallId.push($(selectedRow[i]).attr('alt'));
+
             dataRow[i].forEach((col,index)=>{
                 stRow+=col.outerHTML;
             });
@@ -183,7 +186,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             $('#installment-detail').append(stRow);
             j++;
         }
-
+        // console.log(scheduleInstallId);
 
         let summeryValue={};
         summeryValue["interest"]=0;
@@ -274,96 +277,99 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 
     $('#btn-submitPayment').click((e)=>{
         e.preventDefault();
-        let amount = Number($('#amount').val());
-        let rate= Number($('#rate').val())/100;
-        let duration= Number($('#duration').val());
-        let start= $('#start').val();
 
-        //console.log(amount,rate,duration,start);
+        //prepare json data  for master
 
+        let invoiceNum=$('#invoice-code').html();
 
-        let amountToPay = roundToTwo((rate*amount) / ( 1- ( Math.pow( (1+rate) , duration*-1 )) ),2);
+        let tAmount = roundToTwo(
+            Number($('#install-interest').html())
+            +Number($('#install-principle').html())
+            +Number($('#install-penalty').html())
+            );
 
-        let dateStart = new Date(start);
+        let inDiscount=$('#install-invoice-discount').val();
 
-        let oldOutDebt = roundToTwo(amountToPay * duration,2);
+        let tItemDiscount=$('#install-item-discount').html();
+        
+        let total = $('#install-total').html();
 
-        let interest = roundToTwo(amount * rate);
+        let customerId = {{$customer->customerId}};
 
-        let principle = roundToTwo(amountToPay -interest);
+        //end prepare json data for master
+        
 
-        let outPrinciple =roundToTwo(amount - principle);
-    
-        console.log(amount,oldOutDebt);
+        //prepre json data for detail
 
-        let newOutDebt=oldOutDebt-amountToPay;
+        let detailList=[];
 
-        let oldOutPrinciple;
+        let detailPrice,detailItemDiscount,detailAmount,detailPenalty,detailAbstractId,detailType;
 
-        let scheduleList=[];
-
-       
-
-        let remainPrecisionPayment;
-
-        for(let i = 1;i<=duration;i++){
-            let schedule={};
-            schedule['dateStart']=formatDateYMD(dateStart);
-            schedule['interest']=interest;
-            schedule['principle']=principle;
-            schedule['amountToPay']=amountToPay;
-            schedule['outPrinciple']=outPrinciple;
-            schedule['outDebt']=newOutDebt;
-            //console.log(i,formatDateYMD(dateStart),interest,principle,amountToPay,outPrinciple,newOutDebt);
-            
-            scheduleList.push(schedule);
-            
-
-            dateStart.setMonth(dateStart.getMonth()+1);
-            interest= roundToTwo(outPrinciple*rate,2);
-            principle= roundToTwo(amountToPay -interest,2);
-           
-            outPrinciple = roundToTwo(outPrinciple-principle,2);
-            newOutDebt=  roundToTwo((newOutDebt-amountToPay),2);
-        }   
+        let allRow=$('#installment-detail tr');
 
 
-        scheduleList[scheduleList.length-1]["outPrinciple"]=0;
-        scheduleList[scheduleList.length-1]["outDebt"]=0;
-        console.log(scheduleList);
+        $.each(allRow,(i,row)=>{
+            let allCell= $(row).children().toArray();
 
-        let rowSt='';
+            detailPrice=$(allCell[4]).html();
 
-       
-        scheduleList.forEach((value,index)=>{
-            rowSt+=`<tr>`
+            let inputDiscount=$(row).find(".discount-detail");
+            detailItemDiscount= $(inputDiscount).val();
+            detailAmount=$(allCell[7]).html();
+            detailPenalty=$(allCell[5]).html();
 
-            rowSt+=`<td>${index+1}</td>`
-            
-            
-
-            for(column in value){
-                rowSt+=`<td>${value[column]}</td>`
-            }
-            rowSt+=`</tr>` 
+            detailList.push({
+                "price": detailPrice,
+                "itemDiscount": detailItemDiscount,
+                "amount": detailAmount,
+                "penalty": detailPenalty,
+                'abstractId':scheduleInstallId[i],
+            });
         });
 
-        $('#schedule tbody').html('');
-        $('#schedule tbody').html(rowSt);
-        
+
+
+
+        //console.log(detailList);
+
         // return;
+        
 
 
-        let arrDataRow=(scheduleList.map(element => {
+
+
+        // console.log(`
+        // invoiceNum:${invoiceNum},
+        // tAmount:${tAmount},
+        // invoiceDiscount:${invoiceDiscount},
+        // tItemDiscount:${tItemDiscount},
+        // total:${total}
+        // customerId:${customerId}`);
+
+       
+
+        let arrDataRow=(detailList.map(element => {
       
             return JSON.stringify(element);
         }));
 
+
+
         let jsonData = {
-            "scheduleList" : arrDataRow
+           
+            invoiceNum,
+            tAmount,
+            inDiscount,
+            tItemDiscount,
+            total,
+            customerId,
+            detail:arrDataRow
+
         };
 
+        console.log(jsonData);
 
+        // return;
 
         $.ajax({      
 
@@ -371,7 +377,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: "POST",
-            url: "{{route('storeSchedule')}}",
+            url: "{{route('storePaymentInstallment')}}",
             dataType: 'json',
             contentType:'application/json',
             data: JSON.stringify(jsonData),

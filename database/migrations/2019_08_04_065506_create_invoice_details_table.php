@@ -15,7 +15,7 @@ class CreateInvoiceDetailsTable extends Migration
     {
         Schema::create('invoice_details', function (Blueprint $table) {
             $table->bigIncrements('invoiceDetailId');
-            $table->tinyInteger('num');
+         
             $table->double('price', 15, 2);
             $table->double('itemDiscount', 15, 2);
             $table->double('amount', 15, 2);
