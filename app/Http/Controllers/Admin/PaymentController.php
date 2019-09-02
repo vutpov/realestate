@@ -38,6 +38,16 @@ class PaymentController extends Controller
         return View('admin.payment.createPaymentInstallment');
     }
 
+
+    public function storePaymentInstallment(Request $request)
+    {
+        
+
+
+        return View('admin.payment.createPaymentInstallment');
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *

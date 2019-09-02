@@ -17,11 +17,12 @@ class CreateInvoicesTable extends Migration
            
             $table->bigIncrements('invoiceId');
 
+            $table->text('invoiceNum');
             $table->String('invoiceType');
             $table->double('tAmount', 15, 2);
-            $table->double('inDiscount', 15, 2);
+            $table->double('inDiscount', 15, 2)->default(0);
             $table->double('subTotal', 15, 2);
-            $table->String('status');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
 
             $table->unsignedSmallInteger('staffId');

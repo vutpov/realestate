@@ -63,6 +63,35 @@ const formatDateYMD=(date)=>{
     return `${date.getFullYear()}-${paddingDate(date.getMonth()+1)}-${paddingDate(date.getDate())}`;
 }
 
+const formatCurrentDate=()=>{
+
+    date=new Date();
+    return `${paddingDate(date.getDate())}/${paddingDate(date.getMonth()+1)}/${date.getFullYear()} ${paddingDate(date.getHours())}:${paddingDate(date.getMinutes())}`;
+}
+
+const generateRandom=()=>{
+    
+    let date=new Date();
+
+    let prefix= Math.round((Math.random(0,99)*100))+"";
+
+    let suffix= date.getTime().toString().substring(0,6);
+
+    return prefix+suffix;   
+}
+
+const convertToJson=(arrKey,arrValue)=>{
+
+    let json='';
+
+    for(let i=0;i<length(arrKey);i++){
+        json+=`"${arrKey[i]}":"${arrValue[i]}",`;
+    }
+
+    return `{${json}}`;
+
+}
+
 
 
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Auth;
 use App\Http\Controllers\Controller;
+use App\Staffs;
+use App\Company;
 use App\InstallSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -104,24 +107,37 @@ class InstallScheduleController extends Controller
      */
     public function show($id)
     {
-        $schedule = InstallSchedule::find($id)->get();
+
+
+
+        $schedule = DB::select(
+            DB::raw("select *,amountToPay+penalty as total from install_schedules where contractId=$id;")
+        );
+
+
 
         $customer = DB::table('customers as cus')
             ->join('contracts as c', 'c.customerId', 'cus.customerId')
             ->select(
-                'name',
+                'cus.*',
                 'contractId'
             )
             ->where('contractId', '=', $id)
             ->get()[0];
 
 
+        $company = DB::table('companies')
+            ->select('*')
+            ->get()[0];
+
+        $staff = Staffs::where('staffId', Auth::user()->staffId)->get()[0];
 
         $data = [
             'schedule' => $schedule,
-            'customer' => $customer
+            'customer' => $customer,
+            'staff' => $staff,
+            'company' => $company
         ];
-
         return View('admin.schedule.view', $data);
     }
 

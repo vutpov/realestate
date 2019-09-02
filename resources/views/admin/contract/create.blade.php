@@ -189,7 +189,7 @@
 
 
 <!-- Modal HTML embedded directly into document -->
-<div id="scheule-wrapper" class="modal">
+<div id="modal-wrapper" class="modal">
 
 
     <!-- Detail Header -->
@@ -326,10 +326,10 @@
                 console.log(data);
                 var date = new Date().toLocaleDateString();
                 var deadline = new Date(data.book.deadline).toLocaleDateString();
-                if(deadline < date){
-                    renderMessage($('.show-message'),'error',['Deadline is already expired.']);
-                    return;
-                }
+                // if(deadline < date){
+                //     renderMessage($('.show-message'),'error',['Deadline is already expired.']);
+                //     return;
+                // }
                     
                 $('#agency').val(data.book.agency);
                 $('#customer').val(data.book.customer);
@@ -430,7 +430,7 @@
 
         $("#btn-schedule").click((e)=>{
             e.preventDefault();
-            $("#scheule-wrapper").modal();
+            $("#modal-wrapper").modal();
 
             $("#amountSchedule").val($('#credit').val());
         });

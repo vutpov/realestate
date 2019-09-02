@@ -152,7 +152,7 @@ class PropertyController extends Controller
 
             DB::table('properties')->insert([
                 'projectId' => $request->project,
-                'propertyCode' => rand(0, 99) . substr(time() . '', 6),
+                'propertyCode' => rand(0, 99) . substr(time() . '', 8),
                 'description' => $request->description,
                 'no' => $request->no,
                 'st' => $request->st,

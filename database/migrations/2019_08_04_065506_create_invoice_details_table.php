@@ -19,13 +19,13 @@ class CreateInvoiceDetailsTable extends Migration
             $table->double('price', 15, 2);
             $table->double('itemDiscount', 15, 2);
             $table->double('amount', 15, 2);
+            $table->double('penalty', 15, 2);
 
             $table->bigInteger('abstractId');
-            $table->bigInteger('scheduleInstallId');
+            $table->text('type');
 
             $table->unsignedBigInteger('invoiceID');
             $table->foreign('invoiceID')->references('invoiceID')->on('invoices');
-
         });
     }
 
