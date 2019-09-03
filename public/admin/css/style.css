@@ -253,9 +253,16 @@ label[class="my-switch"] input[type="checkbox"]+.my-slider {
     background: #ff6659;
 }
 
+#installment-detail .red-background {
+    background: #870000 !important;
+    color: white;
+}
+
 .dark-red-background {
     background: #870000;
 }
+
+
 
 
 .yellow-background {

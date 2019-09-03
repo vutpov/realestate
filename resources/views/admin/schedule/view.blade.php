@@ -120,8 +120,12 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 <script>
     var amountToPay;
     var scheduleInstallId=[];
+
     $("#btn-payment").click((e)=>{
         e.preventDefault();
+        
+
+
        
 
         $("#invoice-code").html(generateRandom());
@@ -147,8 +151,6 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
         for(let i=0;i<selectedRow.length;i++){
             let col=$(selectedRow[i]).children().toArray();
             
-
-
             let discountHtml=document.createElement('td');
             
             
@@ -225,10 +227,37 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
     $('#installment-detail').keyup(e=>{
         if(e.target.classList=='discount-detail'){
             changeItemDiscount();
-
+            changeSubTotalDetail(e);
             getResultSummary();
         }
     });
+
+    const changeSubTotalDetail=(e)=>{
+        let currentRow=$(e.target).parents('tr')[0];
+        let childrenCell=Array.from($(currentRow).children());
+
+        let amountToPay=Number($(childrenCell[4]).html());
+        let penalty=Number($(childrenCell[5]).html());
+        let discount=Number($(currentRow).find('.discount-detail').val());
+
+        
+        let subTotal=amountToPay+penalty-discount;
+
+        console.log(amountToPay,penalty,discount,subTotal);
+        $(childrenCell[7]).html(subTotal);
+
+        if(subTotal<=0){
+            $(currentRow).addClass('red-background');
+            return;
+        }
+
+        $(currentRow).removeClass('red-background');
+       
+
+
+    }
+
+
 
 
     const getResultSummary=()=>{
@@ -238,8 +267,8 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
         let totalDiscount = roundToTwo(Number(itemDiscount) + Number(invoiceDiscount));
         let total = roundToTwo(amountToPay - totalDiscount);
         
-        console.log(`itemDiscout ${itemDiscount}`, `invoiceDiscount ${invoiceDiscount}`);
-        console.log($('#install-invoice-discount'));
+        // console.log(`itemDiscout ${itemDiscount}`, `invoiceDiscount ${invoiceDiscount}`);
+        // console.log($('#install-invoice-discount'));
  
         $('#install-total-discount').html(totalDiscount);
         $('#install-total').html(total);
@@ -277,6 +306,14 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 
     $('#btn-submitPayment').click((e)=>{
         e.preventDefault();
+        
+        let errorRow=document.querySelectorAll('tr.red-background').length;
+        console.log(errorRow);
+
+        if(errorRow>0){
+            alert("Please fix all mistake(s)");
+            return;
+        }
 
         //prepare json data  for master
 
@@ -303,7 +340,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 
         let detailList=[];
 
-        let detailPrice,detailItemDiscount,detailAmount,detailPenalty,detailAbstractId,detailType;
+        let detailPrice,detailItemDiscount,detailAmount,detailPenalty,detailAbstractId,detailRecieve;
 
         let allRow=$('#installment-detail tr');
 
@@ -317,7 +354,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             detailItemDiscount= $(inputDiscount).val();
             detailAmount=$(allCell[7]).html();
             detailPenalty=$(allCell[5]).html();
-
+           
             detailList.push({
                 "price": detailPrice,
                 "itemDiscount": detailItemDiscount,
@@ -363,7 +400,8 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             tItemDiscount,
             total,
             customerId,
-            detail:arrDataRow
+            detail:arrDataRow,
+            contractId : {{$customer->contractId}}
 
         };
 
