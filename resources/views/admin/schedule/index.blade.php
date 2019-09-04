@@ -38,9 +38,13 @@
                 @endif
             </td>
             <td>{{$item->completion}}%</td>
-            <td><a href="{{route("showSchedule",['id'=>$item->contractId])}}"><i class="fas fa-search"></i></a>
 
-
+            @if($item->status==0)
+            <td><a href="{{route("paymentSchedule",['id'=>$item->contractId])}}"><i class="fas fa-dollar-sign"></i></a>
+            </td>
+            @else
+            <td><a href="{{route("showSchedule",['id'=>$item->contractId])}}"><i class="fas fa-search"></i></a></td>
+            @endif
         </tr>
         @endforeach
 

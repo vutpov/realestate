@@ -169,7 +169,8 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Schedule
     Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');
     Route::post('storeSchedule', 'admin\InstallScheduleController@store')->name('storeSchedule');
-    Route::get('showSchedule/{id}', 'admin\InstallScheduleController@show')->name('showSchedule');
+    Route::get('paymentSchedule/{id}', 'admin\InstallScheduleController@paymentSchedule')->name('paymentSchedule');
+    Route::get('show/{id}', 'admin\InstallScheduleController@show')->name('showSchedule');
     Route::get('test', 'admin\InstallScheduleController@test')->name('test');
 
 
@@ -182,7 +183,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Book
     Route::get('book', 'admin\BookController@index');
     Route::get('createBook', 'admin\BookController@create')->name('createBook');
-    Route::get('getDetailBook/{id}','admin\BookController@getDetailBook');
+    Route::get('getDetailBook/{id}', 'admin\BookController@getDetailBook');
     Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
     Route::get('editBook/{id}', 'admin\BookController@edit')->name('editBook');
 

@@ -105,7 +105,7 @@ class PaymentController extends Controller
                 InstallSchedule::where('scheduleInstallId', $row["abstractId"])
                     ->update([
                         'status' => 2,
-
+                        'receive' => $row["receive"]
 
                     ]);
 
@@ -140,7 +140,7 @@ class PaymentController extends Controller
                     ->update(['status' => 5]);
             } else { }
 
-
+            
             return response()->json(['message' => ['Added new payment.'], 'data' => $status], 200);
         }
 

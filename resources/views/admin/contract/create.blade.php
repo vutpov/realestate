@@ -486,7 +486,7 @@
 
                 dateStart.setMonth(dateStart.getMonth()+1);
                 interest= roundToTwo(outPrinciple*rate,2);
-                principle= roundToTwo(amountToPay -interest,2);
+                principle= roundToTwo(amountToPay - interest,2);
             
                 outPrinciple = roundToTwo(outPrinciple-principle,2);
                 newOutDebt=  roundToTwo((newOutDebt-amountToPay),2);
