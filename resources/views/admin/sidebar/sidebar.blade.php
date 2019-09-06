@@ -185,6 +185,24 @@
         </ul>
       </li>
 
+      <li class="treeview">
+        <a href="#"><i class="fa fa-address-card"></i><span>Address</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{url('system/cities')}}">Add New Cities</a></li>
+          <li><a href="{{url('/system/addcities') }}">View All Cities</a></li>
+          
+          <li><a href="{{url('system/addstateprovince')}}">Add New StateProvince</a></li>
+          <li><a href="{{url('/system/viewstatprovince') }}">View All StateProvince</a></li>
+
+          <li><a href="{{url('system/addlocation')}}">Add New LocationInfo</a></li>
+          <li><a href="{{url('/system/viewlocation') }}">View All LocationInfo</a></li>
+        </ul>
+      </li>
+
     </ul>
     <!-- /.sidebar-menu -->
   </section>
