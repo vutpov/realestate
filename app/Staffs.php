@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Staffs extends Model
 {
+    protected $primaryKey = 'staffId';
     protected $fillable = ['name', 'gender', 'dob', 'address', 'phone', 'email', 'profile', 'positionId'];
 
     public function position()
@@ -15,7 +16,7 @@ class Staffs extends Model
 
     public function user()
     {
-       
+
         return $this->hasOne('App\User', 'staffId', 'staffId');
     }
 }

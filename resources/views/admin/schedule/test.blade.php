@@ -116,13 +116,13 @@
 
         let interest = roundToTwo(amount * rate);
 
-        let principle = roundToTwo(amountToPay -interest);
+        let principle = roundToTwo(amountToPay -interest,2);
 
-        let outPrinciple =roundToTwo(amount - principle);
+        let outPrinciple =roundToTwo(amount - principle,2);
     
-        console.log(amount,oldOutDebt);
+        //console.log(amount,oldOutDebt);
 
-        let newOutDebt=oldOutDebt-amountToPay;
+        let newOutDebt=roundToTwo(oldOutDebt-amountToPay,2);
 
         let oldOutPrinciple;
 
@@ -140,7 +140,7 @@
             schedule['amountToPay']=amountToPay;
             schedule['outPrinciple']=outPrinciple;
             schedule['outDebt']=newOutDebt;
-            //console.log(i,formatDateYMD(dateStart),interest,principle,amountToPay,outPrinciple,newOutDebt);
+            console.log(i,formatDateYMD(dateStart),interest,principle,amountToPay,outPrinciple,newOutDebt);
             
             scheduleList.push(schedule);
             

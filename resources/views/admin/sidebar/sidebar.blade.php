@@ -9,7 +9,9 @@
         <img src="{{asset("admin/dist/img/avatar.png")}}" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p>Alexander Pierce</p>
+
+
+        <p>{{Auth::User()->currentStaff()->name}}</p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
@@ -194,7 +196,7 @@
         <ul class="treeview-menu">
           <li><a href="{{url('system/cities')}}">Add New Cities</a></li>
           <li><a href="{{url('/system/addcities') }}">View All Cities</a></li>
-          
+
           <li><a href="{{url('system/addstateprovince')}}">Add New StateProvince</a></li>
           <li><a href="{{url('/system/viewstatprovince') }}">View All StateProvince</a></li>
 

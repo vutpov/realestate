@@ -43,7 +43,7 @@
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
             <b>Invoice: <span id="invoice-code"></span></b><br>
-            <b>Contract Id:</b> {{$customer->contractId}}
+            <b>Contract Id:</b> <span id="contract-Id"></span></b><br>  {{$customer->contractId}}
             <br>
 
             <b>Staff:</b> {{$staff->name}}

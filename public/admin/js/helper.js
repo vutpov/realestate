@@ -42,12 +42,12 @@ const roundToTwo=(num)=> {
     return +(Math.round(num + "e+2")  + "e-2");
 };
 
-function roundUp(num, precision) {
+function roundUp(num, precision=2) {
     precision = Math.pow(10, precision)
     return Math.ceil(num * precision) / precision
 }
 
-function roundDown(num, precision) {
+function roundDown(num, precision=2) {
     precision = Math.pow(10, precision)
     return Math.floor(num * precision) / precision
 }

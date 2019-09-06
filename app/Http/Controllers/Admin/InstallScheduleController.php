@@ -118,8 +118,6 @@ class InstallScheduleController extends Controller
 
     function getScedule($id)
     {
-
-
         $schedule = DB::select(
             DB::raw("select 
             i.*,

@@ -12,6 +12,7 @@ use App\InstallSchedule;
 use App\Contract;
 use App\Property;
 use App\Invoice;
+use App\Company;
 
 class PaymentController extends Controller
 {
@@ -36,11 +37,10 @@ class PaymentController extends Controller
 
 
         $data = ['invoice' => $invoice];
-
-
-
         return View('admin.payment.index', $data);
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -62,6 +62,64 @@ class PaymentController extends Controller
     }
 
 
+
+
+    public function storeFirstDeposit(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'invoiceNum' => 'required',
+            'invoiceType' => 'required|numeric',
+            'tAmount' =>  'required|numeric',
+            'tItemDiscount' => 'required|numeric',
+            'total' => 'required|numeric',
+            'customerId' => 'required',
+            'detail' => 'required',
+            'invoiceType' => 'required'
+        ]);
+
+
+        if ($validator->passes()) {
+
+            DB::table('invoices')->insert([
+                'invoiceNum' =>  $request->invoiceNum,
+                'tAmount' =>  $request->tAmount,
+                'inDiscount' =>  $request->inDiscount,
+                'tItemDiscount' => $request->tItemDiscount,
+                'total' => $request->total,
+                'customerId' => $request->customerId,
+                'invoiceType' => $request->invoiceType,
+                'created_at' => now(),
+                'staffId' => Auth::user()->staffId,
+            ]);
+
+            $newId = DB::getPdo()->lastInsertId();
+
+
+            $detail = [];
+
+            foreach ($request->detail as $rowJson) {
+                $row = json_decode($rowJson, true);
+                $temp["invoiceID"] = $newId;
+                $temp["price"] = $row["price"];
+                $temp["itemDiscount"] = $row["itemDiscount"];
+                $temp["amount"] = $row["amount"];
+                $temp["penalty"] = $row["penalty"];
+                $temp["abstractId"] = $row["abstractId"];
+                $temp["type"] = $request->invoiceType;
+                array_push($detail, $temp);
+            };
+
+
+            InvoiceDetail::insert($detail);
+
+
+
+
+            return response()->json(['message' => ['Added new payment.'], 'data' => ''], 200);
+        }
+    }
+
     public function storePaymentInstallment(Request $request)
     {
 
@@ -72,6 +130,8 @@ class PaymentController extends Controller
         // total,
         // customerId,
         // staffId
+
+
 
 
         $validator = Validator::make($request->all(), [
@@ -163,6 +223,69 @@ class PaymentController extends Controller
         }
 
         return response()->json(['message' => $validator->errors()->all(), 'errorCode' => true, 'data' => 'fail'], 403);
+    }
+
+    public function viewPaymentInstallment($id)
+    {
+
+        $invoice = Invoice::find($id);
+
+        $customer = $invoice->customer;
+
+        $staff = $invoice->staff;
+
+        $invoice['detail'] = DB::table('invoice_details as i')
+            ->select(
+                'payDate',
+                'interest',
+                'principle',
+                'amountToPay',
+                'i.penalty',
+                'contractId',
+                'itemDiscount',
+                'amount'
+            )
+            ->join('install_schedules as s', 's.scheduleInstallId', 'i.abstractId')
+            ->where('invoiceId', '=', $invoice->invoiceId)
+            ->where('type', '=', 'installment')
+            ->get();
+
+        $contractId = $invoice['detail'][0]->contractId;
+        $summary = DB::table('install_schedules as s')
+            ->select(
+                DB::raw(
+                    'SUM(interest) as interest,
+                    SUM(principle) as principle,
+                    SUM(i.penalty) as penalty,
+                    tItemDiscount,
+                    inDiscount,
+                    total
+                '
+                )
+            )
+            ->join('invoice_details as i', 'i.abstractid', 's.scheduleInstallId')
+            ->join('invoices as inv', 'inv.invoiceId', 'i.invoiceId')
+            ->where('contractId', '=', $contractId)
+            ->get()[0];
+
+
+        $company = Company::first()->get()[0];
+
+
+
+
+
+
+
+        $data = [
+            'invoice' => $invoice,
+            'company' => $company,
+            'customer' => $customer,
+            'staff' => $staff,
+            'contractId' => $contractId,
+            'summary' => $summary
+        ];
+        return View('admin.payment.payment-installment', $data);
     }
 
 

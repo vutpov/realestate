@@ -59,7 +59,7 @@
 
                     <tr>
                         <th>Invoice Discount:</th>
-                        <td><input type="text" class="form-control" name="amount"
+                        <td id="install-invoide-discount-wrapper"><input type="text" class="form-control" name="amount"
                                 placeholder="Invoice Discount" id="install-invoice-discount" value="0" /></td>
                     </tr>
 

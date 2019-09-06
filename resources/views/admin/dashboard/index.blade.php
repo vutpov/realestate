@@ -5,6 +5,7 @@
 
 @section('col','col-md-12')
 
+@section('display-detail','display:none')
 
 @section('content')
 

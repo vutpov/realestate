@@ -96,7 +96,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             <td>{{$item->penalty}}</td>
             <td>{{$item->total}}</td>
             <td>{{$item->cusPayDate}}</td>
-           
+
 
             <td>
                 @if($item->status==1)

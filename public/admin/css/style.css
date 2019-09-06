@@ -360,3 +360,9 @@ table.has-action tr td:last-child {
 .summary-invoice td {
     width: 25vw;
 }
+
+.user-panel>.info {
+
+    position: relative;
+    left: 0;
+}

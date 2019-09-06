@@ -65,8 +65,9 @@
                 Void
                 @endif
             </td>
-            <td><a href="{{url('/system/editUser')}}"><i class="fa fa-edit"></i></a>
-                <a href="{{url('/system/editUser')}}"><i class="fa fa-trash"></i></a></td>
+            <td><a href="{{route('viewPaymentInstallment',['id'=>$item->invoiceId])}}"><i class="fas fa-search"></i></a>
+            </td>
+
         </tr>
         @endforeach
 

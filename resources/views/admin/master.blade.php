@@ -245,7 +245,7 @@ desired effect
 
 
 
-            <span class="hidden-xs">Alexandar Pierce</span>
+            <span class="hidden-xs">{{Auth::User()->currentStaff()->name}}</span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
@@ -253,13 +253,13 @@ desired effect
               <img src="{{asset("admin/dist/img/avatar.png")}}" class="img-circle" alt="User Image">
 
               <p>
-                Alexandar Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                {{Auth::User()->currentStaff()->name}} - {{Auth::User()->currentRole()->role}}
+
               </p>
             </li>
             <!-- Menu Body -->
             <li class="user-body">
-              <div class="row">
+              {{-- <div class="row">
                 <div class="col-xs-4 text-center">
                   <a href="#">Followers</a>
                 </div>
@@ -270,12 +270,13 @@ desired effect
                   <a href="#">Friends</a>
                 </div>
               </div>
-              <!-- /.row -->
+              <!-- /.row --> --}}
             </li>
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <a href="{{route('showStaff',['id'=>Auth::User()->staffId])}}"
+                  class="btn btn-default btn-flat">Profile</a>
               </div>
               <div class="pull-right">
                 <a href="{{url('/system/logout')}}" class="btn btn-default btn-flat">Sign out</a>
@@ -362,7 +363,7 @@ desired effect
 
     @yield('additional-info')
 
-    
+
 
   </div>
   <!-- /.content-wrapper -->
