@@ -38,7 +38,7 @@ class PartnerTypeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'type' => 'required'
+            'type' => 'required|unique:partner_types,partnerType'
         ]);
 
         $partnerType = new PartnerType;

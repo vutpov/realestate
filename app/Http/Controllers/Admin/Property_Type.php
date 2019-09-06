@@ -14,9 +14,26 @@ class Property_Type extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($getTrash = false)
     {
-        return view('admin.propertyType.index');
+        if($getTrash){
+            $check = "checked";
+            $propTypes = PropertyType::all();
+            $data = [
+                'check' => $check,
+                'propTypes' => $propTypes 
+            ];
+            return view('admin.propertyType.index', $data);
+        }else{
+            $check = '';
+            $propTypes = PropertyType::where('status', '<>', '-1')->get();
+            $data = [
+                'check' => $check,
+                'propTypes' => $propTypes 
+            ];
+            return view('admin.propertyType.index', $data);
+        }
+        
     }
 
     /**
@@ -38,8 +55,9 @@ class Property_Type extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'propertyType' => 'required'
+            'propertyType' => 'required|unique:property_types,propertyType'
         ]);
+        
 
         $propType = new PropertyType;
         $propType->propertyType = $request->propertyType;
@@ -65,7 +83,11 @@ class Property_Type extends Controller
      */
     public function edit($id)
     {
-        //
+        $propTypes = PropertyType::where('propertyTypeId', $id)->first();
+        $data = [
+            'propTypes' => $propTypes 
+        ];  
+        return view('admin.propertyType.edit', $data);
     }
 
     /**
@@ -77,7 +99,12 @@ class Property_Type extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'propertyType' => 'required|unique:property_types,propertyType'
+        ]);
+
+        PropertyType::where('propertyTypeId', $id)->update(['propertyType' => $request->propertyType]);
+        return redirect('/system/PropTypes');
     }
 
     /**
@@ -90,4 +117,12 @@ class Property_Type extends Controller
     {
         //
     }
+
+    public function setStatus($id, $status){
+        $st = $status == 'trash' ? -1 : 1;
+        PropertyType::where('propertyTypeId', $id)->update(['status' => $st]);
+        return redirect()->back();
+    }
+
+
 }

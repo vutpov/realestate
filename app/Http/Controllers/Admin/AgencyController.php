@@ -118,10 +118,10 @@ class AgencyController extends Controller
     public function validateAgency($request)
     {
         $attributes = request()->validate([
-            'agency' => 'required|min:5|max:30',
-            'phone' => 'required|min:9|max:30',
+            'agency' => 'required|min:5|max:30|unique:agencies',
+            'phone' => 'required|min:9|max:30|unique:agencies',
             'email' => ['required', 'min:12', 'max:30', 'unique:agencies'],
-            'address' => 'required|min:10:max:191',
+            'address' => 'required|min:10:max:191|unique:agencies',
             'agencyTypeId' => 'required'
         ]);
 

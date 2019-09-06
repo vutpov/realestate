@@ -17,9 +17,12 @@ Route::group(['prefix' => ''], function () {
     Route::get('', 'front\FrontController@Home');
     Route::get('/contact-us', 'front\FrontController@contact');
     Route::get('/about-us', 'front\FrontController@about');
-    Route::get('/explore', 'front\FrontController@search');
+    // Route::get('/explore', 'front\FrontController@search');
+    Route::get('/explores', 'front\FrontController@addCityDetails');
     Route::get('/show-result', 'front\FrontController@showResult');
-    Route::get('/show-result/show-detail', 'front\FrontController@showDetail');
+    Route::post('/show-result', 'front\FrontController@showResult');
+    Route::get('/show-result/show-detail/{id}', 'front\FrontController@showDetails');
+    Route::post('/show-result/show-detail', 'front\FrontController@showDetail');
 });
 
 
@@ -30,6 +33,26 @@ Route::group(['prefix' => ''], function () {
 // Route::get('/system/create-step2','admin\LoginController@CreateStep2');
 
 // Route::post('/system','admin\LoginController@store');
+
+
+
+// Route::group(['prefix' => 'system'], function () {
+//     //Create Company
+
+//     Route::post('create-step2', 'auth\LoginController@postCreateStep2')->name("step2");
+//     Route::get('create-step2', 'auth\LoginController@CreateStep2');
+//     Route::post('', 'auth\LoginController@store');
+
+//     //login
+//     Route::get('', 'auth\LoginController@Index')->name("login");
+//     Route::post('/login', 'auth\LoginController@login');
+// });
+
+
+
+
+
+
 
 
 
@@ -45,15 +68,20 @@ Route::group(['prefix' => 'system'], function () {
     Route::post('/login', 'auth\LoginController@login');
 });
 
+
+
+
+
+
 Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
 
 
-    //Login 
+    //Login
 
     Route::get('logout', 'auth\LoginController@logout');
 
     //Dashboard
-    Route::get('dashboard', 'admin\DashboardController@index');
+    Route::get('dashboard', 'admin\DashboardController@index')->name('dashboard');
 
     //Staff
     Route::get('staff/{trash?}', 'admin\StaffController@index');
@@ -125,26 +153,39 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('/propAttributeStatus/{id}/{status}/', 'admin\Prop_Attribute@setStatus');
 
     //PropertiesTypes
-    Route::get('PropTypes','admin\Property_Type@index');
+    Route::get('PropTypes/{trash?}', 'admin\Property_Type@index');
     Route::get('createPropTypes', 'admin\Property_Type@create');
-    Route::post('storePropTypes','admin\Property_Type@store');
+    Route::post('storePropTypes', 'admin\Property_Type@store');
+    Route::get('editPropTypes/{id}', 'admin\Property_Type@edit');
+    Route::post('updatePropTypes/{id}', 'admin\Property_Type@update');
+    Route::get('PropTypesStatus/{id}/{status}', 'admin\Property_Type@setStatus');
 
     //Payment
     Route::get('payment', 'admin\PaymentController@index');
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
+    Route::post('storePaymentInstallment', 'admin\PaymentController@storePaymentInstallment')->name('storePaymentInstallment');
 
+    //Schedule
+    Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');
+    Route::post('storeSchedule', 'admin\InstallScheduleController@store')->name('storeSchedule');
+    Route::get('paymentSchedule/{id}', 'admin\InstallScheduleController@paymentSchedule')->name('paymentSchedule');
+    Route::get('show/{id}', 'admin\InstallScheduleController@show')->name('showSchedule');
+    Route::get('test', 'admin\InstallScheduleController@test')->name('test');
 
 
     //Contract
     Route::get('contract', 'admin\ContractController@index');
     Route::get('createContract', 'admin\ContractController@create');
-    Route::get('schedule', 'admin\ContractController@schedule');
-
+    Route::post('storeContract', 'admin\ContractController@store')->name('storeContract');
+    Route::get('editContract/{id}', 'admin\ContractController@edit');
 
     //Book
     Route::get('book', 'admin\BookController@index');
-    Route::get('createBook', 'admin\BookController@create');
+    Route::get('createBook', 'admin\BookController@create')->name('createBook');
+    Route::get('getDetailBook/{id}', 'admin\BookController@getDetailBook');
+    Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
+    Route::get('editBook/{id}', 'admin\BookController@edit')->name('editBook');
 
     //Project
     Route::get('project', 'admin\ProjectController@index');
@@ -175,4 +216,16 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
      Route::POST('storelocation', 'admin\LocationinfoController@store');
      Route::get('editLocation/{id}', 'admin\LocationinfoController@edit');
      Route::post('updateLocation/{id}', 'admin\LocationinfoController@update');
+
+    Route::post('storeProject/', 'admin\ProjectController@store');
+    Route::get('editProject/{id}', 'admin\ProjectController@edit');
+    Route::post('updateProject/{id}', 'admin\ProjectController@update');
+
+    //Property
+    Route::get('property', 'admin\PropertyController@index');
+    Route::get('createProperty', 'admin\PropertyController@create');
+    Route::post('storeProperty', 'admin\PropertyController@store')->name('storeProperty');
+    Route::get('getAvailableProperty', 'admin\PropertyController@getAvailableProperty')->name('getAvailableProperty');
+    Route::post('propertyImageUpload', 'admin\PropertyController@propertyImageUpload')->name('propertyImageUpload');
+
 });

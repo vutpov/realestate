@@ -26,14 +26,10 @@ class CreateContractsTable extends Migration
             $table->String('status');
             $table->timestamps();
 
-            $table->unsignedSmallInteger('staffId');
-            $table->unsignedBigInteger('customerId');
-            $table->unsignedBigInteger('bookId');
-            $table->unsignedBigInteger('agencyId');
-
-            $table->foreign('staffId')->references('staffId')->on('staffs');
-            $table->foreign('customerId')->references('customerId')->on('customers');
-            $table->foreign('agencyId')->references('agencyId')->on('agencies');
+            $table->unsignedSmallInteger('staffId')->nullable();
+            $table->unsignedBigInteger('customerId')->nullable();
+            $table->unsignedBigInteger('bookId')->nullable();
+            $table->unsignedBigInteger('agencyId')->nullable();
         });
     }
 
