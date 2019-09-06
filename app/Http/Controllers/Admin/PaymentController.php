@@ -11,6 +11,7 @@ use App\InvoiceDetail;
 use App\InstallSchedule;
 use App\Contract;
 use App\Property;
+use App\Invoice;
 
 class PaymentController extends Controller
 {
@@ -21,7 +22,24 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        return View('admin.payment.index');
+        $invoice = DB::table('invoices as i')
+            ->join('customers as c', 'c.customerId', 'i.customerId')
+            ->join('staffs as s', 's.staffId', 'i.staffId')
+            ->select([
+                'i.*',
+                'c.name as customer',
+                's.name as staff'
+            ])
+            ->get();
+
+
+
+
+        $data = ['invoice' => $invoice];
+
+
+
+        return View('admin.payment.index', $data);
     }
 
     /**
@@ -140,7 +158,7 @@ class PaymentController extends Controller
                     ->update(['status' => 5]);
             } else { }
 
-            
+
             return response()->json(['message' => ['Added new payment.'], 'data' => $status], 200);
         }
 
