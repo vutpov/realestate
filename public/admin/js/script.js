@@ -14,11 +14,43 @@ $(function () {
     }
 
     $('.dataTable').DataTable({
-
-        'autoWidth': true
-
-        
+        'autoWidth': true,        
     });
+
+
+    const makeTwoScrolledTable=()=>{
+
+        let dataTableWidth=$('.dataTable tbody').width()+'px';
+        let boxBodyWidth=$('.box-body').width()+'px';
+    
+    
+        let dummy=`<div class="dummy-wrapper">
+                <div class="dummy"></div>
+            </div>`;
+    
+        let twoScrolledWrapper=$('.two-scrolled-wrapper');
+    
+        $(twoScrolledWrapper).prepend(dummy);
+    
+    
+        // console.log(dataTableWidth,boxBodyWidth);
+        $('.dummy').css('width',dataTableWidth);
+        $('.dummy-wrapper').css('width',boxBodyWidth);
+        
+    
+        $(".dummy-wrapper").scroll(function(){
+            $(".table-responsive").scrollLeft($(".dummy-wrapper").scrollLeft());
+        });
+        $(".table-responsive").scroll(function(){
+            $(".dummy-wrapper").scrollLeft($(".table-responsive").scrollLeft());
+        });
+    }
+
+
+
+    makeTwoScrolledTable();
+
+
 
 
 

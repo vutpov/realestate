@@ -6,6 +6,12 @@
 
 @section('content')
 
+
+<div class="two-scrolled-wrapper">
+</div>
+
+
+
 <table class="table table-hover dataTable">
 
 

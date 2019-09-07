@@ -131,7 +131,7 @@
        
 
         let remainPrecisionPayment;
-
+        let tInterest=interest;
         for(let i = 1;i<=duration;i++){
             let schedule={};
             schedule['payDate']=formatDateYMD(dateStart);
@@ -140,7 +140,7 @@
             schedule['amountToPay']=amountToPay;
             schedule['outPrinciple']=outPrinciple;
             schedule['outDebt']=newOutDebt;
-            console.log(i,formatDateYMD(dateStart),interest,principle,amountToPay,outPrinciple,newOutDebt);
+            // console.log(i,formatDateYMD(dateStart),interest,principle,amountToPay,outPrinciple,newOutDebt);
             
             scheduleList.push(schedule);
             
@@ -148,7 +148,7 @@
             dateStart.setMonth(dateStart.getMonth()+1);
             interest= roundToTwo(outPrinciple*rate,2);
             principle= roundToTwo(amountToPay -interest,2);
-           
+            tInterest+=interest;
             outPrinciple = roundToTwo(outPrinciple-principle,2);
             newOutDebt=  roundToTwo((newOutDebt-amountToPay),2);
         }   
@@ -156,7 +156,7 @@
 
         // scheduleList[scheduleList.length-1]["outPrinciple"]=0;
         // scheduleList[scheduleList.length-1]["outDebt"]=0;
-        console.log(scheduleList);
+        console.log(tInterest);
 
 
 
@@ -195,7 +195,7 @@
         };
 
 
-
+        return;
         $.ajax({      
 
             headers: {

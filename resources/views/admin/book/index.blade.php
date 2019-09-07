@@ -8,6 +8,9 @@
 
 
 
+
+
+
 <table class="table table-hover dataTable">
 
     <thead>
@@ -29,24 +32,24 @@
 
         @foreach ($book as $item)
         <?php
-        
-            $rowColor='';
-        
-            switch ($item->lateness) {
-                case 1:
-                    $rowColor='yellow-background';
-                    break;
+                        
+                    $rowColor='';
                 
-                case 0:
-                    $rowColor='red-background ';
-                    break;
+                    switch ($item->lateness) {
+                        case 1:
+                            $rowColor='yellow-background';
+                            break;
+                        
+                        case 0:
+                            $rowColor='red-background ';
+                            break;
+                        
+                        case -1:
+                            $rowColor='dark-red-background white-color';
+                            break;
+                    }
                 
-                case -1:
-                    $rowColor='dark-red-background white-color';
-                    break;
-            }
-       
-        ?>
+                ?>
 
         <tr class="{{$rowColor}}">
             <td>{{$loop->iteration}}</td>
@@ -58,19 +61,19 @@
             <td>{{$item->deadline}}</td>
             <td>
                 <?php
-                    $status;
-                    switch ($item->status) {
-                        case 1:
-                            $status="Pending";
-                            break;
-                        case 2:
-                            $status="Success";
-                            break;
-                        default:
-                            $status="Void";
-                            break;
-                    }
-                ?>
+                            $status;
+                            switch ($item->status) {
+                                case 1:
+                                    $status="Pending";
+                                    break;
+                                case 2:
+                                    $status="Success";
+                                    break;
+                                default:
+                                    $status="Void";
+                                    break;
+                            }
+                        ?>
                 {{$status}}
             </td>
             <td><a href="{{route("editBook",['id'=>$item->bookId])}}"><i class="fas fa-search"></i></a>
@@ -82,6 +85,11 @@
     </tbody>
 
 </table>
+
+
+
+
+
 
 @endsection
 
