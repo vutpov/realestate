@@ -8,15 +8,15 @@
             <thead>
                 <tr>
 
-                    <th scope="col">#</th>
-                    <th scope="col">Paydate</th>
-                    <th scope="col">Interest</th>
-                    <th scope="col">Principle</th>
-                    <th scope="col">Amount To Pay</th>
+                    <th>#</th>
+                    <th class="col-heading-schedule">Paydate</th>
+                    <th class="col-heading-schedule">Interest</th>
+                    <th class="col-heading-schedule">Principle</th>
+                    <th>Amount To Pay</th>
 
-                    <th scope="col">Penalty</th>
-                    <th scope="col">Discount</th>
-                    <th scope="col">Sub Total</th>
+                    <th class="col-heading-schedule">Penalty</th>
+                    <th>Discount</th>
+                    <th>Sub Total</th>
                 </tr>
             </thead>
             <tbody id="installment-detail">
@@ -37,17 +37,17 @@
             <table class="table">
                 <tbody>
 
-                    <tr>
+                    <tr class="summary-schedule">
                         <th>Interest:</th>
                         <td id="install-interest">0</td>
                     </tr>
 
-                    <tr>
+                    <tr class="summary-schedule">
                         <th>Principle:</th>
                         <td id="install-principle">0</td>
                     </tr>
 
-                    <tr>
+                    <tr class="summary-schedule">
                         <th>Penalty:</th>
                         <td id="install-penalty">0</td>
                     </tr>

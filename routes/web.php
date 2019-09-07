@@ -166,6 +166,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
     Route::get('viewPaymentInstallment/{id}', 'admin\PaymentController@viewPaymentInstallment')->name('viewPaymentInstallment');
+    Route::get('viewPaymentContractDeposit/{id}', 'admin\PaymentController@viewPaymentContractDeposit')->name('viewPaymentContractDeposit');
     Route::post('storePaymentInstallment', 'admin\PaymentController@storePaymentInstallment')->name('storePaymentInstallment');
 
     //Schedule

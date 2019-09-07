@@ -52,8 +52,8 @@
             <td>{{$item->customer}}</td>
             <td>{{$item->staff}}</td>
             <td>{{$item->created_at}}</td>
-            <td>{{$item->tAmount}}</td>
             <td>{{$item->invoiceType}}</td>
+            <td>{{$item->tAmount}}</td>
             <td>{{$item->tItemDiscount}}</td>
             <td>{{$item->inDiscount}}</td>
             <td>{{$item->inDiscount + $item->tItemDiscount }}</td>
@@ -65,7 +65,14 @@
                 Void
                 @endif
             </td>
-            <td><a href="{{route('viewPaymentInstallment',['id'=>$item->invoiceId])}}"><i class="fas fa-search"></i></a>
+            <td>
+                @if($item->invoiceType=='Contract deposit')
+                <a href="{{route('viewPaymentContractDeposit',['id'=>$item->invoiceId ,'type'=>'Contract deposit'])}}"><i
+                        class="fas fa-search"></i></a>
+                @elseif($item->invoiceType=='installment')
+                <a href="{{route('viewPaymentInstallment',['id'=>$item->invoiceId ,'type'=>'installment'] )}}"><i
+                        class="fas fa-search"></i></a>
+                @endif
             </td>
 
         </tr>

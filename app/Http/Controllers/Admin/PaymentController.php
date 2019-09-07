@@ -64,72 +64,40 @@ class PaymentController extends Controller
 
 
 
-    public function storeFirstDeposit(Request $request)
+    public static function storeFirstDeposit($data)
     {
 
-        $validator = Validator::make($request->all(), [
-            'invoiceNum' => 'required',
-            'invoiceType' => 'required|numeric',
-            'tAmount' =>  'required|numeric',
-            'tItemDiscount' => 'required|numeric',
-            'total' => 'required|numeric',
-            'customerId' => 'required',
-            'detail' => 'required',
-            'invoiceType' => 'required'
+        DB::table('invoices')->insert([
+            'invoiceNum' => rand(0, 999) . substr(time() . '', 6),
+            'tAmount' =>  $data['tAmount'],
+            'inDiscount' =>  $data['inDiscount'],
+            'tItemDiscount' => $data['tItemDiscount'],
+            'total' => $data['total'],
+            'customerId' => $data['customerId'],
+            'invoiceType' => $data['invoiceType'],
+            'created_at' => now(),
+            'staffId' => Auth::user()->staffId,
         ]);
 
-
-        if ($validator->passes()) {
-
-            DB::table('invoices')->insert([
-                'invoiceNum' =>  $request->invoiceNum,
-                'tAmount' =>  $request->tAmount,
-                'inDiscount' =>  $request->inDiscount,
-                'tItemDiscount' => $request->tItemDiscount,
-                'total' => $request->total,
-                'customerId' => $request->customerId,
-                'invoiceType' => $request->invoiceType,
-                'created_at' => now(),
-                'staffId' => Auth::user()->staffId,
-            ]);
-
-            $newId = DB::getPdo()->lastInsertId();
-
-
-            $detail = [];
-
-            foreach ($request->detail as $rowJson) {
-                $row = json_decode($rowJson, true);
-                $temp["invoiceID"] = $newId;
-                $temp["price"] = $row["price"];
-                $temp["itemDiscount"] = $row["itemDiscount"];
-                $temp["amount"] = $row["amount"];
-                $temp["penalty"] = $row["penalty"];
-                $temp["abstractId"] = $row["abstractId"];
-                $temp["type"] = $request->invoiceType;
-                array_push($detail, $temp);
-            };
-
-
-            InvoiceDetail::insert($detail);
+        $newId = DB::getPdo()->lastInsertId();
 
 
 
+        $temp["invoiceID"] = $newId;
+        $temp["price"] =  $data['tAmount'];
+        $temp["itemDiscount"] = $data['tItemDiscount'];
+        $temp["amount"] = $data['tAmount'];
+        $temp["penalty"] = 0;
+        $temp["abstractId"] = $data["abstractId"];
+        $temp["type"] = $data['invoiceType'];
 
-            return response()->json(['message' => ['Added new payment.'], 'data' => ''], 200);
-        }
+
+
+        InvoiceDetail::insert($temp);
     }
 
     public function storePaymentInstallment(Request $request)
     {
-
-        // invoiceNum,
-        // tAmount,
-        // inDiscount,
-        // tItemDiscount,
-        // total,
-        // customerId,
-        // staffId
 
 
 
@@ -225,6 +193,8 @@ class PaymentController extends Controller
         return response()->json(['message' => $validator->errors()->all(), 'errorCode' => true, 'data' => 'fail'], 403);
     }
 
+
+
     public function viewPaymentInstallment($id)
     {
 
@@ -272,11 +242,6 @@ class PaymentController extends Controller
         $company = Company::first()->get()[0];
 
 
-
-
-
-
-
         $data = [
             'invoice' => $invoice,
             'company' => $company,
@@ -287,6 +252,65 @@ class PaymentController extends Controller
         ];
         return View('admin.payment.payment-installment', $data);
     }
+
+    public function  viewPaymentContractDeposit($id)
+    {
+
+        $invoice = Invoice::find($id);
+
+        $customer = $invoice->customer;
+
+        $staff = $invoice->staff;
+
+        $invoice['detail'] = DB::table('invoice_details as i')
+            ->select(
+                'price',
+
+                'i.penalty',
+                'contractId',
+                'itemDiscount',
+                'i.amount',
+                'contractId',
+                'tItemDiscount',
+                'inDiscount',
+                'total'
+            )
+            ->join('contracts as c', 'c.contractId', 'i.abstractId')
+            ->join('invoices as inv', 'inv.invoiceId', 'i.invoiceId')
+            ->where('inv.invoiceId', '=', $invoice->invoiceId)
+            ->where('type', '=', 'Contract deposit')
+            ->get();
+
+
+        $contractId = $invoice['detail'][0]->contractId;
+
+        $summary = [];
+
+        $summary['price'] =  $invoice['detail'][0]->price;
+        $summary['penalty'] =  $invoice['detail'][0]->penalty;
+        $summary['tItemDiscount'] =  $invoice['detail'][0]->tItemDiscount;
+        $summary['inDiscount'] =  $invoice['detail'][0]->inDiscount;
+        $summary['total'] =  $invoice['detail'][0]->total;
+
+        // dd($summary);
+
+
+        $company = Company::first()->get()[0];
+
+
+        $data = [
+            'invoice' => $invoice,
+            'company' => $company,
+            'customer' => $customer,
+            'staff' => $staff,
+            'contractId' => $contractId,
+            'summary' => $summary
+        ];
+        return View('admin.payment.payment-contract-deposit', $data);
+    }
+
+
+
 
 
     /**

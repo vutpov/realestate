@@ -1,7 +1,7 @@
 @extends('admin.master')
 
 @section('page-header')
-View Invoice For Installment
+View Invoice For Contract Deposit
 @endsection
 
 @section('col','col-md-12')
@@ -32,19 +32,17 @@ View Invoice For Installment
 
     $('#contract-Id').html("{{$contractId}}");
 
-
     
+    $(".col-heading-schedule").remove();
+    $(".summary-schedule").remove();
   
     $detail ={!!$invoice->detail!!};
     let dataRow='';
     $detail.forEach((element,index) => {
         let row='';
         row+=`<td>${index+1}</td>
-            <td>${element['payDate']}</td>
-            <td>${element['interest']}</td>
-            <td>${element['principle']}</td>
-            <td>${element['amountToPay']}</td>
-            <td>${element['penalty']}</td>
+            <td>${element['amount']}</td>
+          
             <td>${element['itemDiscount']}</td>
             <td>${element['amount']}</td>
         `;
@@ -52,18 +50,20 @@ View Invoice For Installment
     });
 
 
+
+
     $('#installment-detail').html(dataRow);
     
     $('#install-invoide-discount-wrapper input').remove();
 
-    $('#install-penalty').html('{{ $summary->penalty }}')
+    $('#install-penalty').html("{{ $summary['penalty'] }}");
 
-    $('#install-invoide-discount-wrapper').html('{{ $summary->inDiscount }}');
-    $('#install-interest').html('{{ $summary->interest }}');
-    $('#install-principle').html('{{ $summary->principle }}');
-    $('#install-item-discount').html(' {{$summary->tItemDiscount}} ');
-    $('#install-total-discount').html(' {{ $summary->tItemDiscount + $summary->inDiscount }} ');
-    $('#install-total').html('{{ $summary->total }}');
+    $('#install-invoide-discount-wrapper').html("{{ $summary['inDiscount'] }}");
+ 
+
+    $('#install-item-discount').html("{{$summary['tItemDiscount']}} ");
+    $('#install-total-discount').html("{{ $summary['tItemDiscount'] + $summary['inDiscount'] }}" );
+    $('#install-total').html("{{ $summary['total'] }}");
     
     
 </script>

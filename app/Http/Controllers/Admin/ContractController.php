@@ -25,13 +25,12 @@ class ContractController extends Controller
     {
         $contracts = Contract::all();
 
-        for($id =0; $id<count($contracts); $id++)
-        {
+        for ($id = 0; $id < count($contracts); $id++) {
             $contracts[$id]['customer'] = Book::find($contracts[$id]->bookId)->customer->name;
             $contracts[$id]['agency'] = Book::find($contracts[$id]->bookId)->agency->agency;
         }
         // dd($contract);
-        return View('admin.contract.index',compact('contracts'));
+        return View('admin.contract.index', compact('contracts'));
     }
 
     /**
@@ -41,7 +40,7 @@ class ContractController extends Controller
      */
     public function create()
     {
-        $book = Book::where('status',2)->get();
+        $book = Book::where('status', 2)->get();
 
         $statement = DB::select("SHOW TABLE STATUS LIKE 'contracts'");
 
@@ -96,9 +95,24 @@ class ContractController extends Controller
                 $temp['discount'] = $item["discount"];
                 $temp['amount'] = $item["amount"];
                 $temp['contractId'] = $newContractId;
-
                 array_push($allRow, $temp);
             }
+
+
+            if ($request->deposit > 0) {
+
+                $data['tAmount'] = $request->deposit;
+                $data['inDiscount'] = 0;
+                $data['tItemDiscount'] = 0;
+                $data['total'] = $request->deposit;
+
+                $data['customerId'] =  $book['customerId'];
+                $data['invoiceType'] = 'Contract deposit';
+                $data['abstractId'] = $newContractId;
+                PaymentController::storeFirstDeposit($data);
+            }
+
+
             ContractDetail::insert($allRow);
 
             Book::where('bookId', $request->bookId)->update(['status' => '3']);
@@ -155,14 +169,13 @@ class ContractController extends Controller
         $contract['customer'] = Contract::find($id)->customer->name;
         $contract['agency'] = Contract::find($id)->agency->agency;
 
-        $detail = ContractDetail::where('contractId',$id)->get();
+        $detail = ContractDetail::where('contractId', $id)->get();
 
-        for($id =0; $id<count($detail); $id++)
-        {
-            $property = Property::select('propertyCode')->where('propertyId',$detail[$id]->propertyId)->get();
+        for ($id = 0; $id < count($detail); $id++) {
+            $property = Property::select('propertyCode')->where('propertyId', $detail[$id]->propertyId)->get();
             $detail[$id]['propertyCode'] = $property[0]->propertyCode;
         }
-        return view('admin.contract.edit',compact('contract','detail'));
+        return view('admin.contract.edit', compact('contract', 'detail'));
     }
 
     /**
