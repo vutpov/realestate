@@ -38,8 +38,8 @@ const clearBtnAddData=(elem,data)=>{
 
 
 
-const roundToTwo=(num)=> {    
-    return +(Math.round(num + "e+2")  + "e-2");
+const roundToTwo=(num,precision=2)=> {    
+    return Number(Math.round(num+'e'+precision)+'e-'+precision);
 };
 
 function roundUp(num, precision=2) {

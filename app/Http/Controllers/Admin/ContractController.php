@@ -40,7 +40,7 @@ class ContractController extends Controller
      */
     public function create()
     {
-        $book = Book::where('status', 2)->get();
+        $book = Book::where('status', 3)->get();
 
         $statement = DB::select("SHOW TABLE STATUS LIKE 'contracts'");
 
@@ -96,6 +96,9 @@ class ContractController extends Controller
                 $temp['amount'] = $item["amount"];
                 $temp['contractId'] = $newContractId;
                 array_push($allRow, $temp);
+
+
+                Property::where('propertyId', $item["propertyId"])->update(['status' => '4']);
             }
 
 
@@ -115,7 +118,7 @@ class ContractController extends Controller
 
             ContractDetail::insert($allRow);
 
-            Book::where('bookId', $request->bookId)->update(['status' => '3']);
+            Book::where('bookId', $request->bookId)->update(['status' => '4']);
 
 
             $allRow = [];

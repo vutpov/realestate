@@ -105,33 +105,51 @@
         let duration= Number($('#duration').val());
         let start= $('#start').val();
 
-        //console.log(amount,rate,duration,start);
 
+       
+        
+        let monthlyInstallment = roundToTwo((rate*amount) / ( 1- ( Math.pow( (1+rate) , duration*-1 )) ),2);;
 
-        let amountToPay = roundToTwo((rate*amount) / ( 1- ( Math.pow( (1+rate) , duration*-1 )) ),2);
+        let firstInstallment=0;
+
+        let remainPrecision=0;
+
+        if(monthlyInstallment % 1 > 0){
+            firstInstallment = String(monthlyInstallment).split('.');
+            console.log(firstInstallment);
+            monthlyInstallment = Number(firstInstallment[0]);
+
+            remainPrecision = roundToTwo(Number('0.'+firstInstallment[1]) * duration);
+
+            firstInstallment =  roundToTwo(Number(monthlyInstallment) + remainPrecision);
+        }else{
+            firstInstallment=monthlyInstallment ;
+        }
+
 
         let dateStart = new Date(start);
 
-        let oldOutDebt = roundToTwo(amountToPay * duration,2);
+        let oldOutDebt = roundToTwo(monthlyInstallment*(duration-1) + firstInstallment);
 
-        let interest = roundToTwo(amount * rate);
+        let interest =roundToTwo(amount * rate);
 
-        let principle = roundToTwo(amountToPay -interest,2);
+        
 
-        let outPrinciple =roundToTwo(amount - principle,2);
+        let principle = roundToTwo(firstInstallment - interest);
+
+        let outPrinciple =roundToTwo(amount - principle);
     
         //console.log(amount,oldOutDebt);
 
-        let newOutDebt=roundToTwo(oldOutDebt-amountToPay,2);
+        let newOutDebt= roundToTwo(oldOutDebt-firstInstallment);
 
         let oldOutPrinciple;
 
         let scheduleList=[];
 
+        let amountToPay=firstInstallment;
        
-
-        let remainPrecisionPayment;
-        let tInterest=interest;
+      
         for(let i = 1;i<=duration;i++){
             let schedule={};
             schedule['payDate']=formatDateYMD(dateStart);
@@ -143,20 +161,30 @@
             // console.log(i,formatDateYMD(dateStart),interest,principle,amountToPay,outPrinciple,newOutDebt);
             
             scheduleList.push(schedule);
-            
-
+    
             dateStart.setMonth(dateStart.getMonth()+1);
             interest= roundToTwo(outPrinciple*rate,2);
-            principle= roundToTwo(amountToPay -interest,2);
-            tInterest+=interest;
+            principle= roundToTwo(monthlyInstallment - interest,2);
+            amountToPay = monthlyInstallment;
             outPrinciple = roundToTwo(outPrinciple-principle,2);
             newOutDebt=  roundToTwo((newOutDebt-amountToPay),2);
-        }   
+        }
+        
+
+        let lastSchedule=scheduleList[duration-1];
+
+        if(lastSchedule['outPrinciple']!=0){
+            lastSchedule['principle']=scheduleList[duration-2]['outPrinciple'];
+            lastSchedule['interest']=roundToTwo(lastSchedule['amountToPay']-lastSchedule['principle']);
+            lastSchedule['amountToPay']= lastSchedule['principle'] +  lastSchedule['interest'];
+            lastSchedule['outPrinciple']= 0;
+        }
+        
 
 
         // scheduleList[scheduleList.length-1]["outPrinciple"]=0;
         // scheduleList[scheduleList.length-1]["outDebt"]=0;
-        console.log(tInterest);
+        //console.log(tInterest);
 
 
 
@@ -182,7 +210,7 @@
         $('#schedule tbody').html('');
         $('#schedule tbody').html(rowSt);
         
-        // return;
+        return;
 
 
         let arrDataRow=(scheduleList.map(element => {
@@ -195,7 +223,7 @@
         };
 
 
-        return;
+
         $.ajax({      
 
             headers: {

@@ -21,6 +21,7 @@
                     <th>Code</th>
                     <th>Property Types</th>
                     <th>Attribute</th>
+                    <th>Status</th>
                     <th>Description</th>
                     <th>No</th>
                     <th>St</th>
@@ -47,6 +48,27 @@
                     <td>{{$item->propertyCode}}</td>
                     <td>{{$item->propertyType}}</td>
                     <td>{{$item->propAttribute}}</td>
+                    <td>
+                        @switch($item->status)
+                        @case(1)
+                        Available
+                        @break
+                        @case(2)
+                        Booked
+                        @break
+                        @case(3)
+                        Available For Contract
+                        @break
+                        @case(4)
+                        In Contract
+                        @break
+                        @case(5)
+                        Sold
+                        @break
+                        @endswitch
+
+
+                    </td>
                     <td>{{$item->description}}</td>
                     <td>{{$item->no}}</td>
                     <td>{{$item->st}}</td>
@@ -100,4 +122,3 @@ Trash
 @endsection
 
 @section('display-detail','display:none')
-

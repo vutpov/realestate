@@ -167,6 +167,7 @@ class PropertyController extends Controller
                 'partnerId' => $request->partner,
                 'staffId' => Auth::user()->staffId,
                 'partnerId' => $partnerId,
+                'status' => 1
             ]);
             $newPropertyId = DB::getPdo()->lastInsertId() + 1;
 

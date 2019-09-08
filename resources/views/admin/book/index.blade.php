@@ -61,19 +61,25 @@
             <td>{{$item->deadline}}</td>
             <td>
                 <?php
-                            $status;
-                            switch ($item->status) {
-                                case 1:
-                                    $status="Pending";
-                                    break;
-                                case 2:
-                                    $status="Success";
-                                    break;
-                                default:
-                                    $status="Void";
-                                    break;
-                            }
-                        ?>
+                    $status;
+                    switch ($item->status) {
+                        case 1:
+                            $status="Pending";
+                            break;
+                        case 2:
+                            $status="Success";
+                            break;
+                        case 3:
+                            $status="Able to create contract";
+                            break;
+                        case 4:
+                            $status="Contractred";
+                            break;
+                        default:
+                            $status="Void";
+                            break;
+                    }
+                ?>
                 {{$status}}
             </td>
             <td><a href="{{route("editBook",['id'=>$item->bookId])}}"><i class="fas fa-search"></i></a>
