@@ -162,7 +162,6 @@ class LoginController extends Controller
         if ($user) {
 
             Auth::loginUsingId($user->UserId);
-         
             return redirect()->route('dashboard');
         } else {
             //dd($user);
