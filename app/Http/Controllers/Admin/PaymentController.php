@@ -13,6 +13,8 @@ use App\Contract;
 use App\Property;
 use App\Invoice;
 use App\Company;
+use App\Book;
+use App\Staffs;
 
 class PaymentController extends Controller
 {
@@ -50,9 +52,28 @@ class PaymentController extends Controller
     public function create()
     { }
 
-    public function createPaymentBook()
+    public function createPaymentBook($id = null)
     {
-        return View('admin.payment.createPaymentBook');
+        if($id == null){
+            $book = Book::where('status', 1)->get();
+            return view('admin.payment.createPaymentBook', compact('book'));
+        }
+        else{
+            $book = Book::where([['status', 1],['bookId', '!=', $id]])->get();
+            $company = Company::all()->first();
+            $customer = Book::find($id)->customer;
+            $customer['bookId'] = $id;
+            $staff = Staffs::where('staffId', Auth::user()->staffId)->get()[0];
+            return View('admin.payment.createPaymentBook',compact('book','company','customer','staff'));
+        }
+    }
+
+    public function getListBookingDetail($id)
+    {
+        $detail = InvoiceDetail::join('invoices','invoice_details.invoiceID','=','invoices.invoiceId')->select('invoiceNum','price','created_at')->where([['abstractId',$id], ['type','booking']])->get();
+        $deposit = Book::select('limitMoney')->where('bookId', $id)->get();
+
+        return compact('detail','deposit');
     }
 
 
@@ -94,6 +115,51 @@ class PaymentController extends Controller
 
 
         InvoiceDetail::insert($temp);
+    }
+
+    public function storePaymentBooking(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'bookId' => 'required',
+            'invoiceNum' => 'required|numeric',
+            'total' => 'required|numeric'
+        ]);
+
+        if($validator->passes())
+        {
+            $book = Book::find($request->bookId);
+            DB::table('invoices')->insert([
+                'invoiceNum' =>  $request->invoiceNum,
+                'tAmount' =>  $request->total,
+                'inDiscount' =>  0,
+                'tItemDiscount' => 0,
+                'total' => $request->total,
+                'customerId' => $book['customerId'],
+                'invoiceType' => 'booking',
+                'created_at' => now(),
+                'staffId' => Auth::user()->staffId,
+            ]);
+
+            $newId = DB::getPdo()->lastInsertId();
+
+            DB::table('invoice_details')->insert([
+                'price' => $request->total,
+                'itemDiscount' => 0,
+                'amount' => $request->total,
+                'penalty' => 0,
+                'abstractId' => $request->bookId,
+                'type' => 'booking',
+                'invoiceID' => $newId
+            ]);
+            
+            $price = DB::select(DB::raw("SELECT sum(amount) as price from invoice_details where abstractId = $request->bookId"));
+            if($price[0]->price == $book->limitMoney)
+                Book::where('bookId', $request->bookId)->update(['status' => '2']);
+
+            return response()->json(['message' => ['Added new payment.']], 200);
+        }
+
+        return response()->json(['message' => $validator->errors()->all()], 403);
     }
 
     public function storePaymentInstallment(Request $request)

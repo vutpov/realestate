@@ -102,8 +102,8 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          {{-- <li><a href="/system/createPaymentBook">Add New Payment(Book)</a></li>
-          <li><a href="/system/createPaymentInstallment">Add New Payment(Installment)</a></li> --}}
+          <li><a href="/system/createPaymentBook">Add New Payment(Book)</a></li>
+          {{-- <li><a href="/system/createPaymentInstallment">Add New Payment(Installment)</a></li> --}}
           <li><a href="/system/payment">View All Payment</a></li>
         </ul>
       </li>
