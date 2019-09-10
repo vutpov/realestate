@@ -25,6 +25,8 @@ Route::group(['prefix' => ''], function () {
     Route::post('/show-result/show-detail', 'front\FrontController@showDetail');
 });
 
+Route::get('/register', 'front\FrontController@registerusers');
+
 
 
 // Route::get('/system','admin\LoginController@Index')->name("system");
@@ -67,8 +69,6 @@ Route::group(['prefix' => 'system'], function () {
     Route::get('', 'auth\LoginController@Index')->name("login");
     Route::post('/login', 'auth\LoginController@login');
 });
-
-
 
 
 

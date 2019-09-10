@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateLocationInfosTable extends Migration
 {
@@ -16,6 +17,9 @@ class CreateLocationInfosTable extends Migration
         Schema::create('location_infos', function (Blueprint $table) {
             $table->smallIncrements('locationinfoId');
             $table->String('locationinfo', 30);
+
+
+
         });
     }
 

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreatePropertiesTable extends Migration
 {
@@ -16,7 +17,7 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('propertyId');
             $table->text('propertyCode');
-            $table->string('description', 30)->nullable();
+            $table->text('description')->nullable();
             $table->string('no', 5);
             $table->string('st', 20);
             $table->double('cost', 15, 2);
@@ -38,6 +39,8 @@ class CreatePropertiesTable extends Migration
             $table->unsignedSmallInteger('propertyTypeId');
             $table->unsignedSmallInteger('umId');
             $table->unsignedBigInteger('propAttribId');
+
+
         });
     }
 

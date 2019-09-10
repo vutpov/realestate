@@ -35,7 +35,12 @@ INSERT INTO `realestate`.`agencies`(`agency`, `address`, `phone`, `email`, `tCOm
 
 --contract
 INSERT INTO `realestate`.`contracts`(`contractId`, `discount`, `subTotal`, `deposit`, `credit`, `comission`, `amount`, `left`, `status`, `created_at`, `updated_at`, `staffId`, `customerId`, `bookId`, `agencyId`) VALUES (1, 0, 0, 0, 0, 0, 0, 0, '0', '2019-08-27 16:27:39', '2019-08-27 16:27:42', 1, 1, 1, 1)
+
+
 --End For Testing
+
+
+
 
 SET GLOBAL event_scheduler = ON;
 

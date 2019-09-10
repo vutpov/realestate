@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateCitiesTable extends Migration
 {
@@ -17,6 +18,8 @@ class CreateCitiesTable extends Migration
             $table->smallIncrements('cityId');
             $table->String('city', 30);
             $table->timestamps();
+
+            
         });
     }
 
