@@ -82,7 +82,9 @@
                 ?>
                 {{$status}}
             </td>
-            <td><a href="{{route("editBook",['id'=>$item->bookId])}}"><i class="fas fa-search"></i></a>
+            <td>
+                <a href="{{route("editBook",['id'=>$item->bookId])}}"><i class="fas fa-search"></i></a>
+                <a href="{{route("createPaymentBook",['id'=>$item->bookId])}}"><i class="fas fa-dollar-sign"></i></a>
             </td>
         </tr>
         @endforeach
