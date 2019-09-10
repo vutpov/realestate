@@ -11,6 +11,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 
 
 
+<button type="button" class="btn btn-primary" id="btn-payment">Payment</button>
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -55,7 +56,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
 <table class="table check-table" id="schedule">
     <thead>
         <tr>
-
+            <th scope="col"></th>
             <th scope="col">#</th>
             <th scope="col">Pay Date</th>
             <th scope="col">Interest</th>
@@ -65,7 +66,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             <th scope="col">Out Debt</th>
             <th scope="col">Penalty</th>
             <th scope="col">Total</th>
-            <th scope="col">Paydate</th>
+            <th scope="col">Customer Pay Date</th>
             <th scope="col">Status</th>
         </tr>
     </thead>
@@ -76,6 +77,15 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
         @foreach ($schedule as $item)
 
         <tr alt="{{$item->scheduleInstallId}}">
+
+
+
+            <td class="first-cell">
+
+                @if($item->status==1)
+                <input type="checkbox" class="checkSchedule" data-check="{{$item->scheduleInstallId}}">
+                @endif
+            </td>
             <td>{{$loop->iteration}}</td>
             <td>{{$item->payDate}}</td>
             <td>{{$item->interest}}</td>
@@ -86,6 +96,8 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             <td>{{$item->penalty}}</td>
             <td>{{$item->total}}</td>
             <td>{{$item->cusPayDate}}</td>
+
+
             <td>
                 @if($item->status==1)
                 Pending
@@ -353,20 +365,21 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             detailItemDiscount= $(inputDiscount).val();
             detailAmount=$(allCell[7]).html();
             detailPenalty=$(allCell[5]).html();
-           
+            detailRecieve= detailAmount;
             detailList.push({
                 "price": detailPrice,
                 "itemDiscount": detailItemDiscount,
                 "amount": detailAmount,
                 "penalty": detailPenalty,
                 'abstractId':scheduleInstallId[i],
+                'receive': detailRecieve
             });
         });
 
 
 
 
-        //console.log(detailList);
+        // console.log(detailList);
 
         // return;
         
@@ -421,7 +434,7 @@ View schedule for contractId:<b>{{$customer->contractId}}</b>
             success: response =>{
                
                 console.log(response);
-                
+                location.replace("{{route('schedule')}}");
                
             },
             error: response=>{

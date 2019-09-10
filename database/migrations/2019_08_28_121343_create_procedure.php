@@ -23,7 +23,7 @@ class CreateProcedure extends Migration
              DEClARE install_schedules_cursor CURSOR FOR 
              
              SELECT scheduleInstallId,DATEDIFF(now(),payDate)*0.01*amountToPay as newPenalty FROM 			
-             install_schedules;
+             install_schedules  WHERE status=1;
              
              DECLARE CONTINUE HANDLER 
                             FOR NOT FOUND SET v_finished = 1;

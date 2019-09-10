@@ -253,9 +253,16 @@ label[class="my-switch"] input[type="checkbox"]+.my-slider {
     background: #ff6659;
 }
 
+#installment-detail .red-background {
+    background: #870000 !important;
+    color: white;
+}
+
 .dark-red-background {
     background: #870000;
 }
+
+
 
 
 .yellow-background {
@@ -309,7 +316,7 @@ table.has-action tr td:last-child {
 }
 
 
-#scheule-wrapper {
+#modal-wrapper {
     max-width: 80%;
     padding-right: 30px !important;
     background: #ECF0F5;
@@ -339,3 +346,25 @@ table.has-action tr td:last-child {
 }
 
 /*end check-table first-cell*/
+
+
+
+#modal-wrapper .invoice {
+    padding: 50px;
+    margin: 0;
+    border: 0;
+}
+
+
+.summary-invoice th,
+.summary-invoice td {
+    width: 25vw;
+}
+
+.user-panel>.info {
+
+    position: relative;
+    left: 0;
+}
+
+

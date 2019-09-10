@@ -89,6 +89,7 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::post('storeStaff', 'admin\StaffController@store');
     Route::get('editStaff/{id}', 'admin\StaffController@edit');
     Route::post('updateStaff/{id}', 'admin\StaffController@update');
+    Route::get('/showStaff/{id}/', 'admin\StaffController@show')->name('showStaff');
     Route::get('/staffStatus/{id}/{status}/', 'admin\StaffController@setStatus');
 
 
@@ -164,36 +165,70 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('payment', 'admin\PaymentController@index');
     Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
+    Route::get('viewPaymentInstallment/{id}', 'admin\PaymentController@viewPaymentInstallment')->name('viewPaymentInstallment');
+    Route::get('viewPaymentContractDeposit/{id}', 'admin\PaymentController@viewPaymentContractDeposit')->name('viewPaymentContractDeposit');
+    Route::post('storePaymentInstallment', 'admin\PaymentController@storePaymentInstallment')->name('storePaymentInstallment');
 
     //Schedule
     Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');
     Route::post('storeSchedule', 'admin\InstallScheduleController@store')->name('storeSchedule');
-    Route::get('showSchedule/{id}', 'admin\InstallScheduleController@show')->name('showSchedule');
+    Route::get('paymentSchedule/{id}', 'admin\InstallScheduleController@paymentSchedule')->name('paymentSchedule');
+    Route::get('show/{id}', 'admin\InstallScheduleController@show')->name('showSchedule');
     Route::get('test', 'admin\InstallScheduleController@test')->name('test');
 
 
     //Contract
-    Route::get('contract', 'admin\ContractController@index');
+    Route::get('contract', 'admin\ContractController@index')->name('contract');
     Route::get('createContract', 'admin\ContractController@create');
     Route::post('storeContract', 'admin\ContractController@store')->name('storeContract');
     Route::get('editContract/{id}', 'admin\ContractController@edit');
 
     //Book
-    Route::get('book', 'admin\BookController@index');
+    Route::get('book', 'admin\BookController@index')->name('book');
     Route::get('createBook', 'admin\BookController@create')->name('createBook');
-    Route::get('getDetailBook/{id}','admin\BookController@getDetailBook');
+    Route::get('getDetailBook/{id}', 'admin\BookController@getDetailBook');
     Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
     Route::get('editBook/{id}', 'admin\BookController@edit')->name('editBook');
 
     //Project
-    Route::get('project', 'admin\ProjectController@index');
+    Route::get('project', 'admin\ProjectController@index')->name('project');
     Route::get('createProject', 'admin\ProjectController@create');
     Route::post('storeProject/', 'admin\ProjectController@store');
     Route::get('editProject/{id}', 'admin\ProjectController@edit');
     Route::post('updateProject/{id}', 'admin\ProjectController@update');
 
+    //cities
+    Route::get('addcities', 'admin\CityController@index');
+    Route::get('destroy/{id}', 'admin\CityController@destroy');
+    Route::get('cities', 'admin\CityController@create');
+    Route::POST('storecity', 'admin\CityController@store');
+    Route::get('editCity/{id}', 'admin\CityController@edit');
+    Route::post('updateCity/{id}', 'admin\CityController@update');
+
+    //state_province
+
+    Route::get('viewstatprovince', 'admin\StateOrProvinceController@index');
+    Route::get('destroys/{id}', 'admin\StateOrProvinceController@destroy');
+    Route::get('addstateprovince', 'admin\StateOrProvinceController@create');
+    Route::POST('storestate', 'admin\StateOrProvinceController@store');
+    Route::get('editstateprovince/{id}', 'admin\StateOrProvinceController@edit');
+    Route::post('updatestateprovince/{id}', 'admin\StateOrProvinceController@update');
+
+    //LocationInfo
+
+    Route::get('viewlocation', 'admin\LocationinfoController@index');
+    Route::get('destroy/{id}', 'admin\LocationinfoController@destroy');
+    Route::get('addlocation', 'admin\LocationinfoController@create');
+    Route::POST('storelocation', 'admin\LocationinfoController@store');
+    Route::get('editLocation/{id}', 'admin\LocationinfoController@edit');
+    Route::post('updateLocation/{id}', 'admin\LocationinfoController@update');
+
+
+
+
+
     //Property
-    Route::get('property', 'admin\PropertyController@index');
+    Route::get('property', 'admin\PropertyController@index')->name('property');
     Route::get('createProperty', 'admin\PropertyController@create');
     Route::post('storeProperty', 'admin\PropertyController@store')->name('storeProperty');
     Route::get('getAvailableProperty', 'admin\PropertyController@getAvailableProperty')->name('getAvailableProperty');

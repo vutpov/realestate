@@ -8,6 +8,9 @@
 
 
 
+
+
+
 <table class="table table-hover dataTable">
 
     <thead>
@@ -29,24 +32,24 @@
 
         @foreach ($book as $item)
         <?php
-        
-            $rowColor='';
-        
-            switch ($item->lateness) {
-                case 1:
-                    $rowColor='yellow-background';
-                    break;
+                        
+                    $rowColor='';
                 
-                case 0:
-                    $rowColor='red-background ';
-                    break;
+                    switch ($item->lateness) {
+                        case 1:
+                            $rowColor='yellow-background';
+                            break;
+                        
+                        case 0:
+                            $rowColor='red-background ';
+                            break;
+                        
+                        case -1:
+                            $rowColor='dark-red-background white-color';
+                            break;
+                    }
                 
-                case -1:
-                    $rowColor='dark-red-background white-color';
-                    break;
-            }
-       
-        ?>
+                ?>
 
         <tr class="{{$rowColor}}">
             <td>{{$loop->iteration}}</td>
@@ -66,6 +69,12 @@
                         case 2:
                             $status="Success";
                             break;
+                        case 3:
+                            $status="Able to create contract";
+                            break;
+                        case 4:
+                            $status="Contractred";
+                            break;
                         default:
                             $status="Void";
                             break;
@@ -82,6 +91,11 @@
     </tbody>
 
 </table>
+
+
+
+
+
 
 @endsection
 

@@ -113,7 +113,7 @@ class BookController extends Controller
             'commission' => $request->commission,
             'created_at' => now(),
             'staffId' => Auth::user()->staffId,
-            'status' => 1
+            'status' => 2
         ]);
 
 

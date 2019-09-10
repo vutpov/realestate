@@ -755,6 +755,7 @@
                 return;
             }
 
+           
             let arrDataRow=(detail.getAllValue()).map(element => {
                 
                 return JSON.stringify(element);

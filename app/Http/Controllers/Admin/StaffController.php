@@ -97,7 +97,7 @@ class StaffController extends Controller
             'profile' => 'mimes:jpeg,jpg,png',
             'position' => 'required'
         ]);
-        
+
 
         $path = null;
         if ($request->file('profile') != null) {
@@ -127,16 +127,15 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        //
+
+
+
+
+        $data = $this->getSpecificStaff($id);
+        return View('admin.staff.view', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    function getSpecificStaff($id)
     {
         $position = Position::all();
         $staff = Staffs::where('staffId', $id)->get()[0];
@@ -148,6 +147,19 @@ class StaffController extends Controller
             'staff' => $staff,
 
         );
+
+        return $data;
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $data = $this->getSpecificStaff($id);
 
 
         return View('admin.staff.edit', $data);

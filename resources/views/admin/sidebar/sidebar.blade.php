@@ -9,7 +9,9 @@
         <img src="{{asset("admin/dist/img/avatar.png")}}" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-        <p>Alexander Pierce</p>
+
+
+        <p>{{Auth::User()->currentStaff()->name}}</p>
         <!-- Status -->
         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
       </div>
@@ -20,8 +22,8 @@
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu" data-widget="tree">
 
-      <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i><span>Dashboard</span>
+      <li class="">
+        <a href="{{route('dashboard')}}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
 
         </a>
       </li>
@@ -52,6 +54,24 @@
           <li><a href="/system/propAttribute">View All Property Attributes</a></li>
           <li><a href="/system/createPropTypes">Add New Property Types</a></li>
           <li><a href="/system/PropTypes">View All Property Types</a></li>
+        </ul>
+      </li>
+
+      <li class="treeview">
+        <a href="#"><i class="fa fa-address-card"></i><span>Address</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{url('system/cities')}}">Add New Cities</a></li>
+          <li><a href="{{url('/system/addcities') }}">View All Cities</a></li>
+
+          <li><a href="{{url('system/addstateprovince')}}">Add New StateProvince</a></li>
+          <li><a href="{{url('/system/viewstatprovince') }}">View All StateProvince</a></li>
+
+          <li><a href="{{url('system/addlocation')}}">Add New LocationInfo</a></li>
+          <li><a href="{{url('/system/viewlocation') }}">View All LocationInfo</a></li>
         </ul>
       </li>
 
@@ -100,24 +120,12 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="/system/createPaymentBook">Add New Payment(Book)</a></li>
-          <li><a href="/system/createPaymentInstallment">Add New Payment(Installment)</a></li>
+          {{-- <li><a href="/system/createPaymentBook">Add New Payment(Book)</a></li>
+          <li><a href="/system/createPaymentInstallment">Add New Payment(Installment)</a></li> --}}
           <li><a href="/system/payment">View All Payment</a></li>
         </ul>
       </li>
 
-
-      <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>CRM</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="#">Add New Opportunity</a></li>
-          <li><a href="#">View All Opportunities</a></li>
-        </ul>
-      </li>
 
       <li class="treeview">
         <a href="#"><i class="fas fa-handshake"></i><span>Customer</span>
@@ -184,6 +192,8 @@
           <li><a href="/system/user">View All Users</a></li>
         </ul>
       </li>
+
+
 
     </ul>
     <!-- /.sidebar-menu -->

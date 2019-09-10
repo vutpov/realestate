@@ -69,6 +69,7 @@ class PropertyController extends Controller
                 $join->on('projects.projectId', '=', 'properties.projectId');
             })
             ->where('is_featured', '=', '1')
+            ->orderByDesc('created_at')
             ->get();
 
 
@@ -152,7 +153,7 @@ class PropertyController extends Controller
 
             DB::table('properties')->insert([
                 'projectId' => $request->project,
-                'propertyCode' => rand(0, 99) . substr(time() . '', 6),
+                'propertyCode' => rand(0, 999) . substr(time() . '', 6),
                 'description' => $request->description,
                 'no' => $request->no,
                 'st' => $request->st,
@@ -166,6 +167,7 @@ class PropertyController extends Controller
                 'partnerId' => $request->partner,
                 'staffId' => Auth::user()->staffId,
                 'partnerId' => $partnerId,
+                'status' => 1
             ]);
             $newPropertyId = DB::getPdo()->lastInsertId() + 1;
 

@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Staffs;
+use App\Roles;
 
 class User extends Authenticatable
 {
@@ -25,6 +27,21 @@ class User extends Authenticatable
         return $this->hasOne('App\Role', 'roleId', 'roleId');
     }
 
+    public function currentStaff()
+    {
+        $staff = Staffs::find($this->staffId);
+        return $staff;
+    }
+
+    public function currentRole()
+    {
+        $role = Role::find($this->roleId);
+        return $role;
+    }
+
+
+
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -33,6 +50,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
 
     /**
      * The attributes that should be cast to native types.

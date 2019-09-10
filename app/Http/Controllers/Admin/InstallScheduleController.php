@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Auth;
 use App\Http\Controllers\Controller;
+use App\Staffs;
+use App\Company;
 use App\InstallSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -80,12 +83,12 @@ class InstallScheduleController extends Controller
             $temp["interest"] = $row["interest"];
             $temp["outPrinciple"] = $row["outPrinciple"];
             $temp["outDebt"] = $row["outDebt"];
-            $temp["receive"] = 0;
+            $temp["receive"] =0;
             $temp["penalty"] = 0;
             $temp["status"] = 1;
             $temp["created_at"] = now();
             $temp["payDate"] = $row["payDate"];
-            $temp["contractId"] = 1; //for testing
+            $temp["contractId"] = $row["contractId"]; //for testing
             array_push($allRow, $temp);
         };
 
@@ -102,27 +105,61 @@ class InstallScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function show($id)
     {
-        $schedule = InstallSchedule::find($id)->get();
+
+        $data = $this::getScedule($id);
+        return View('admin.schedule.view', $data);
+    }
+
+
+
+    function getScedule($id)
+    {
+        $schedule = DB::select(
+            DB::raw("select 
+            i.*,
+            amountToPay+(i.penalty) as total,
+            (select created_at  from invoices where invoiceID=inv.invoiceId) as cusPayDate
+            from install_schedules i 
+            left join invoice_details inv on i.scheduleInstallId = inv.abstractId
+            where contractId=$id;")
+        );
+
+
 
         $customer = DB::table('customers as cus')
             ->join('contracts as c', 'c.customerId', 'cus.customerId')
             ->select(
-                'name',
+                'cus.*',
                 'contractId'
             )
             ->where('contractId', '=', $id)
             ->get()[0];
 
 
+        $company = DB::table('companies')
+            ->select('*')
+            ->get()[0];
+
+        $staff = Staffs::where('staffId', Auth::user()->staffId)->get()[0];
 
         $data = [
             'schedule' => $schedule,
-            'customer' => $customer
+            'customer' => $customer,
+            'staff' => $staff,
+            'company' => $company
         ];
 
-        return View('admin.schedule.view', $data);
+        return $data;
+    }
+
+    public function paymentSchedule($id)
+    {
+        $data = $this::getScedule($id);
+        return View('admin.schedule.payment', $data);
     }
 
     /**

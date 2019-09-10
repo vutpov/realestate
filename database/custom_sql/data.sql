@@ -28,22 +28,14 @@ INSERT INTO `realestate`.`agency_types`(`agencyType`) VALUES ('Company');
 INSERT INTO `realestate`.`agencies`(`agency`, `address`, `phone`, `email`, `tCOm`, `paid`, `amountDue`, `agencyTypeId`) VALUES ('Centrion', 'Phnom Penh', '076669697', 'centrion@gmail.com', 0, 0, 0, 1);
 
 
+INSERT INTO `realestate`.`projects`(`projectId`, `project`, `staffId`, `partnerId`) VALUES (1, 'Project 1', 1, 1);
 
---For Testing
-
---SCHEDULE
-
---contract
-INSERT INTO `realestate`.`contracts`(`contractId`, `discount`, `subTotal`, `deposit`, `credit`, `comission`, `amount`, `left`, `status`, `created_at`, `updated_at`, `staffId`, `customerId`, `bookId`, `agencyId`) VALUES (1, 0, 0, 0, 0, 0, 0, 0, '0', '2019-08-27 16:27:39', '2019-08-27 16:27:42', 1, 1, 1, 1)
-
-
---End For Testing
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 
 
 SET GLOBAL event_scheduler = ON;
-
 
 
 

@@ -38,16 +38,16 @@ const clearBtnAddData=(elem,data)=>{
 
 
 
-const roundToTwo=(num)=> {    
-    return +(Math.round(num + "e+2")  + "e-2");
+const roundToTwo=(num,precision=2)=> {    
+    return Number(Math.round(num+'e'+precision)+'e-'+precision);
 };
 
-function roundUp(num, precision) {
+function roundUp(num, precision=2) {
     precision = Math.pow(10, precision)
     return Math.ceil(num * precision) / precision
 }
 
-function roundDown(num, precision) {
+function roundDown(num, precision=2) {
     precision = Math.pow(10, precision)
     return Math.floor(num * precision) / precision
 }
@@ -61,6 +61,35 @@ const paddingDate=(data)=>{
 
 const formatDateYMD=(date)=>{
     return `${date.getFullYear()}-${paddingDate(date.getMonth()+1)}-${paddingDate(date.getDate())}`;
+}
+
+const formatCurrentDate=()=>{
+
+    date=new Date();
+    return `${paddingDate(date.getDate())}/${paddingDate(date.getMonth()+1)}/${date.getFullYear()} ${paddingDate(date.getHours())}:${paddingDate(date.getMinutes())}`;
+}
+
+const generateRandom=()=>{
+    
+    let date=new Date();
+
+    let prefix= Math.round((Math.random(0,99)*100))+"";
+
+    let suffix= date.getTime().toString().substring(0,6);
+
+    return prefix+suffix;   
+}
+
+const convertToJson=(arrKey,arrValue)=>{
+
+    let json='';
+
+    for(let i=0;i<length(arrKey);i++){
+        json+=`"${arrKey[i]}":"${arrValue[i]}",`;
+    }
+
+    return `{${json}}`;
+
 }
 
 
