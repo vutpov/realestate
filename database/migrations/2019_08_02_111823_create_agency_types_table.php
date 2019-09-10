@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class CreateAgencyTypesTable extends Migration
 {
@@ -18,6 +19,8 @@ class CreateAgencyTypesTable extends Migration
             $table->String('agencyType',30);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
+
+
         });
     }
 

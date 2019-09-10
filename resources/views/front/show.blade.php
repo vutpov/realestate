@@ -17,6 +17,7 @@
     <form action="/show-result" method="POST" enctype="multipart/form-data">
         {{csrf_field()}}
         <!--Block Top of Body-->
+        <span><label  name="statusone" value="1"></label></span>
         <div class="row bg-dark rounded p-3  ">
 
             <div class="col-md-3 col-sm-3 col-xs-3 ">
@@ -138,7 +139,7 @@
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <div class="form-group" style="margin-top: 40px; margin-left: -25px ; ">
                         {{-- <a class="btn btn-primary form-control" role="button" aria-pressed="true" href="/show-result"> --}}
-                        <button type="submit" class="btn btn-blue" id="search" style="width: 450%;">
+                        <button type="submit" class="btn btn-blue" id="search" name="search" value="1" style="width: 450%;">
                             <i class="fas fa-search">Search</i></button>
                     </div>
                 </div>

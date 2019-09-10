@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>Real Estate</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   {{-- <link rel="stylesheet" href="{{ url('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') }}"> --}}
@@ -122,9 +122,9 @@ desired effect
       <!-- Logo -->
       <a href="{{url('/system/dashboard')}}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini"><b>Real</b> Estate</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><b>Real</b> Estate</span>
       </a>
 
       <!-- Header Navbar -->
@@ -314,7 +314,7 @@ desired effect
     </section>
 
     <!-- Main content -->
-    <section class="content container-fluid">
+    <section class="content container-fluid" @yield("display-main")>
       <div class="row">
         <div class="@yield('col')">
           <div class="box box-primary">
@@ -375,7 +375,7 @@ desired effect
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; <?php echo date('Y'); ?> <a href="#">Setec SO1.7</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

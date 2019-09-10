@@ -32,6 +32,9 @@ INSERT INTO `realestate`.`projects`(`projectId`, `project`, `staffId`, `partnerI
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+
+
+
 SET GLOBAL event_scheduler = ON;
 
 

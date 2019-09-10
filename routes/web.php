@@ -25,6 +25,8 @@ Route::group(['prefix' => ''], function () {
     Route::post('/show-result/show-detail', 'front\FrontController@showDetail');
 });
 
+Route::get('/register', 'front\FrontController@registerusers');
+
 
 
 // Route::get('/system','admin\LoginController@Index')->name("system");
@@ -67,8 +69,6 @@ Route::group(['prefix' => 'system'], function () {
     Route::get('', 'auth\LoginController@Index')->name("login");
     Route::post('/login', 'auth\LoginController@login');
 });
-
-
 
 
 
@@ -180,21 +180,24 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
 
 
     //Contract
-    Route::get('contract', 'admin\ContractController@index');
+    Route::get('contract', 'admin\ContractController@index')->name('contract');
     Route::get('createContract', 'admin\ContractController@create');
     Route::post('storeContract', 'admin\ContractController@store')->name('storeContract');
     Route::get('editContract/{id}', 'admin\ContractController@edit');
 
     //Book
-    Route::get('book', 'admin\BookController@index');
+    Route::get('book', 'admin\BookController@index')->name('book');
     Route::get('createBook', 'admin\BookController@create')->name('createBook');
     Route::get('getDetailBook/{id}', 'admin\BookController@getDetailBook');
     Route::post('storeBook', 'admin\BookController@store')->name('storeBook');
     Route::get('editBook/{id}', 'admin\BookController@edit')->name('editBook');
 
     //Project
-    Route::get('project', 'admin\ProjectController@index');
+    Route::get('project', 'admin\ProjectController@index')->name('project');
     Route::get('createProject', 'admin\ProjectController@create');
+    Route::post('storeProject/', 'admin\ProjectController@store');
+    Route::get('editProject/{id}', 'admin\ProjectController@edit');
+    Route::post('updateProject/{id}', 'admin\ProjectController@update');
 
     //cities
     Route::get('addcities', 'admin\CityController@index');
@@ -222,12 +225,12 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('editLocation/{id}', 'admin\LocationinfoController@edit');
     Route::post('updateLocation/{id}', 'admin\LocationinfoController@update');
 
-    Route::post('storeProject/', 'admin\ProjectController@store');
-    Route::get('editProject/{id}', 'admin\ProjectController@edit');
-    Route::post('updateProject/{id}', 'admin\ProjectController@update');
+
+
+
 
     //Property
-    Route::get('property', 'admin\PropertyController@index');
+    Route::get('property', 'admin\PropertyController@index')->name('property');
     Route::get('createProperty', 'admin\PropertyController@create');
     Route::post('storeProperty', 'admin\PropertyController@store')->name('storeProperty');
     Route::get('getAvailableProperty', 'admin\PropertyController@getAvailableProperty')->name('getAvailableProperty');

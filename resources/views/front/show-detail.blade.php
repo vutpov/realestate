@@ -19,15 +19,16 @@
     <form action="/show-result" method="POST" enctype="multipart/form-data">
         {{csrf_field()}}
         <!--Block Top of Body-->
+        <span><label  name="statusone" value="1"></label></span>
         <div class="row bg-dark rounded p-3  ">
 
             <div class="col-md-3 col-sm-3 col-xs-3 ">
                 <div class="form-group">
                     <label for="city">City</label>
-                    <select class="form-control" name="city_id" id="city_id">
-                        <option value="" selected="selected">--Select City--</option>
+                    <select class="form-control" name="cityname" id="city_id">
+                        <option value="" selected="selected">-- Selected --</option>
                         @foreach ($citys as $key => $value)
-                        <option value="{{ $key }}">
+                        <option value="{{  $value }}">
                             {{ $value }}
                         </option>
                         @endforeach
@@ -36,10 +37,10 @@
                 <div class="form-group">
 
                     <label for="purpose">Purpose</label>
-                    <select class="form-control" name="purpose_id" id="purpose_id">
-                        <option value="" selected="selected">--Select Purpose--</option>
+                    <select class="form-control" name="purposename" id="purpose_id">
+                        <option value="" selected="selected">-- Selected --</option>
                         @foreach ($ptype as $key => $value)
-                        <option value="{{ $key }}"> {{ $value }}
+                        <option value="{{  $value }}"> {{ $value }}
                         </option>
                         @endforeach
 
@@ -52,8 +53,8 @@
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <div class="form-group">
                     <label for="type">Property Type</label>
-                    <select class="form-control" name="type_id" id="type_id">
-                        <option value="" selected="selected">--Select Type--</option>
+                    <select class="form-control" name="typename" id="type_id">
+                        <option value="" selected="selected">-- Selected --</option>
                         <option value="apartment">Apartment</option>
                         <option value="apartment">Serviced Apartment</option>
                         <option value="condominium">Condo</option>
@@ -68,8 +69,7 @@
                 <div class="form-group">
                     <label for="bedroom">Bedroom</label>
                     <select class="form-control" name="bedrom" id="bedroom_id">
-                        <option value="" selected="selected">--Select room--</option>
-                        <option value="all-beds">Bedrooms</option>
+                        <option value="" selected="selected">-- Selected --</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -93,8 +93,7 @@
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <label for="area">All Area</label>
                 <select name="area" class="form-control" id="areaid">
-                    <option value="0" selected="selected">--Select Area--</option>
-                    <option value="">All Areas</option>
+                    <option value="" selected="selected">-- Selected --</option>
                     <option value="Banteay Meanchey">Banteay Meanchey</option>
                     <option value="Battambang">Battambang</option>
                     <option value="BKK 1">BKK 1</option>
@@ -142,7 +141,7 @@
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <div class="form-group" style="margin-top: 40px; margin-left: -25px ; ">
                         {{-- <a class="btn btn-primary form-control" role="button" aria-pressed="true" href="/show-result"> --}}
-                        <button type="submit" class="btn btn-blue" id="search" style="width: 450%;">
+                        <button type="submit" class="btn btn-blue" id="search" name="search" value="1" style="width: 450%;">
                             <i class="fas fa-search">Search</i></button>
                     </div>
                 </div>
@@ -172,7 +171,7 @@
                             <ul id="lightSlider">
                                 @foreach($t as $row)
                                 <li data-thumb="{{asset('/storage/img')}}/{{$row->image}}">
-                                    <img src="{{asset('/storage/img')}}/{{$row->image}}" height="100%" width="100%">
+                                    <img src="{{asset('/storage/img')}}/{{$row->image}}" height="300px" width="100%">
                                 </li>
                                 @endforeach
                                 {{-- <li data-thumb="{{url('front/img/house.jpg')}}">
@@ -258,7 +257,9 @@
                                         <p><i class="fas fa-exclamation-circle"></i> ID : {{$item->propertyCode}}</p>
                                         <p><i class="far fa-square small"></i> size: {{$item->unit}}</p>
                                         <p id="bedrooms"><i class="fas fa-bed small"></i> bedroom & bathroom:
-                                            {{$item->propAtrribute}}</p>
+                                            {{$item->propAttribute}}
+
+                                        </p>
                                         {{-- <p id="bathrooms"><i class="fas fa-syringe small"></i> bathroom: 1</p> --}}
                                         <p><i class="far fa-eye small"></i> viewed: 88 times</p>
                                         <p><i class="fas fa-clock small"></i> listed: 1 week ago</p>

@@ -10,7 +10,7 @@ use App\PropertyType;
 use App\StateOrProvince;
 use DB;
 use App\Support\Collection;
-
+use Illuminate\Support\Facades\View;
 
 class FrontController extends Controller
 {
@@ -54,12 +54,15 @@ class FrontController extends Controller
         $max_price = $re->max_price;
         $area = $re->area;
         $search_term = $city . " ," . $purpose . " ," . $type . " ," . $bedrom . " ," . $area . ", " . $minprice . " ," . $max_price;
-
-        $result = DB::table('properties')
+        $showall = $re->showall;
+        $search = $re->search;
+        $result = "";
+        if ( $search == "1") {
+            $result = DB::table('properties')
             ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
             ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
             ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-            ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribDetailId')
+          //  ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
             ->select(
                 'properties.propertyCode',
                 'properties.description',
@@ -67,8 +70,8 @@ class FrontController extends Controller
                 'properties.st',
                 'properties.price',
                 'properties.location',
-                'prop_attrib_details.propAtrribute',
-                'prop_attrib_details.title',
+         //       'prop_attrib_details.propAttributeDetail',
+
                 'property_types.propertyType',
                 'u_m_s.um',
                 'properties.created_at',
@@ -77,12 +80,42 @@ class FrontController extends Controller
                 'property_images.image'
             )
             ->whereRaw("MATCH(properties.description, properties.no, properties.st, properties.location, properties.unit, properties.propertyCode) AGAINST( ? IN BOOLEAN MODE)", $search_term)
-            ->orWhereRaw("MATCH(prop_attrib_details.propAtrribute, prop_attrib_details.title) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
+           // ->orWhereRaw("MATCH(prop_attrib_details.propAtrribute, prop_attrib_details.title) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
             ->orWhereRaw("MATCH(property_types.propertyType) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
             ->orWhereRaw("MATCH(u_m_s.um) AGAINST(? IN BOOLEAN MODE)",  $search_term)
             ->where('property_images.is_featured', '1')
-            ->groupBy('properties.propertyId')
+             ->groupBy('property_images.propertyId')
             ->orderBy('properties.created_at', 'DESC')->paginate(10);
+        }
+        if ( $showall == "2" ) {
+            $result = DB::table('properties')
+            ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
+            ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+            ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+        //    ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
+            ->select(
+                'properties.propertyCode',
+                'properties.description',
+                'properties.no',
+                'properties.st',
+                'properties.price',
+                'properties.location',
+             //   'prop_attrib_details.propAttributeDetail',
+
+                'property_types.propertyType',
+                'u_m_s.um',
+                'properties.created_at',
+                'properties.unit',
+                'properties.propertyId',
+                'property_images.image'
+            )
+            ->where('property_images.is_featured', '1')
+            ->groupBy('property_images.propertyId')
+            ->orderBy('properties.created_at', 'DESC')->paginate(10);
+        }
+
+
+
             // ->take($re->get('limit', 10))
 
             // dd($result);
@@ -114,7 +147,7 @@ class FrontController extends Controller
             ->join('properties', 'property_images.propertyId', '=', 'properties.propertyId')
             ->join('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-            ->join('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribDetailId')
+        //    ->join('prop_attributes', 'prop_attributes.propAttributeid', '=', 'properties.propAttribId')
             ->select(
                 'property_images.image',
                 'properties.propertyCode',
@@ -123,8 +156,7 @@ class FrontController extends Controller
                 'properties.st',
                 'properties.price',
                 'properties.location',
-                'prop_attrib_details.propAtrribute',
-                'prop_attrib_details.title',
+            //    'prop_attributes.propAttribute',
                 'property_types.propertyType',
                 'u_m_s.um',
                 'property_images.propertyId'
@@ -133,7 +165,7 @@ class FrontController extends Controller
         $information = DB::table('properties')
             ->join('u_m_s', 'properties.umId', '=', 'u_m_s.umId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-            ->join('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribDetailId')
+            ->join('prop_attributes', 'prop_attributes.propAttributeid', '=', 'propAttribId')
             ->select(
                 'properties.propertyCode',
                 'properties.description',
@@ -141,8 +173,7 @@ class FrontController extends Controller
                 'properties.st',
                 'properties.price',
                 'properties.location',
-                'prop_attrib_details.propAtrribute',
-                'prop_attrib_details.title',
+               'prop_attributes.propAttribute',
                 'property_types.propertyType',
                 'u_m_s.um',
                 'properties.created_at',
@@ -177,7 +208,7 @@ class FrontController extends Controller
             ->join('properties', 'property_images.propertyId', '=', 'properties.propertyId')
             ->join('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-            ->join('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribDetailId')
+       //     ->join('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribDetailId')
             ->select(
                 'property_images.image',
                 'properties.propertyCode',
@@ -186,8 +217,8 @@ class FrontController extends Controller
                 'properties.st',
                 'properties.price',
                 'properties.location',
-                'prop_attrib_details.propAtrribute',
-                'prop_attrib_details.title',
+           //     'prop_attrib_details.propAttributeDetail',
+
                 'property_types.propertyType',
                 'u_m_s.um',
                 'property_images.propertyId'
@@ -341,5 +372,10 @@ class FrontController extends Controller
             ->get();
 
         return $result;
+    }
+
+    public function registerusers(){
+
+        return View('front.register');
     }
 }

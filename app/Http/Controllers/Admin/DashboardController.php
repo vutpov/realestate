@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Book;
+use App\Contract;
+use App\Property;
+use App\Project;
+use App\Invoice;
+
 
 class DashboardController extends Controller
 {
@@ -18,7 +24,30 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return View('admin.dashboard.index');
+
+        $book = Book::sum('deposit');
+        $bookCount = Book::count('*');
+
+        $contract = Contract::sum('deposit');
+        $contractCount = Contract::count('*');
+
+        $project = Project::count('*');
+        $propertyCount = Property::count('*');
+
+        $installment = Invoice::where('invoiceType','installment')->sum('total'); 
+
+        
+        $data = [
+            'book' => $book,
+            'bookCount' => $bookCount,
+            'contract' => $contract,
+            'contractCount' => $contractCount,
+            'propertyCount' => $propertyCount,
+            'installment' => $installment,
+            'project' => $project
+        ];
+
+        return View('admin.dashboard.index',$data);
     }
 
     /**

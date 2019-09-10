@@ -14,6 +14,7 @@
     <form action="/show-result" method="POST" enctype="multipart/form-data">
         {{csrf_field()}}
         <!--Block Top of Body-->
+        <span><label  name="statusone" value="1"></label></span>
         <div class="row bg-dark rounded p-3  ">
 
             <div class="col-md-3 col-sm-3 col-xs-3 ">
@@ -133,12 +134,12 @@
                     <option value="Wat Phnom">Wat Phnom</option>
                 </select>
                 <div class="col-md-3 col-sm-3 col-xs-3">
-                <div class="form-group" style="margin-top: 40px; margin-left: -25px ; ">
-                    {{-- <a class="btn btn-primary form-control" role="button" aria-pressed="true" href="/show-result"> --}}
-                    <button type="submit" class="btn btn-blue" id="search" style="width: 450%;" >
-                        <i class="fas fa-search">Search</i></button>
+                    <div class="form-group" style="margin-top: 40px; margin-left: -25px ; ">
+                        {{-- <a class="btn btn-primary form-control" role="button" aria-pressed="true" href="/show-result"> --}}
+                        <button type="submit" class="btn btn-blue" id="search" name="search" value="1" style="width: 450%;">
+                            <i class="fas fa-search">Search</i></button>
+                    </div>
                 </div>
-            </div>
             </div>
 
             <!--Search Sectionx End-->
@@ -150,19 +151,25 @@
     <!--Data Middle of Body-->
     <div class="row mt-3 bg-light rounded">
         <div class="container">
+            <form action="/show-result" method="POST" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <!--Find by Category-->
 
-            <!--Find by Category-->
-            <div class="card-header bg-light text-dark">
-                <strong>Find by category</strong>
-                <a href="#" class="text-dark text-decoration-none float-right">
-                    Show All
-                </a>
-            </div>
+                <div class="card-header bg-light text-dark">
+                    <strong>Find by category</strong>
+                    {{-- <a href="#" class="text-dark text-decoration-none float-right">
+                        Show All
+                    </a> --}}
+                    <button type="submit" id="showall" name="showall" value="2" class="btn-outline-grey" style="margin-left: 92%; margin-top: -2%; ">
+                        Show All
+                    </button>
+                </div>
+            </form>
             <!--Find by Category End-->
 
 
             <!--List Category-->
-            <div class="card-body">
+            {{-- <div class="card-body">
                 <div class="card-deck">
 
                     <!--Category One-->
@@ -199,16 +206,16 @@
                     <!--Category One End-->
 
                 </div>
-            </div>
+            </div> --}}
             <!--List Category End-->
 
 
             <!--Recently-->
             <div class="row p-3">
                 <!-- Grid -->
-                <div class="col-md-12 mt-5 mb-3">
+                {{-- <div class="col-md-12 mt-5 mb-3">
                     <h1 class="text-dark">Our Recently post</h1>
-                </div>
+                </div> --}}
 
 
                 <!--Card in Grid-->
@@ -255,7 +262,7 @@
                 @endforeach
                 <!--Card in Grid End-->
 
-             {{--   <div class="col-md-3 mb-4">
+                  {{-- <div class="col-md-3 mb-4">
                     <div class="card border-0 bg-light scale_img" style="cursor: pointer;">
                         <div style="overflow:hidden">
                             <!-- edit -->
