@@ -54,26 +54,25 @@ class PaymentController extends Controller
 
     public function createPaymentBook($id = null)
     {
-        if($id == null){
+        if ($id == null) {
             $book = Book::where('status', 1)->get();
             return view('admin.payment.createPaymentBook', compact('book'));
-        }
-        else{
-            $book = Book::where([['status', 1],['bookId', '!=', $id]])->get();
+        } else {
+            $book = Book::where([['status', 1], ['bookId', '!=', $id]])->get();
             $company = Company::all()->first();
             $customer = Book::find($id)->customer;
             $customer['bookId'] = $id;
             $staff = Staffs::where('staffId', Auth::user()->staffId)->get()[0];
-            return View('admin.payment.createPaymentBook',compact('book','company','customer','staff'));
+            return View('admin.payment.createPaymentBook', compact('book', 'company', 'customer', 'staff'));
         }
     }
 
     public function getListBookingDetail($id)
     {
-        $detail = InvoiceDetail::join('invoices','invoice_details.invoiceID','=','invoices.invoiceId')->select('invoiceNum','price','created_at')->where([['abstractId',$id], ['type','booking']])->get();
+        $detail = InvoiceDetail::join('invoices', 'invoice_details.invoiceID', '=', 'invoices.invoiceId')->select('invoiceNum', 'price', 'created_at')->where([['abstractId', $id], ['type', 'booking']])->get();
         $deposit = Book::select('limitMoney')->where('bookId', $id)->get();
 
-        return compact('detail','deposit');
+        return compact('detail', 'deposit');
     }
 
 
@@ -119,14 +118,13 @@ class PaymentController extends Controller
 
     public function storePaymentBooking(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'bookId' => 'required',
             'invoiceNum' => 'required|numeric',
             'total' => 'required|numeric'
         ]);
 
-        if($validator->passes())
-        {
+        if ($validator->passes()) {
             $book = Book::find($request->bookId);
             DB::table('invoices')->insert([
                 'invoiceNum' =>  $request->invoiceNum,
@@ -151,10 +149,10 @@ class PaymentController extends Controller
                 'type' => 'booking',
                 'invoiceID' => $newId
             ]);
-            
+
             $price = DB::select(DB::raw("SELECT sum(amount) as price from invoice_details where abstractId = $request->bookId"));
-            if($price[0]->price == $book->limitMoney)
-                Book::where('bookId', $request->bookId)->update(['status' => '2']);
+            if ($price[0]->price == $book->limitMoney)
+                Book::where('bookId', $request->bookId)->update(['status' => '3']);
 
             return response()->json(['message' => ['Added new payment.']], 200);
         }
@@ -232,6 +230,8 @@ class PaymentController extends Controller
                 ->where('contractId', $request->contractId)
                 ->get()[0]->status;
 
+
+
             if ($status == 1) {
                 Contract::where('contractId', $request->contractId)
                     ->update(['status' => 2]);
@@ -248,7 +248,10 @@ class PaymentController extends Controller
                     }
                 )
                     ->update(['status' => 5]);
-            } else { }
+
+                $bookId = Contract::where('contractId', $request->contractId)->get()[0]->bookId;
+                Book::where('bookId', $bookId)->update(['status' => 2]);
+            }
 
 
             return response()->json(['message' => ['Added new payment.'], 'data' => $status], 200);

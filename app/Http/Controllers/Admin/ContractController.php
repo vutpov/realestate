@@ -118,7 +118,7 @@ class ContractController extends Controller
 
             ContractDetail::insert($allRow);
 
-            Book::where('bookId', $request->bookId)->update(['status' => '3']);
+            Book::where('bookId', $request->bookId)->update(['status' => '4']);
 
 
             $allRow = [];

@@ -33,23 +33,25 @@
         @foreach ($book as $item)
         <?php
                         
-                    $rowColor='';
-                
-                    switch ($item->lateness) {
-                        case 1:
-                            $rowColor='yellow-background';
-                            break;
-                        
-                        case 0:
-                            $rowColor='red-background ';
-                            break;
-                        
-                        case -1:
-                            $rowColor='dark-red-background white-color';
-                            break;
-                    }
-                
-                ?>
+            $rowColor='';
+           
+            if($item->statusContract==1){
+                switch ($item->lateness) {
+                    case 1:
+                        $rowColor='yellow-background';
+                        break;
+                    
+                    case 0:
+                        $rowColor='red-background ';
+                        break;
+                    
+                    case -1:
+                        $rowColor='dark-red-background white-color';
+                        break;
+                }
+            }
+            
+        ?>
 
         <tr class="{{$rowColor}}">
             <td>{{$loop->iteration}}</td>
@@ -67,7 +69,7 @@
                             $status="Pending";
                             break;
                         case 2:
-                            $status="Success";
+                            $status="Done";
                             break;
                         case 3:
                             $status="Able to create contract";
@@ -84,7 +86,10 @@
             </td>
             <td>
                 <a href="{{route("editBook",['id'=>$item->bookId])}}"><i class="fas fa-search"></i></a>
+
+                @if($status=='Pending')
                 <a href="{{route("createPaymentBook",['id'=>$item->bookId])}}"><i class="fas fa-dollar-sign"></i></a>
+                @endif
             </td>
         </tr>
         @endforeach

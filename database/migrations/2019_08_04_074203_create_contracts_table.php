@@ -30,6 +30,8 @@ class CreateContractsTable extends Migration
             $table->unsignedBigInteger('customerId')->nullable();
             $table->unsignedBigInteger('bookId')->nullable();
             $table->unsignedBigInteger('agencyId')->nullable();
+
+            
         });
     }
 
