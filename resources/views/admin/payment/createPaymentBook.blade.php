@@ -141,8 +141,10 @@
 
                 $('#deposit').keyup(() =>{
                     let deposit = Number($('#deposit').val());
-                    if(deposit > $('#remain').val())
+                    if(deposit > $('#remain').val()){
                         alert("Deposit can't higher than Remaining Amount");
+                        $('#deposit').val('');
+                    }
                 });
             });
         }
