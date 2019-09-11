@@ -166,8 +166,6 @@ class PaymentController extends Controller
     {
 
 
-
-
         $validator = Validator::make($request->all(), [
 
             'invoiceNum' => 'required',
