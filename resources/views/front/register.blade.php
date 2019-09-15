@@ -1,131 +1,128 @@
-<html>
+@extends('admin.create.layout')
 
-<head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
+@section('content')
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-    <style>
-        .divider-text {
-            position: relative;
-            text-align: center;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
+    <form action="/addvisitor" method="POST">
+        @csrf
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="name">Full Name</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="text" name="name" value="{{old('name')}}" class="form-control" placeholder="Full Name">
+                </div>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="username">Username</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="text" name="username" value="{{old('username')}}" class="form-control" placeholder="Username">
+                </div>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="password">Password</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                </div>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="password">Confirmed Password</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="password" name="confirmed" class="form-control" placeholder="Confirmed Password">
+                </div>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="email">Email</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="Email">
+                </div>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="gender">Gender</label>
+                </div>
+                <div class="col-lg-8">
+                    <select name="gender" class="form-control">
+                        <option value="male" selected>Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="address">Date of Birth</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="date" value="{{old('dob')}}" name="dob" class="form-control">
+                </div>
+            </div>
+        </div> --}}
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="address">Address</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="text" name="address" value="{{old('address')}}" class="form-control" placeholder="Address">
+                </div>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class="company" for="phone">Phone</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="text" name="tel" value="{{old('phone')}}" class="form-control" placeholder="Phone">
+                </div>
+            </div>
+        </div>
+        <div class="form-group has-feedback">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-8">
+                    <input type="submit" value="Register" class="btn btn-primary pull-right">
+                </div>
+            </div>
+        </div>
+    </form>
 
-        .divider-text span {
-            padding: 7px;
-            font-size: 12px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .divider-text:after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            border-bottom: 1px solid #ddd;
-            top: 55%;
-            left: 0;
-            z-index: 1;
-        }
-
-        .btn-facebook {
-            background-color: #405D9D;
-            color: #fff;
-        }
-
-        .btn-twitter {
-            background-color: #42AEEC;
-            color: #fff;
-        }
-    </style>
-
-</head>
-<!------ Include the above in your HEAD tag ---------->
-
-<body>
-    <div class="container">
-        <br>
-        {{-- <p class="text-center">More bootstrap 4 components on <a href="http://bootstrap-ecommerce.com/">
-                Bootstrap-ecommerce.com</a></p> --}}
-        <hr>
-
-        <div class="card bg-light">
-            <article class="card-body mx-auto" style="max-width: 400px;">
-                <h4 class="card-title mt-3 text-center">Create Account</h4>
-                <p class="text-center">Get started with your free account</p>
-                <p>
-                    <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
-                    <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via
-                        facebook</a>
-                </p>
-                <p class="divider-text">
-                    <span class="bg-light">OR</span>
-                </p>
-                <form>
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-                        </div>
-                        <input name="" class="form-control" placeholder="Full name" type="text">
-                    </div> <!-- form-group// -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                        </div>
-                        <input name="" class="form-control" placeholder="Email address" type="email">
-                    </div> <!-- form-group// -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
-                        </div>
-                        <select class="custom-select" style="max-width: 120px;">
-                            <option selected="">+971</option>
-                            <option value="1">+972</option>
-                            <option value="2">+198</option>
-                            <option value="3">+701</option>
-                        </select>
-                        <input name="" class="form-control" placeholder="Phone number" type="text">
-                    </div> <!-- form-group// -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                        </div>
-                        <select class="form-control">
-                            <option selected=""> Select job type</option>
-                            <option>Designer</option>
-                            <option>Manager</option>
-                            <option>Accaunting</option>
-                        </select>
-                    </div> <!-- form-group end.// -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                        </div>
-                        <input class="form-control" placeholder="Create password" type="password">
-                    </div> <!-- form-group// -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                        </div>
-                        <input class="form-control" placeholder="Repeat password" type="password">
-                    </div> <!-- form-group// -->
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
-                    </div> <!-- form-group// -->
-                    <p class="text-center">Have an account? <a href="">Log In</a> </p>
-                </form>
-            </article>
-        </div> <!-- card.// -->
-
+    <div class="form-group has-feedback">
+        <div class="row">
+            <div class="col-lg-3">
+                <a href="/system" class="btn btn-primary " style="margin-top:-49px; margin-left: 500px;">Sign In </a>
+            </div>
+            <div class="col-lg-8">
+            </div>
+        </div>
     </div>
-    <!--container end.//-->
-
-    <br><br>
-
-</body>
-
-</html>
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+@endsection

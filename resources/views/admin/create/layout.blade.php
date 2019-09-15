@@ -20,8 +20,11 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
+            <div class=" login-logo">
+                    <a href="/"><b>Real</b>Estate</a>
+                </div>
         <div class="login-box-body">
-            <h4 class="login-box-msg">Welcome! Please fill your company detail and password account</h4>
+            <h4 class="login-box-msg">Register Account </h4>
             @yield('content')
         </div>
     </div>

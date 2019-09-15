@@ -33,7 +33,7 @@
 <body class="hold-transition login-page">
     <div class="login-box" style="width:560px">
         <div class=" login-logo">
-            <a href="../../index2.html"><b>Real</b>Estate</a>
+            <a href="/"><b>Real</b>Estate</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -85,9 +85,13 @@
                     <!-- /.col -->
                     <div class="col-xs-4">
                         <input type="submit" value="Sign In" class="btn btn-primary btn-block btn-flat">
-
-
                     </div>
+                    <div class="col-xs-4">
+                            <button class="btn btn-primary btn-block btn-flat">
+                                    <a style="color:white;" href="/register">Register</a>
+
+                                </button>
+                        </div>
                     <!-- /.col -->
                 </div>
 

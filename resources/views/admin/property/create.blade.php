@@ -156,11 +156,11 @@
 
     const sendData = () =>{
         let description = $("input[name='description']").val();
-               
-                
+
+
         var frmdata = new FormData($("#form-submit-property")[0])
-        
-        
+
+
 
         $.ajax({
             headers: {
@@ -172,33 +172,33 @@
             contentType:false,
             data: frmdata,
             success: response =>{
-               
-                
+
+
                 $("#propertyId").val(response.propertyId)
-              
+
                 myDropzone.processQueue();
                 console.log(response);
                 renderMessage($('.show-message'),'success', response.message);
-                
+
             },
             error: response=>{
-               
+
                 renderMessage($('.show-message'),'error', response.responseJSON.message);
-                
-                
+
+
 
             },
             complete: response=>{
                 console.log(response.data);
-               
+
             },
             dataType: "json",
             // contentType : "application/json"
         });
-        
+
     };
-    
-   
+
+
 
     Dropzone.options.propertyDropzone = {
         autoProcessQueue:false,
@@ -208,11 +208,11 @@
         timeout: 5000,
 
 
-        
+
         init: function() {
             myDropzone=this;
-            this.on("success", function(file, response) {             
-                
+            this.on("success", function(file, response) {
+
                 this.removeFile(file);
 
 
@@ -224,23 +224,23 @@
 
             this.on("addedfile",(file)=>{
                 file.propertyId=$('#propertyId').val();
-              
+
             });
 
             this.on("error", function(file, response) {
                 console.log(response);
-                  
+
             });
 
             this.on("complete", function(file, response) {
                 console.log(response);
-                  
+
             });
 
-            
 
 
-            $("#submitProperty").click(()=>{      
+
+            $("#submitProperty").click(()=>{
                 //$('#form-submit-property').submit();
 
                 sendData();
@@ -248,20 +248,20 @@
                 // if(sendData()){
                 //     console.log('send photo');
                 //     myDropzone.processQueue();
-                    
+
                 // }else{
                 //     console.log('not send photo');
                 // }
-                   
+
             });
-            
+
         }
 
-        
+
     };
 
 
-    
+
 
 </script>
 @endsection

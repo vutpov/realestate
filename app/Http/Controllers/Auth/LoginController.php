@@ -15,6 +15,8 @@ use App\Position;
 use App\Role;
 use App\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
+
 
 class LoginController extends Controller
 {
@@ -137,7 +139,7 @@ class LoginController extends Controller
         unset($userAttr['confirmed']);
         $userAttr['staffId'] = $staffId;
         $userAttr['roleId'] = $role->roleId;
-        $userAttr['password'] =  Hash::make($userAttr['password']);
+        $userAttr['password'] =  \Hash::make($userAttr['password']);
 
 
         DB::table('users')->insert($userAttr);
@@ -152,19 +154,48 @@ class LoginController extends Controller
             $request,
             [
                 'username' => 'required',
-                // 'password' => 'required'
+                'password' => 'required'
             ]
         );
+        $us = User::where('username', $request->username)->where('password',$request->password)->count();
 
-        $user = User::where('staffId', 1)
-            ->first();
+
+        $u = DB::table('users')->select('*')->where('username', $request->username)->first();
+        $name = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.name')->where('users.username', $request->username)->first();
+        $tel = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.tel')->where('users.username', $request->username)->first();
+        $email = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.email')->where('users.username', $request->username)->first();
+        $data =  array(
+            'name' => $name,
+            'tel' => $tel,
+            'email' => $email,
+            'u' =>   $u
+        );
+
+        // $user = User::where('staffId', 1)
+        //     ->first();
+        $user = User::where('username', $request->username)->where('password',$request->password)
+        ->first();
+
+        if($us == 0 ){
+            return redirect()->back()->withInput();
+        }
+
+
 
         if ($user) {
+            if ($u->roleId == 2) {
 
-            Auth::loginUsingId($user->UserId);
-            return redirect()->route('dashboard');
+                Auth::loginUsingId($user->UserId);
+                return View('front.virsitor', $data);
+                // Auth::loginUsingId($user->UserId);
+                // return redirect()->route('visitor-product');
+            } else {
+
+                Auth::loginUsingId($user->UserId);
+                return redirect()->route('dashboard');
+            }
         } else {
-            //dd($user);
+
             return redirect()->back()->withInput();
         }
 

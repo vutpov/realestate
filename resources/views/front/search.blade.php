@@ -14,7 +14,7 @@
     <form action="/show-result" method="POST" enctype="multipart/form-data">
         {{csrf_field()}}
         <!--Block Top of Body-->
-        <span><label  name="statusone" value="1"></label></span>
+        <span><label name="statusone" value="1"></label></span>
         <div class="row bg-dark rounded p-3  ">
 
             <div class="col-md-3 col-sm-3 col-xs-3 ">
@@ -136,7 +136,8 @@
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <div class="form-group" style="margin-top: 40px; margin-left: -25px ; ">
                         {{-- <a class="btn btn-primary form-control" role="button" aria-pressed="true" href="/show-result"> --}}
-                        <button type="submit" class="btn btn-blue" id="search" name="search" value="1" style="width: 450%;">
+                        <button type="submit" class="btn btn-blue" id="search" name="search" value="1"
+                            style="width: 450%;">
                             <i class="fas fa-search">Search</i></button>
                     </div>
                 </div>
@@ -160,7 +161,8 @@
                     {{-- <a href="#" class="text-dark text-decoration-none float-right">
                         Show All
                     </a> --}}
-                    <button type="submit" id="showall" name="showall" value="2" class="btn-outline-grey" style="margin-left: 92%; margin-top: -2%; ">
+                    <button type="submit" id="showall" name="showall" value="2" class="btn-outline-grey"
+                        style="margin-left: 92%; margin-top: -2%; ">
                         Show All
                     </button>
                 </div>
@@ -230,7 +232,9 @@
                                 style="right:0;width: 1.5rem; height: 1.5rem; z-index:1" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
-                            <img id="lazy1629" src="{{asset('/storage/img')}}/{{$row->image}}" height="150px"
+                            {{-- {{ URL::to('/storage/') }}/ --}}
+                            {{-- <img id="lazy1629" src="{{asset('/storage/')}}/img/{{$row->image}}" height="150px" --}}
+                            <img id="lazy1629" src="{{asset('/storage/')}}/{{$row->image}}" height="150px"
                                 class="card-img-top rounded-0" style="z-index:3" alt="...">
 
                             <!-- Edit End-->
@@ -262,7 +266,7 @@
                 @endforeach
                 <!--Card in Grid End-->
 
-                  {{-- <div class="col-md-3 mb-4">
+                {{-- <div class="col-md-3 mb-4">
                     <div class="card border-0 bg-light scale_img" style="cursor: pointer;">
                         <div style="overflow:hidden">
                             <!-- edit -->
@@ -503,9 +507,13 @@
 
             </div>
             <!--Recently End-->
-
+            <div class="pt3 mt-3">
+                    <span> {{$t->appends(request()->input())->links()}}</span>
+                </div>
         </div>
     </div>
+
+
     <!--Data Middle of Body End-->
 
 </div>

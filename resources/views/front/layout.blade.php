@@ -50,10 +50,10 @@
 
         <div>
             <a style="font-size:1rem; float: left;" class="nav-item nav-link text-success"
-                href="/explore">Log In</a>
+                href="/system">Log In</a>
 
                 <a style="font-size:1rem; float: left;" class="nav-item nav-link text-info"
-                href="/explore">Register</a>
+                href="/register">Register</a>
         </div>
     </nav>
 

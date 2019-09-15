@@ -13,7 +13,7 @@
 
 
 
-Route::group(['prefix' => ''], function () {
+Route::group(['prefix'=> '', 'middleware' => 'auth' ], function () {
     Route::get('', 'front\FrontController@Home');
     Route::get('/contact-us', 'front\FrontController@contact');
     Route::get('/about-us', 'front\FrontController@about');
@@ -23,9 +23,23 @@ Route::group(['prefix' => ''], function () {
     Route::post('/show-result', 'front\FrontController@showResult');
     Route::get('/show-result/show-detail/{id}', 'front\FrontController@showDetails');
     Route::post('/show-result/show-detail', 'front\FrontController@showDetail');
+
+    //register
+    Route::get('/register', 'front\FrontController@getVisitor');
+    Route::post('/addvisitor', 'front\FrontController@storeVisitor');
+    Route::get('/visitor', 'front\FrontController@indexvisitor');
+
+    //upload visitor
+    Route::get('/visitor-product', 'front\FrontPropertyController@indexfront')->name('visitor-product');
+    Route::get('/createPropertyfront', 'front\FrontPropertyController@createfront')->name('createPropertyfront');
+    Route::post('/storePropertysfront', 'front\FrontPropertyController@storefront')->name('storePropertyfront');
+    Route::get('/getAvailablePropertyfront', 'front\FrontPropertyController@getAvailablePropertyfront')->name('getAvailablePropertyfront');
+    Route::post('/propertyImageUploadfront', 'front\FrontPropertyController@propertyImageUploadfront')->name('propertyImageUploadfront');
+
+
 });
 
-Route::get('/register', 'front\FrontController@registerusers');
+
 
 
 
@@ -35,6 +49,26 @@ Route::get('/register', 'front\FrontController@registerusers');
 // Route::get('/system/create-step2','admin\LoginController@CreateStep2');
 
 // Route::post('/system','admin\LoginController@store');
+
+
+
+Route::group(['prefix' => 'system'], function () {
+    //Create Company
+
+    // Route::post('create-step2', 'auth\LoginController@postCreateStep2')->name("step2");
+    // Route::get('create-step2', 'auth\LoginController@CreateStep2');
+    // Route::post('', 'auth\LoginController@store');
+
+    //login
+    Route::get('', 'auth\LoginController@Index')->name("login");
+    Route::post('/login', 'auth\LoginController@login');
+});
+
+
+
+
+
+
 
 
 
@@ -49,26 +83,6 @@ Route::get('/register', 'front\FrontController@registerusers');
 //     Route::get('', 'auth\LoginController@Index')->name("login");
 //     Route::post('/login', 'auth\LoginController@login');
 // });
-
-
-
-
-
-
-
-
-
-Route::group(['prefix' => 'system'], function () {
-    //Create Company
-
-    Route::post('create-step2', 'auth\LoginController@postCreateStep2')->name("step2");
-    Route::get('create-step2', 'auth\LoginController@CreateStep2');
-    Route::post('', 'auth\LoginController@store');
-
-    //login
-    Route::get('', 'auth\LoginController@Index')->name("login");
-    Route::post('/login', 'auth\LoginController@login');
-});
 
 
 

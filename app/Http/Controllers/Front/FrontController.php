@@ -11,6 +11,7 @@ use App\StateOrProvince;
 use DB;
 use App\Support\Collection;
 use Illuminate\Support\Facades\View;
+use App\Visitor;
 
 class FrontController extends Controller
 {
@@ -57,69 +58,69 @@ class FrontController extends Controller
         $showall = $re->showall;
         $search = $re->search;
         $result = "";
-        if ( $search == "1") {
+        if ($search == "1") {
             $result = DB::table('properties')
-            ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
-            ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
-            ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-          //  ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
-            ->select(
-                'properties.propertyCode',
-                'properties.description',
-                'properties.no',
-                'properties.st',
-                'properties.price',
-                'properties.location',
-         //       'prop_attrib_details.propAttributeDetail',
+                ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
+                ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+                ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+                //  ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
+                ->select(
+                    'properties.propertyCode',
+                    'properties.description',
+                    'properties.no',
+                    'properties.st',
+                    'properties.price',
+                    'properties.location',
+                    //       'prop_attrib_details.propAttributeDetail',
 
-                'property_types.propertyType',
-                'u_m_s.um',
-                'properties.created_at',
-                'properties.unit',
-                'properties.propertyId',
-                'property_images.image'
-            )
-            ->whereRaw("MATCH(properties.description, properties.no, properties.st, properties.location, properties.unit, properties.propertyCode) AGAINST( ? IN BOOLEAN MODE)", $search_term)
-           // ->orWhereRaw("MATCH(prop_attrib_details.propAtrribute, prop_attrib_details.title) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
-            ->orWhereRaw("MATCH(property_types.propertyType) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
-            ->orWhereRaw("MATCH(u_m_s.um) AGAINST(? IN BOOLEAN MODE)",  $search_term)
-            ->where('property_images.is_featured', '1')
-             ->groupBy('property_images.propertyId')
-            ->orderBy('properties.created_at', 'DESC')->paginate(10);
+                    'property_types.propertyType',
+                    'u_m_s.um',
+                    'properties.created_at',
+                    'properties.unit',
+                    'properties.propertyId',
+                    'property_images.image'
+                )
+                ->whereRaw("MATCH(properties.description, properties.no, properties.st, properties.location, properties.unit, properties.propertyCode) AGAINST( ? IN BOOLEAN MODE)", $search_term)
+                // ->orWhereRaw("MATCH(prop_attrib_details.propAtrribute, prop_attrib_details.title) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
+                ->orWhereRaw("MATCH(property_types.propertyType) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
+                ->orWhereRaw("MATCH(u_m_s.um) AGAINST(? IN BOOLEAN MODE)",  $search_term)
+                ->where('property_images.is_featured', '1')
+                ->groupBy('property_images.propertyId')
+                ->orderBy('properties.created_at', 'DESC')->paginate(10);
         }
-        if ( $showall == "2" ) {
+        if ($showall == "2") {
             $result = DB::table('properties')
-            ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
-            ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
-            ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-        //    ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
-            ->select(
-                'properties.propertyCode',
-                'properties.description',
-                'properties.no',
-                'properties.st',
-                'properties.price',
-                'properties.location',
-             //   'prop_attrib_details.propAttributeDetail',
+                ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
+                ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+                ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+                //    ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
+                ->select(
+                    'properties.propertyCode',
+                    'properties.description',
+                    'properties.no',
+                    'properties.st',
+                    'properties.price',
+                    'properties.location',
+                    //   'prop_attrib_details.propAttributeDetail',
 
-                'property_types.propertyType',
-                'u_m_s.um',
-                'properties.created_at',
-                'properties.unit',
-                'properties.propertyId',
-                'property_images.image'
-            )
-            ->where('property_images.is_featured', '1')
-            ->groupBy('property_images.propertyId')
-            ->orderBy('properties.created_at', 'DESC')->paginate(10);
+                    'property_types.propertyType',
+                    'u_m_s.um',
+                    'properties.created_at',
+                    'properties.unit',
+                    'properties.propertyId',
+                    'property_images.image'
+                )
+                ->where('property_images.is_featured', '1')
+                ->groupBy('property_images.propertyId')
+                ->orderBy('properties.created_at', 'DESC')->paginate(10);
         }
 
 
 
-            // ->take($re->get('limit', 10))
+        // ->take($re->get('limit', 10))
 
-            // dd($result);
-           // $result->withPath('show-result/url');
+        // dd($result);
+        // $result->withPath('show-result/url');
         $data = [
             'result' => $result,
             'citys' => $citys,
@@ -147,7 +148,7 @@ class FrontController extends Controller
             ->join('properties', 'property_images.propertyId', '=', 'properties.propertyId')
             ->join('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-        //    ->join('prop_attributes', 'prop_attributes.propAttributeid', '=', 'properties.propAttribId')
+            //    ->join('prop_attributes', 'prop_attributes.propAttributeid', '=', 'properties.propAttribId')
             ->select(
                 'property_images.image',
                 'properties.propertyCode',
@@ -156,7 +157,7 @@ class FrontController extends Controller
                 'properties.st',
                 'properties.price',
                 'properties.location',
-            //    'prop_attributes.propAttribute',
+                //    'prop_attributes.propAttribute',
                 'property_types.propertyType',
                 'u_m_s.um',
                 'property_images.propertyId'
@@ -173,7 +174,7 @@ class FrontController extends Controller
                 'properties.st',
                 'properties.price',
                 'properties.location',
-               'prop_attributes.propAttribute',
+                'prop_attributes.propAttribute',
                 'property_types.propertyType',
                 'u_m_s.um',
                 'properties.created_at',
@@ -208,7 +209,7 @@ class FrontController extends Controller
             ->join('properties', 'property_images.propertyId', '=', 'properties.propertyId')
             ->join('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-       //     ->join('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribDetailId')
+            //     ->join('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribDetailId')
             ->select(
                 'property_images.image',
                 'properties.propertyCode',
@@ -217,14 +218,14 @@ class FrontController extends Controller
                 'properties.st',
                 'properties.price',
                 'properties.location',
-           //     'prop_attrib_details.propAttributeDetail',
+                //     'prop_attrib_details.propAttributeDetail',
 
                 'property_types.propertyType',
                 'u_m_s.um',
                 'property_images.propertyId'
             )->where('property_images.is_featured', '1')
             ->orderBy('properties.created_at', 'DESC')
-            ->take(10)->get();
+            ->paginate(20);
 
 
         $data = [
@@ -374,8 +375,63 @@ class FrontController extends Controller
         return $result;
     }
 
-    public function registerusers(){
 
+
+
+    public function storeVisitor(Request $request)
+    {
+
+        $visitor = request()->validate([
+            'name' => 'required|min:5|max:50',
+            'gender' => 'required',
+            'address' => 'required|min:5',
+            'tel' => 'required|min:9',
+            'email' => 'required|min:12|unique:visitors'
+        ]);
+
+        //   $this->validate($request,[
+        //     'name' => 'required|min:5|max:50',
+        //     'gender' => 'required',
+        //     'address' => 'required|min:5',
+        //     'tel' => 'required|min:10',
+        //     'email' => 'required|min:12|unique:visitors'
+
+        // ] );
+
+
+        DB::table('visitors')->insert($visitor);
+        $last_id = DB::getPDO()->lastInsertId();
+
+        $userAttr = request()->validate([
+            'username' => 'required|min:5|max:20|unique:users',
+            'password' => 'required|min:6',
+            'confirmed' => 'required|min:6|same:password'
+        ]);
+
+        // $visitorId = DB::table('visitors')->insertGetId($visitor);
+        //  $role = Role::where('role', 'Admin')->first();
+        $rID =   DB::table('roles')->select('roleId')
+            ->where('roleId', '=', '2')
+            ->first();
+        unset($userAttr['confirmed']);
+        $userAttr['staffId'] =  $last_id;
+        $userAttr['roleId'] = '2';
+        $userAttr['password'] = $userAttr['password'];
+
+
+        DB::table('users')->insert($userAttr);
+
+        return redirect('/system');
+        // return view('admin.login.index');
+    }
+
+    public function getVisitor()
+    {
         return View('front.register');
+    }
+
+    public function indexvisitor()
+    {
+        return View('front.virsitor');
     }
 }

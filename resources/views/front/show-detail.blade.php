@@ -170,8 +170,8 @@
 
                             <ul id="lightSlider">
                                 @foreach($t as $row)
-                                <li data-thumb="{{asset('/storage/img')}}/{{$row->image}}">
-                                    <img src="{{asset('/storage/img')}}/{{$row->image}}" height="300px" width="100%">
+                                <li data-thumb="{{asset('/storage/')}}/{{$row->image}}">
+                                    <img src="{{asset('/storage/')}}/{{$row->image}}" height="300px" width="100%">
                                 </li>
                                 @endforeach
                                 {{-- <li data-thumb="{{url('front/img/house.jpg')}}">

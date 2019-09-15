@@ -213,7 +213,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <!-- Images -->
-                                    <img src="{{asset('/storage/img')}}/{{$row->image}}" class="card-img-top rounded-0"
+                                    <img src="{{asset('/storage/')}}/{{$row->image}}" class="card-img-top rounded-0"
                                         style="z-index:3" alt="..." height="200px">
                                 </div>
                                 <div class="col-md-8 ">
@@ -278,7 +278,6 @@
                             Land For Sale
                         </div>
                         <!--Head Data End-->
-
                         <!--Body Data-->
                         <div class="card-body  p-0 position-relative">
                             <div class="row">
@@ -295,24 +294,19 @@
                                         <div id="listing-size " class="p-1">
                                             <span class="text-muted"><i class="fas fa-vector-square"></i> 53</span>
                                         </div>
-
                                         <div class="p-1">
                                             <span class="text-muted"><i class="fas fa-bed"></i> 1 </span>
                                             <span class="text-muted"><i class="fas fa-shower"></i> 1 </span>
                                         </div>
-
                                         <div id="listing-location" class="p-1">
                                             <span class="text-muted text-uppercase"><i
                                                     class="fas fa-map-marker-alt"></i> Doun Penh phnom penh</span>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!--body data end-->
-
-
                         <!--foot data-->
                         <div class="card-footer p-1">
                             <div class="float-left text-muted small">
@@ -356,87 +350,40 @@
 </div>
 {{-- <script type="text/javascript">
     $(window).on('hashchange', function() {
-
         if (window.location.hash) {
-
             var page = window.location.hash.replace('#', '');
-
             if (page == Number.NaN || page <= 0) {
-
                 return false;
-
             }else{
-
                 getData(page);
-
             }
-
         }
-
     });
-
-
-
     $(document).ready(function()
-
     {
-
         $(document).on('click', '.pagination a',function(event)
-
         {
-
             event.preventDefault();
-
-
-
             $('li').removeClass('active');
-
             $(this).parent('li').addClass('active');
-
-
-
             var myurl = $(this).attr('href');
-
             var page=$(this).attr('href').split('page=')[1];
-
-
-
             getData(page);
-
         });
-
-
-
     });
-
-
-
     function getData(page){
-
         $.ajax(
-
         {
-
             url: '?page=' + page,
-
             type: "get",
-
             datatype: "html"
-
         }).done(function(data){
-
             $("#tag_container").empty().html(data);
-
             location.hash = page;
-
         }).fail(function(jqXHR, ajaxOptions, thrownError){
-
               alert('No response from server');
-
         });
-
     }
-
 </script> --}}
 <!--Body End-->
 @endsection;
