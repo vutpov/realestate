@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #ebebeb; 
+}
+
+.menu-top,.navbar{
+    background-color: white;
+}
+
+
+.user-info ul li p{
+    font-size: 13px;
+}
+
+.user-info ul li{
+    line-height: 15px;
+}
+
+.content{
+    
+    min-height: 900px;
+}
+
+.opt-search{
+    padding: 30px 15px 30px 15px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgb(226, 224, 224);
+}
+
+.list-pro{
+    padding: 20px;
+    background-color: white;
+    margin-top: 30px;
+    border-radius: 10px;
+    min-height: 300px;
+}
+
+/* css for post page */
+
+.post{
+    background-color: white;
+    min-height: 1000px;
+}
+
+.post-header{
+    padding: 10px 15px 10px 15px;   
+}
+
+.post-body{
+    padding: 25px;
+}

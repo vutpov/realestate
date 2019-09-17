@@ -14,8 +14,8 @@
 
 @section('content')
 <br>
-<div class="container text-white position-relative mt-n5 mb-5" style="margin-top:110px !important">
-    <div class="row bg-dark rounded p-3  ">
+<div class="container text-white position-relative mt-n5 mb-5" style="margin-top:110px !important ;background-color: #0080ff">
+    <div class="row rounded p-3  ">
 
         <div class="col-md-4 col-sm-4 col-xs-4 ">
 
@@ -98,7 +98,7 @@
                 <div class="form-group">
                     <label class="control-label" for="inputSuccess">Price</label>
                     {{-- <input type="Text" class="form-control" name="price" placeholder="Price" /> --}}
-                    <input type="number" min="1" name="Price" id="ad_price" class="form-control  number " required="" aria-describedby="basic-addon1" value="">
+                    <input type="number" min="1" name="price" id="ad_price" class="form-control  number " required="" aria-describedby="basic-addon1" value="">
                     <span class="help-block"></span>
                 </div>
 

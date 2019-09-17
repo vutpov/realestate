@@ -79,9 +79,9 @@ class FrontPropertyController extends Controller
                     'properties.created_at',
                     'properties.updated_at',
                     'image',
-                    'properties.propertyId'
+                    'property_images.propertyId'
                 )
-                ->where('is_featured', '=', '1')->where('properties.staffId','=',Auth::user()->staffId)
+                ->where('is_featured', '=', '1')->where('properties.staffId', '=', Auth::user()->staffId)
                 ->orderByDesc('created_at')
                 ->get();
 
@@ -98,6 +98,109 @@ class FrontPropertyController extends Controller
         //  dd($data);
 
         return View('front.virsitor');
+    }
+
+    public function index()
+    {
+
+
+        $name = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.name')->where('users.username', Auth::user()->username)->first();
+        $tel = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.tel')->where('users.username', Auth::user()->username)->first();
+        $email = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.email')->where('users.username', Auth::user()->username)->first();
+        $property = DB::table('properties')
+            ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+            ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttribId')
+            ->join('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+            ->select(
+                'properties.propertyCode',
+                'property_types.propertyType',
+                'prop_attributes.propAttribute',
+                'properties.description',
+                'properties.no',
+                'properties.st',
+                'properties.cost',
+                'properties.price',
+                'properties.free',
+                'property_types.propertyType',
+                'property_images.image',
+                'properties.propertyId'
+            )
+            ->where('property_images.is_featured', '=', '1')->where('properties.staffId', '=', Auth::user()->staffId)
+            ->orderByDesc('properties.created_at')
+            ->paginate(10);
+
+        $data =  array(
+            'name' => $name,
+            'tel' => $tel,
+            'email' => $email,
+            'property' => $property
+        );
+
+        return View('front.profile',  $data );
+    }
+
+
+    function action(Request $request)
+    {
+        if($request->has('search')){
+            $property =   DB::table('properties')
+            ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+            ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttribId')
+            ->join('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+            ->select(
+                'propertyCode',
+                'property_types.propertyType',
+                'prop_attributes.propAttribute',
+                'description',
+                'no',
+                'st',
+                'cost',
+                'price',
+                'free',
+                'properties.created_at',
+                'properties.updated_at',
+                'image',
+                'property_images.propertyId'
+            )
+            ->where('propertyType', 'like', '%' . $request->search . '%')
+            ->where('is_featured', '=', '1')->where('properties.staffId', '=', Auth::user()->staffId)
+            ->orWhere('description', 'like', '%' .$request->search . '%')
+            ->orWhere('no', 'like', '%' . $request->search . '%')
+            ->orWhere('price', 'like', '%' . $request->search . '%')
+            ->orderBy('created_at')
+            ->paginate(10);
+
+        }else{
+            $property =   DB::table('properties')
+            ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+            ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttribId')
+            ->join('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+            ->select(
+                'propertyCode',
+                'property_types.propertyType',
+                'prop_attributes.propAttribute',
+                'description',
+                'no',
+                'st',
+                'cost',
+                'price',
+                'free',
+                'properties.created_at',
+                'properties.updated_at',
+                'image',
+                'property_images.propertyId'
+            )
+            ->where('is_featured', '=', '1')->where('properties.staffId', '=', Auth::user()->staffId)
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        }
+
+        $data = array('property' =>  $property);
+
+
+
+        return view('front.profile', $data);
     }
 
     /**
@@ -188,7 +291,7 @@ class FrontPropertyController extends Controller
                 'created_at' => now(),
                 // 'staffId' => $request->sid,
                 // 'partnerId' => $request->partner,
-                  'staffId' => Auth::user()->staffId,
+                'staffId' => Auth::user()->staffId,
                 // 'partnerId' => $partnerId,
                 'status' => 1
             ]);
@@ -263,9 +366,9 @@ class FrontPropertyController extends Controller
     public function propertyImageUploadfront(Request $request)
     {
 
-        
+
         $path = $request->file('file')->store('img');
-           DB::table('property_images')->insert([
+        DB::table('property_images')->insert([
             'image' => $path,
             'is_featured' => 0,
             'propertyId' => $request->propertyId

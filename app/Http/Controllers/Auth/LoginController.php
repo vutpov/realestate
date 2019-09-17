@@ -154,22 +154,14 @@ class LoginController extends Controller
             $request,
             [
                 'username' => 'required',
-                'password' => 'required'
+               'password' => 'required'
             ]
         );
         $us = User::where('username', $request->username)->where('password',$request->password)->count();
 
 
         $u = DB::table('users')->select('*')->where('username', $request->username)->first();
-        $name = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.name')->where('users.username', $request->username)->first();
-        $tel = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.tel')->where('users.username', $request->username)->first();
-        $email = DB::table('users')->join('visitors', 'users.staffId', '=', 'visitors.visitorId')->select('visitors.email')->where('users.username', $request->username)->first();
-        $data =  array(
-            'name' => $name,
-            'tel' => $tel,
-            'email' => $email,
-            'u' =>   $u
-        );
+
 
         // $user = User::where('staffId', 1)
         //     ->first();
@@ -186,7 +178,8 @@ class LoginController extends Controller
             if ($u->roleId == 2) {
 
                 Auth::loginUsingId($user->UserId);
-                return View('front.virsitor', $data);
+                   return redirect()->route('profile');
+                //   return View('front.profile',$data);
                 // Auth::loginUsingId($user->UserId);
                 // return redirect()->route('visitor-product');
             } else {
@@ -198,6 +191,9 @@ class LoginController extends Controller
 
             return redirect()->back()->withInput();
         }
+
+
+
 
 
         //Hashing
@@ -227,6 +223,11 @@ class LoginController extends Controller
         //     return redirect()->back()->with('msg', 'Your username or password incorrect');
         //     //laravel
         // }
+    }
+
+    public function getdata($data){
+
+        return View('front.profile',$data);
     }
 
     public function logout()

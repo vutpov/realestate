@@ -25,15 +25,15 @@
 
     <link rel="stylesheet" href="{{ url('front/css/mdb.min.css') }}">
 
-    <link rel="stylesheet" href="{{ url('admin/css/datatables.min.css') }}">
+    {{--  <link rel="stylesheet" href="{{ url('admin/css/datatables.min.css') }}">  --}}
 
 
-    <link rel="stylesheet" href="{{url('admin/css/animations-extended.min.css')}}">
+    {{--  <link rel="stylesheet" href="{{url('admin/css/animations-extended.min.css')}}">  --}}
 
     <!-- Additional style -->
-    <link rel="stylesheet" href="{{url('admin/css/mdb-style.min.css')}}">
+    {{--  <link rel="stylesheet" href="{{url('admin/css/mdb-style.min.css')}}">  --}}
     <!-- Additional style -->
-    <link rel="stylesheet" href="{{url('admin/css/style.css')}}">
+    {{--  <link rel="stylesheet" href="{{url('admin/css/style.css')}}">  --}}
 
 
 
@@ -177,7 +177,7 @@
     </footer> --}}
 
     <script src="{{url('front/js/jquery-3.4.1.min.js')}}"></script>
-    <script src="{{url('front/js/mdb.min.js')}}"></script>
+    {{--  <script src="{{url('front/js/mdb.min.js')}}"></script>  --}}
     <script src="{{url('front/js/popper.min.js')}}"></script>
     <script src="{{url('front/js/bootstrap.min.js')}}"></script>
     <script src="{{url('front/js/lightslider.min.js')}}"></script>

@@ -26,15 +26,18 @@ class BookController extends Controller
     {
 
 
+
+
         $book = DB::select(
             DB::raw("select 
-            bookId,
+            b.bookId,
             s.name 'staff',
             c.name 'customer',
             agency,
             b.created_at,
             deadline,
             b.status,
+            con.status 'statusContract',
             (case
                 when datediff(date(deadline),now()) >=20 then 2
                 when datediff(date(deadline),now()) >=10 then 1
@@ -42,13 +45,23 @@ class BookController extends Controller
                 else -1
             end) as lateness
         from books b 
-            join staffs s on b.staffId=s.staffId 
+            join staffs s on b.staffId=s.staffId
             join customers c on c.customerId=b.customerId
+            left join contracts con on con.bookId=b.bookId
             left join agencies a on a.agencyId=b.agencyId;")
         );
 
+
+
+
+
+        $data = [
+            'book' => $book,
+
+        ];
+
         // dd($book);
-        return View('admin.book.index', compact('book'));
+        return View('admin.book.index', $data);
     }
 
     /**
@@ -113,7 +126,7 @@ class BookController extends Controller
             'commission' => $request->commission,
             'created_at' => now(),
             'staffId' => Auth::user()->staffId,
-            'status' => 2
+            'status' => 1
         ]);
 
 
@@ -237,9 +250,9 @@ class BookController extends Controller
         $book = Book::find($id);
         $book['customer'] = Book::find($id)->customer->name;
         $book['agency'] = Book::find($id)->agency->agency;
-        
-        $detail = BookDetail::join('properties','book_details.propertyId', '=' , 'properties.propertyId')->select('propertyCode','book_details.price','discount','amount')->where('bookId',$id)->get();
 
-        return compact('book','detail');
+        $detail = BookDetail::join('properties', 'book_details.propertyId', '=', 'properties.propertyId')->select('propertyCode', 'book_details.price', 'discount', 'amount')->where('bookId', $id)->get();
+
+        return compact('book', 'detail');
     }
 }

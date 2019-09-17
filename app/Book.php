@@ -18,9 +18,21 @@ class Book extends Model
         return $this->belongsTo('App\Agency','agencyId','agencyId');
     }
 
+    public function staff()
+    {
+        return $this->belongsTo('App\Staffs','staffId','staffId');
+    }
+
     public function detail()
     {
         return $this->hasMany('App\BookDetail','bookId','bookId');
+    }
+
+
+
+
+    public function contract(){
+        return $this->hasOne('App\Contract','bookId','bookId');
     }
 
     protected $fillable = ['created_at', 'updated_at'];

@@ -13,7 +13,7 @@
 
 
 
-Route::group(['prefix'=> '', 'middleware' => 'auth' ], function () {
+Route::group(['prefix' => ''], function () {
     Route::get('', 'front\FrontController@Home');
     Route::get('/contact-us', 'front\FrontController@contact');
     Route::get('/about-us', 'front\FrontController@about');
@@ -35,6 +35,8 @@ Route::group(['prefix'=> '', 'middleware' => 'auth' ], function () {
     Route::post('/storePropertysfront', 'front\FrontPropertyController@storefront')->name('storePropertyfront');
     Route::get('/getAvailablePropertyfront', 'front\FrontPropertyController@getAvailablePropertyfront')->name('getAvailablePropertyfront');
     Route::post('/propertyImageUploadfront', 'front\FrontPropertyController@propertyImageUploadfront')->name('propertyImageUploadfront');
+
+    Route::get('/profile','front\FrontPropertyController@index')->name('profile');
 
 
 });
@@ -62,6 +64,7 @@ Route::group(['prefix' => 'system'], function () {
     //login
     Route::get('', 'auth\LoginController@Index')->name("login");
     Route::post('/login', 'auth\LoginController@login');
+
 });
 
 
@@ -176,12 +179,14 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     Route::get('PropTypesStatus/{id}/{status}', 'admin\Property_Type@setStatus');
 
     //Payment
-    Route::get('payment', 'admin\PaymentController@index');
-    Route::get('createPaymentBook', 'admin\PaymentController@createPaymentBook');
+    Route::get('payment', 'admin\PaymentController@index')->name('payment');
+    Route::get('createPaymentBook/{id?}', 'admin\PaymentController@createPaymentBook')->name('createPaymentBook');
+    Route::get('getDetailList/{id}', 'admin\PaymentController@getListBookingDetail');
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
     Route::get('viewPaymentInstallment/{id}', 'admin\PaymentController@viewPaymentInstallment')->name('viewPaymentInstallment');
     Route::get('viewPaymentContractDeposit/{id}', 'admin\PaymentController@viewPaymentContractDeposit')->name('viewPaymentContractDeposit');
     Route::post('storePaymentInstallment', 'admin\PaymentController@storePaymentInstallment')->name('storePaymentInstallment');
+    Route::post('storePaymentBooking', 'admin\PaymentController@storePaymentBooking')->name('storePaymentBooking');
 
     //Schedule
     Route::get('schedule', 'admin\InstallScheduleController@index')->name('schedule');

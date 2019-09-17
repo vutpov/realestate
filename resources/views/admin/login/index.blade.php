@@ -86,18 +86,18 @@
                     <div class="col-xs-4">
                         <input type="submit" value="Sign In" class="btn btn-primary btn-block btn-flat">
                     </div>
-                    <div class="col-xs-4">
-                            <button class="btn btn-primary btn-block btn-flat">
-                                    <a style="color:white;" href="/register">Register</a>
 
-                                </button>
-                        </div>
-                    <!-- /.col -->
-                </div>
 
 
             </form>
+            <div class="col-xs-4">
+                    <button class="btn btn-primary btn-block btn-flat">
+                            <a style="color:white;" href="/register">Register</a>
 
+                        </button>
+                </div>
+            <!-- /.col -->
+        </div>
 
 
         </div>

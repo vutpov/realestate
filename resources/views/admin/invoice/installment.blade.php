@@ -1,5 +1,9 @@
 @extends('admin.invoice.invoice')
 
+@section('ContractId-Or-BookId')
+<b>Contract Id:</b> <span id="contract-Id"></span></b><br>  {{$customer->contractId}}
+@endsection
+
 @section('content-invoice')
 
 <div class="row">

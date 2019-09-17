@@ -11,9 +11,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
-<link rel="stylesheet" href="css/style.css">
-<div class="container text-white position-relative mt-n5 mb-5" style="margin-top:110px !important">
-    <div class="row bg-dark rounded p-3  ">
+{{--  <link rel="stylesheet" href="css/style.css">  --}}
+<div class="container text-white position-relative mt-n5 mb-5" style="margin-top:110px !important ; background-color: #0080c0">
+    <div class="row  rounded p-3  ">
 
         <div class="col-md-4 col-sm-4 col-xs-4 ">
             <div class="container pt-4 pb-3">
@@ -47,7 +47,7 @@
 <div class="container" style="margin-top: -40px">
     <div class="two-scrolled-wrapper">
         <div class="table-responsive">
-            <table class="table table-hover dataTable" id="tb">
+            <table class="table table-hover dataTable" id="table" >
                 <thead>
                     <tr>
                         {{-- <th>#</th> --}}
@@ -133,7 +133,7 @@
                 } ); --}}
                 $(document).ready(function(){
 
-                    $('#tb').DataTable({
+                    $('#table').DataTable({
                      processing: true,
                      serverSide: true,
                      ajax:{
