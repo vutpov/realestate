@@ -181,7 +181,11 @@ Route::group(['prefix' => 'system', 'middleware' => 'auth'], function () {
     //Payment
     Route::get('payment', 'admin\PaymentController@index')->name('payment');
     Route::get('createPaymentBook/{id?}', 'admin\PaymentController@createPaymentBook')->name('createPaymentBook');
+<<<<<<< HEAD
     Route::get('getDetailList/{id}', 'admin\PaymentController@getListBookingDetail');
+=======
+    Route::get('getDetailList/{id}','admin\PaymentController@getListBookingDetail');
+>>>>>>> cf4ddb442e2ec22a0993d79667804307845fa3de
     Route::get('createPaymentInstallment', 'admin\PaymentController@createPaymentInstallment');
     Route::get('viewPaymentInstallment/{id}', 'admin\PaymentController@viewPaymentInstallment')->name('viewPaymentInstallment');
     Route::get('viewPaymentContractDeposit/{id}', 'admin\PaymentController@viewPaymentContractDeposit')->name('viewPaymentContractDeposit');
