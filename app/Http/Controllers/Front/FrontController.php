@@ -36,10 +36,8 @@ class FrontController extends Controller
         return View('front.search');
     }
 
-
-    public function showResult(Request $re)
+    public function getdata(request $re)
     {
-
         $citys = City::pluck('city', 'cityId');
         $ptype = PropertyType::pluck('propertyType', 'propertyTypeId');
         $state = StateOrProvince::pluck('name', 'stateOrProvinceId');
@@ -54,39 +52,73 @@ class FrontController extends Controller
         $bedrom = $re->bedrom;
         $max_price = $re->max_price;
         $area = $re->area;
-        $search_term = $city . " ," . $purpose . " ," . $type . " ," . $bedrom . " ," . $area . ", " . $minprice . " ," . $max_price;
+        $search_term = $city . " ," . $purpose . " ," . $type . " ," . $bedrom . " ," . $area . " ," . $minprice . " ," . $max_price;
         $showall = $re->showall;
         $search = $re->search;
         $result = "";
         if ($search == "1") {
-            $result = DB::table('properties')
-                ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
-                ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
-                ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-                //  ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
-                ->select(
-                    'properties.propertyCode',
-                    'properties.description',
-                    'properties.no',
-                    'properties.st',
-                    'properties.price',
-                    'properties.location',
-                    //       'prop_attrib_details.propAttributeDetail',
 
-                    'property_types.propertyType',
-                    'u_m_s.um',
-                    'properties.created_at',
-                    'properties.unit',
-                    'properties.propertyId',
-                    'property_images.image'
-                )
-                ->whereRaw("MATCH(properties.description, properties.no, properties.st, properties.location, properties.unit, properties.propertyCode) AGAINST( ? IN BOOLEAN MODE)", $search_term)
-                // ->orWhereRaw("MATCH(prop_attrib_details.propAtrribute, prop_attrib_details.title) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
-                ->orWhereRaw("MATCH(property_types.propertyType) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
-                ->orWhereRaw("MATCH(u_m_s.um) AGAINST(? IN BOOLEAN MODE)",  $search_term)
-                ->where('property_images.is_featured', '1')
-                ->groupBy('property_images.propertyId')
-                ->orderBy('properties.created_at', 'DESC')->paginate(10);
+            if ($city == '' && $purpose == '' && $bedrom == '' && $area == '' &&  $type == '') {
+                $result = DB::table('properties')
+                    ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
+                    ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+                    ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+                    //  ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
+                    ->select(
+                        'properties.propertyCode',
+                        'properties.description',
+                        'properties.no',
+                        'properties.st',
+                        'properties.price',
+                        'properties.location',
+                        //       'prop_attrib_details.propAttributeDetail',
+
+                        'property_types.propertyType',
+                        'u_m_s.um',
+                        'properties.created_at',
+                        'properties.unit',
+                        'properties.propertyId',
+                        'property_images.image'
+                    )
+                    ->where('properties.price', '>=',  $minprice)
+                    ->where('properties.price', '<=', $max_price)
+                    ->groupBy('property_images.propertyId')
+                    ->orderBy('properties.created_at', 'DESC')->paginate(10);
+
+                
+            } else {
+                $result = DB::table('properties')
+                    ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
+                    ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+                    ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+                    //  ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
+                    ->select(
+                        'properties.propertyCode',
+                        'properties.description',
+                        'properties.no',
+                        'properties.st',
+                        'properties.price',
+                        'properties.location',
+                        //       'prop_attrib_details.propAttributeDetail',
+
+                        'property_types.propertyType',
+                        'u_m_s.um',
+                        'properties.created_at',
+                        'properties.unit',
+                        'properties.propertyId',
+                        'property_images.image'
+                    )
+                    ->where('properties.price', '>=',  $minprice)
+                    ->where('properties.price', '<=', $max_price)
+
+                    ->where('property_images.is_featured', '1')
+                    ->whereRaw("MATCH(properties.description, properties.no, properties.st, properties.location, properties.unit, properties.propertyCode) AGAINST( ? IN BOOLEAN MODE)", $search_term)
+                    // ->orWhereRaw("MATCH(prop_attrib_details.propAtrribute, prop_attrib_details.title) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
+                    ->orWhereRaw("MATCH(property_types.propertyType) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
+                    ->orWhereRaw("MATCH(u_m_s.um) AGAINST(? IN BOOLEAN MODE)",  $search_term)
+                    ->groupBy('property_images.propertyId')
+                    ->orderBy('properties.created_at', 'DESC')->paginate(10);
+            }
         }
         if ($showall == "2") {
             $result = DB::table('properties')
@@ -127,6 +159,116 @@ class FrontController extends Controller
             'ptype' => $ptype,
             'state' => $state
         ];
+
+        return $data;
+    }
+
+
+    public function showResult(Request $re)
+    {
+
+        // $citys = City::pluck('city', 'cityId');
+        // $ptype = PropertyType::pluck('propertyType', 'propertyTypeId');
+        // $state = StateOrProvince::pluck('name', 'stateOrProvinceId');
+
+        // //pagination
+
+
+        // $city = $re->cityname;
+        // $purpose = $re->purposename;
+        // $minprice = $re->min_price;
+        // $type = $re->typename;
+        // $bedrom = $re->bedrom;
+        // $max_price = $re->max_price;
+        // $area = $re->area;
+        // $search_term = $city . " ," . $purpose . " ," . $type . " ," . $bedrom . " ," . $area ;
+        // $showall = $re->showall;
+        // $search = $re->search;
+        // $result = "";
+        // if ($search == "1") {
+
+
+
+
+        //         // $result = DB::table('properties')
+        //         //     ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
+        //         //     ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+        //         //     ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+        //         //     //  ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
+        //         //     ->select(
+        //         //         'properties.propertyCode',
+        //         //         'properties.description',
+        //         //         'properties.no',
+        //         //         'properties.st',
+        //         //         'properties.price',
+        //         //         'properties.location',
+        //         //         //       'prop_attrib_details.propAttributeDetail',
+
+        //         //         'property_types.propertyType',
+        //         //         'u_m_s.um',
+        //         //         'properties.created_at',
+        //         //         'properties.unit',
+        //         //         'properties.propertyId',
+        //         //         'property_images.image'
+        //         //     )
+        //         //     ->where('properties.price', '>',  $minprice)
+        //         //     ->where('properties.price', '<', $max_price)
+
+        //         //     ->where('property_images.is_featured', '1')
+        //         //     ->whereRaw("MATCH(properties.description, properties.no, properties.st, properties.location, properties.unit, properties.propertyCode) AGAINST( ? IN BOOLEAN MODE)", $search_term)
+        //         //     // ->orWhereRaw("MATCH(prop_attrib_details.propAtrribute, prop_attrib_details.title) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
+        //         //     ->orWhereRaw("MATCH(property_types.propertyType) AGAINST( ? IN BOOLEAN MODE)",  $search_term)
+        //         //     ->orWhereRaw("MATCH(u_m_s.um) AGAINST(? IN BOOLEAN MODE)",  $search_term)
+        //         //     ->groupBy('property_images.propertyId')
+        //         //     ->orderBy('properties.created_at', 'DESC')->paginate(10);
+
+
+
+
+
+        // }
+        // if ($showall == "2") {
+        //     $result = DB::table('properties')
+        //         ->leftJoin('u_m_s', 'u_m_s.umId', '=', 'properties.umId')
+        //         ->leftJoin('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
+        //         ->leftJoin('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
+        //         //    ->leftJoin('prop_attrib_details', 'prop_attrib_details.propAttribDetailId', '=', 'properties.propAttribId')
+        //         ->select(
+        //             'properties.propertyCode',
+        //             'properties.description',
+        //             'properties.no',
+        //             'properties.st',
+        //             'properties.price',
+        //             'properties.location',
+        //             //   'prop_attrib_details.propAttributeDetail',
+
+        //             'property_types.propertyType',
+        //             'u_m_s.um',
+        //             'properties.created_at',
+        //             'properties.unit',
+        //             'properties.propertyId',
+        //             'property_images.image'
+        //         )
+        //         ->where('property_images.is_featured', '1')
+        //         ->groupBy('property_images.propertyId')
+        //         ->orderBy('properties.created_at', 'DESC')->paginate(10);
+        // }
+
+
+
+        // // ->take($re->get('limit', 10))
+
+        // // dd($result);
+        // // $result->withPath('show-result/url');
+        // $data = [
+        //     'result' => $result,
+        //     'citys' => $citys,
+        //     'ptype' => $ptype,
+        //     'state' => $state
+        // ];
+
+        $data = $this::getdata($re);
+
 
         return View('front.show', $data);
     }
