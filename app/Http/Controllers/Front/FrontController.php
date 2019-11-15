@@ -56,7 +56,7 @@ class FrontController extends Controller
 
     public function product()
     {
-      $products = Property::paginate(9);
+      $products = Property::with('propAttribute:propAttribute')->paginate(9);
       return View('front.pages.product')->with('products', $products);
     }
 

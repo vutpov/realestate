@@ -12,10 +12,15 @@ class Property extends Model
     protected $primaryKey = 'propertyId';
 
     public function propAttribute(){
-      return $this->hasOne('App/propAttribute');
+
+      
+
+      return $this->belongsTo('App\propAttribute', 'propAttribId', 'propAttributeid');
     }
 
     public function propType(){
-      return $this->hasOne('App/PropertyType', 'propertyTypeId', 'propertyTypeId');
+      return $this->belongsTo('App\PropertyType', 'propertyTypeId', 'propertyTypeId');
+    
+    
     }
 }

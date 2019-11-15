@@ -147,6 +147,8 @@
                               </div>
                               <div class="single_appartment_content">
                                   <a href="" class="love_us"> <span class="ti-heart"></span></a>
+                                  
+                                  
                                   <p>{{$item->propType}}</p>
                                   <a href="#">
                                       <h4>{{$item->description}}</h4>
@@ -155,18 +157,20 @@
 
                                     <?php
                                       
-                                      $propAttributes = [];
-                                      $expoldeProps = explode(",", $item->propAttribute);
-
-                                      foreach($expoldeProps as $temp){
-                                        $propItem = explode(":", $temp);
-                                        $propAttributes[$propItem[0]] = $propItem[1];
-                                      }
+                                      // $propAttributes = [];
+                                      // dd($item->propAttribute);
+                                      // $expoldeProps = explode(",", $item->propAttribute);
+                                      
+                                      // foreach($expoldeProps as $temp){
+                                      //   $propItem = explode(":", $temp);
+                                       
+                                      //   $propAttributes[$propItem[0]] = $propItem[1];
+                                      // }
                                       ?>
 
-                                    <li><a href=""><span class="flaticon-bath"></span></a>{{$propAttributes['Bathroom']}}</li>
+                                    {{-- <li><a href=""><span class="flaticon-bath"></span></a>{{$propAttributes['Bathroom']}}</li>
                                     <li><a href=""><span class="flaticon-bed"></span></a>{{$propAttributes['Bedroom']}}</li>
-                                    <li><a href=""><span class="flaticon-frame"></span></a>{{$item->unit}}</li>
+                                    <li><a href=""><span class="flaticon-frame"></span></a>{{$item->unit}}</li> --}}
                                   </ul>
                               </div>
                           </div>
