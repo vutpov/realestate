@@ -14,7 +14,8 @@
 
 
 Route::group(['prefix' => ''], function () {
-    Route::get('', 'front\FrontController@Home');
+    Route::get('', 'front\FrontController@home');
+    Route::get('/ceo-message', 'front\FrontController@ceoMessage');
     Route::get('/contact-us', 'front\FrontController@contact');
     Route::get('/about-us', 'front\FrontController@about');
     // Route::get('/explore', 'front\FrontController@search');

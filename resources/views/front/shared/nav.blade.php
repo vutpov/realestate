@@ -1,17 +1,17 @@
 <!--::menu part start::-->
-<header class="main_menu home_menu">
+<header class="main_menu">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="index.php"><img src="img/full-logo.png" class="img-fluid" alt="logo" width="300" height="100"></a>
+                    <a class="navbar-brand" href="/"><img src="{{url('front/img/full-logo.png')}}" class="img-fluid" alt="logo" width="300" height="100"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse main-menu-item" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -19,16 +19,16 @@
                                     About
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="ceo_message.php">CEO Message </a>
-                                    <a class="dropdown-item" href="company_background.php">The Company Background</a>
-                                    <a class="dropdown-item" href="vision.php">Vision &amp; Mission</a>
-                                    <a class="dropdown-item" href="staff.php">Staff and Man Power</a>
+                                    <a class="dropdown-item" href="/ceo-message">CEO Message </a>
+                                    <a class="dropdown-item" href="/company-background">The Company Background</a>
+                                    <a class="dropdown-item" href="/vision">Vision &amp; Mission</a>
+                                    <a class="dropdown-item" href="/staff">Staff and Man Power</a>
 
                                 </div>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="product.php">Product &amp; Service</a>
+                                <a class="nav-link" href="/product">Product and Service</a>
                             </li>
                             <!-- <li class="nav-item">
                                 <a class="nav-link page-scroll" href="blog.php">Blog</a>
@@ -43,7 +43,7 @@
                                 </div>
                             </li> -->
                             <li class="nav-item">
-                                <a class="nav-link" href="contact.php">Contact us</a>
+                                <a class="nav-link" href="/contact">Contact us</a>
                             </li>
                         </ul>
                     </div>

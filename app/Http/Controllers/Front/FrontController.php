@@ -16,12 +16,18 @@ use App\Visitor;
 class FrontController extends Controller
 {
 
-    public function Home()
+    public function home()
     {
         // dd(getLogo());
-        return View('front.index');
+        return View('front.pages.index');
     }
-    public function Contact()
+
+    public function ceoMessage()
+    {
+        // dd(getLogo());
+        return View('front.pages.ceo-message');
+    }
+    public function contact()
     {
         return View('front.contact');
     }
