@@ -49,7 +49,7 @@ class FrontController extends Controller
 
     public function contact()
     {
-        return View('front.contact');
+        return View('front.pages.contact');
     }
 
     public function about()
