@@ -7,7 +7,7 @@ use Illuminate\Http\Requests\valProperty;
 use App\Http\Controllers\Controller;
 use App\Property;
 use App\Project;
-use App\PropertyType;
+use App\PropertyTypes;
 use App\PropAttribute;
 use App\UM;
 use Illuminate\Support\Facades\DB;
@@ -89,7 +89,7 @@ class PropertyController extends Controller
     {
         $project = Project::select('projectId', 'project')
             ->get();
-        $propertyType = PropertyType::select('propertyTypeId', 'propertyType')
+        $propertyType = PropertyTypes::select('propertyTypeId', 'propertyType')
             ->get();
 
         $propAttribute = PropAttribute::select('propAttributeID', 'propAttribute')
