@@ -27,6 +27,26 @@ class FrontController extends Controller
         // dd(getLogo());
         return View('front.pages.ceo-message');
     }
+
+    public function companyBackground()
+    {
+        // dd(getLogo());
+        return View('front.pages.company-background');
+    }
+
+    public function visionMission()
+    {
+        // dd(getLogo());
+        return View('front.pages.vision');
+    }
+
+    public function staff()
+    {
+        // dd(getLogo());
+        return View('front.pages.staff');
+    }
+
+
     public function contact()
     {
         return View('front.contact');

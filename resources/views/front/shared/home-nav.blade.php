@@ -20,7 +20,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/ceo-message">CEO Message </a>
                                     <a class="dropdown-item" href="/company-background">The Company Background</a>
-                                    <a class="dropdown-item" href="/vision">Vision &amp; Mission</a>
+                                    <a class="dropdown-item" href="/vision-mission">Vision &amp; Mission</a>
                                     <a class="dropdown-item" href="/staff">Staff and Man Power</a>
 
                                 </div>
