@@ -12,6 +12,7 @@ use DB;
 use App\Support\Collection;
 use Illuminate\Support\Facades\View;
 use App\Visitor;
+use App\Property;
 
 class FrontController extends Controller
 {
@@ -52,15 +53,14 @@ class FrontController extends Controller
         return View('front.pages.contact');
     }
 
-    public function about()
+
+    public function product()
     {
-        return View('front.about');
+      $products = Property::paginate(9);
+      return View('front.pages.product')->with('products', $products);
     }
 
-    public function search()
-    {
-        return View('front.search');
-    }
+
 
     public function getdata(request $re)
     {

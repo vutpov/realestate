@@ -20,13 +20,8 @@ Route::group(['prefix' => ''], function () {
     Route::get('/vision-mission', 'front\FrontController@visionMission');
     Route::get('/staff', 'front\FrontController@staff');
     Route::get('/contact', 'front\FrontController@contact');
-    Route::get('/about-us', 'front\FrontController@about');
-    // Route::get('/explore', 'front\FrontController@search');
-    Route::get('/explores', 'front\FrontController@addCityDetails');
-    Route::get('/show-result', 'front\FrontController@showResult');
-    Route::post('/show-result', 'front\FrontController@showResult');
-    Route::get('/show-result/show-detail/{id}', 'front\FrontController@showDetails');
-    Route::post('/show-result/show-detail', 'front\FrontController@showDetail');
+    Route::get('/product', 'front\FrontController@product');
+   
 
     //register
     Route::get('/register', 'front\FrontController@getVisitor');

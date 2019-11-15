@@ -122,8 +122,6 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validator = Validator::make($request->all(), [
 
             'project' => 'required',
@@ -149,7 +147,7 @@ class PropertyController extends Controller
         if ($validator->passes()) {
 
             //join('contacts', 'users.id', '=', 'contacts.user_id')
-
+            $path = request()->file('thumbnail')->store('propertyImage');
 
             DB::table('properties')->insert([
                 'projectId' => $request->project,
@@ -167,13 +165,11 @@ class PropertyController extends Controller
                 'partnerId' => $request->partner,
                 'staffId' => Auth::user()->staffId,
                 'partnerId' => $partnerId,
-                'status' => 1
+                'status' => 1,
+                'image' => $path
             ]);
             $newPropertyId = DB::getPdo()->lastInsertId() + 1;
-
-
-
-            $path = request()->file('thumbnail')->store('propertyImage');
+           
             $PropertyImage = new PropertyImage();
             $PropertyImage->image = $path;
             $PropertyImage->is_featured = 1;

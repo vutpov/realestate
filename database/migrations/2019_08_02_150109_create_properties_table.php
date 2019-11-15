@@ -26,6 +26,7 @@ class CreatePropertiesTable extends Migration
             $table->string('location', 200)->nullable();
             $table->string('unit');
             $table->tinyInteger('status')->default(1);
+            $table->string('image', 200);
             $table->timestamps();
 
             //status 1:publish
