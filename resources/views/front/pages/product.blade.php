@@ -152,9 +152,21 @@
                                       <h4>{{$item->description}}</h4>
                                   </a>
                                   <ul class="list-unstyled">
-                                      <li><a href=""><span class="flaticon-bath"></span></a> 04</li>
-                                      <li><a href=""><span class="flaticon-bed"></span></a> 03</li>
-                                      <li><a href=""><span class="flaticon-frame"></span></a> 2400 sqft</li>
+
+                                    <?php
+                                      
+                                      $propAttributes = [];
+                                      $expoldeProps = explode(",", $item->propAttribute);
+
+                                      foreach($expoldeProps as $temp){
+                                        $propItem = explode(":", $temp);
+                                        $propAttributes[$propItem[0]] = $propItem[1];
+                                      }
+                                      ?>
+
+                                    <li><a href=""><span class="flaticon-bath"></span></a>{{$propAttributes['Bathroom']}}</li>
+                                    <li><a href=""><span class="flaticon-bed"></span></a>{{$propAttributes['Bedroom']}}</li>
+                                    <li><a href=""><span class="flaticon-frame"></span></a>{{$item->unit}}</li>
                                   </ul>
                               </div>
                           </div>

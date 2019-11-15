@@ -59,7 +59,7 @@ class PropertyController extends Controller
                 'properties.updated_at',
                 'project',
                 'partner',
-                'image',
+                'property_images.image',
                 'properties.propertyId'
             )
             ->leftJoinSub($partnerQry, 'partners', function ($join) {

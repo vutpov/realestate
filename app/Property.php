@@ -16,6 +16,6 @@ class Property extends Model
     }
 
     public function propType(){
-      return $this->hasOne('App/PropertyTypes', 'propertyTypeId', 'propertyTypeId');
+      return $this->hasOne('App/PropertyType', 'propertyTypeId', 'propertyTypeId');
     }
 }
