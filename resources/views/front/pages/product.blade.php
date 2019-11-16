@@ -139,38 +139,42 @@
                       <div class="col-md-4 col-lg-4">
                           <div class="single_appartment_part">
                               <div class="appartment_img">
-                                  <img src="img/appertment_3.png" alt="">
+                                  <img src="{{url('/storage')}}/{{$item->image}}" alt="">
                                   <div class="single_appartment_text">
                                       <h3>{{$item->price}}</h3>
-                                      <p><span class="ti-location-pin"></span>{{$item->location}}</p>
+                                      <p><span class="ti-location-pin">
+                                          
+                                      </span>{{$item->location}}</p>
                                   </div>
                               </div>
                               <div class="single_appartment_content">
                                   <a href="" class="love_us"> <span class="ti-heart"></span></a>
                                   
-                                  
-                                  <p>{{$item->propType}}</p>
+                                  <?php
+                                    $stPropType = $item->propType->propertyType;
+                                  ?>
+                                  <p>{{$stPropType}}</p>
                                   <a href="#">
                                       <h4>{{$item->description}}</h4>
                                   </a>
                                   <ul class="list-unstyled">
-
                                     <?php
                                       
-                                      // $propAttributes = [];
-                                      // dd($item->propAttribute);
-                                      // $expoldeProps = explode(",", $item->propAttribute);
-                                      
-                                      // foreach($expoldeProps as $temp){
-                                      //   $propItem = explode(":", $temp);
+                                      $propAttributes = [];
+                                     
+                                      $expoldeProps = explode(",", $item->propAttribute->propAttribute);
+                                     
+                                      foreach($expoldeProps as $temp){
+                                        $propItem = explode(":", $temp);
                                        
-                                      //   $propAttributes[$propItem[0]] = $propItem[1];
-                                      // }
+                                        $propAttributes[$propItem[0]] = $propItem[1];
+                                      }
+                                     
                                       ?>
 
-                                    {{-- <li><a href=""><span class="flaticon-bath"></span></a>{{$propAttributes['Bathroom']}}</li>
+                                    <li><a href=""><span class="flaticon-bath"></span></a>{{$propAttributes['Bathroom']}}</li>
                                     <li><a href=""><span class="flaticon-bed"></span></a>{{$propAttributes['Bedroom']}}</li>
-                                    <li><a href=""><span class="flaticon-frame"></span></a>{{$item->unit}}</li> --}}
+                                    <li><a href=""><span class="flaticon-frame"></span></a>{{$item->unit}} {{$item->unitMesurement->um}}</li>
                                   </ul>
                               </div>
                           </div>

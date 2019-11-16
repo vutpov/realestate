@@ -7,7 +7,7 @@ use Illuminate\Http\Requests\valProperty;
 use App\Http\Controllers\Controller;
 use App\Property;
 use App\Project;
-use App\PropertyTypes;
+use App\PropertyType;
 use App\PropAttribute;
 use App\UM;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +40,7 @@ class PropertyController extends Controller
         $property = DB::table('properties')
             ->join('staffs', 'properties.staffId', '=', 'staffs.staffId')
             ->join('property_types', 'property_types.propertyTypeId', '=', 'properties.propertyTypeId')
-            ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttribId')
+            ->join('prop_attributes', 'prop_attributes.propAttributeId', '=', 'properties.propAttributeId')
             ->join('property_images', 'property_images.propertyId', '=', 'properties.propertyId')
             ->select(
                 'propertyCode',
@@ -89,7 +89,7 @@ class PropertyController extends Controller
     {
         $project = Project::select('projectId', 'project')
             ->get();
-        $propertyType = PropertyTypes::select('propertyTypeId', 'propertyType')
+        $propertyType = PropertyType::select('propertyTypeId', 'propertyType')
             ->get();
 
         $propAttribute = PropAttribute::select('propAttributeID', 'propAttribute')
@@ -158,7 +158,7 @@ class PropertyController extends Controller
                 'umid' => $request->mesurement,
                 'unit' => $request->unit,
                 'propertyTypeId' => $request->propertyType,
-                'propAttribId' => $request->propAttribute,
+                'propAttributeId' => $request->propAttribute,
                 'price' => $request->price,
                 'cost' => $request->cost,
                 'created_at' => now(),

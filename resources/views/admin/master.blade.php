@@ -375,7 +375,7 @@ desired effect
       Anything you want
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; <?php echo date('Y'); ?> <a href="#">Setec SO1.7</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; <?php echo date('Y'); ?>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
